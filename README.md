@@ -23,5 +23,7 @@ The final deliverable for this project will be an interactive map of recent traf
 
 ### Appendix
 Jason Bartling: Data and Methodology, and Conclusion
+
 Ian Kelly: Introduction, References, and Proposal Design
+
 Brandon Rose: Data and Methodology, and Web Application Prototype UI
