@@ -15,9 +15,11 @@ Data for this web map will be acquired from The City of Austin’s Open Data Por
 The final deliverable for this project will be an interactive map of recent traffic incidents, their severity, and proximate roads around Austin. When the application first loads only active incidents will be shown, but the user will also be able to show more historical data over months or years and filter by traffic incident type. With this project, our team hopes to educate travelers in the Austin area to the most dangerous roads in Austin that may be previously unknown to the public. If we have time, we’d also like to implement route navigation from one address to another that gives an indication of how dangerous the route is overall. This is a more complex feature involving network analysis and requires more research, so it may have to be an additional improvement that is not completed with the core project. Because of the dynamic nature of the web map, it can be used to not only address the needs of today, but also the needs of the future. The City of Austin could use this visual representation of traffic incident data to explain spatial trends to stakeholders involved in the planning and implementation of infrastructure.
 
 ### References
-```Bakiera, A., R. Weaver, C. Hiner, and Y. Lu. 2016. Spatial analysis of traffic congestion and transit accessibility in Austin, Texas. https://digital.library.txstate.edu/bitstream/handle/10877/6323/BAKIERA-THESIS-2016.pdf?sequence=1 (last accessed 29 October 2018). 
-Texas Relocation Report. 2017. Texas Association of Realtors. https://www.texasrealestate.com/wp-content/uploads/2017TexasRelocationReport.pdf (last accessed 29 October 2018). 
-Transportation and Mobility. https://data.austintexas.gov/Transportation-and-Mobility/Real-Time-Traffic-Incident-Reports/dx9v-zd7x (last accessed 1 November 2018). ```
+```Bakiera, A., R. Weaver, C. Hiner, and Y. Lu. 2016. Spatial analysis of traffic congestion and transit accessibility in Austin, Texas. https://digital.library.txstate.edu/bitstream/handle/10877/6323/BAKIERA-THESIS-2016.pdf?sequence=1 (last accessed 29 October 2018).```
+
+```Texas Relocation Report. 2017. Texas Association of Realtors. https://www.texasrealestate.com/wp-content/uploads/2017TexasRelocationReport.pdf (last accessed 29 October 2018).```
+
+```Transportation and Mobility. https://data.austintexas.gov/Transportation-and-Mobility/Real-Time-Traffic-Incident-Reports/dx9v-zd7x (last accessed 1 November 2018).```
 
 ### Appendix
 Jason Bartling: Data and Methodology, and Conclusion
