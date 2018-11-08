@@ -2,4 +2,4 @@
 https://atym.github.io/awheelTraffic/
 
 #Link to JSON traffic incident data
-https://data.austintexas.gov/resource/r3af-2r8x.json
+https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM
