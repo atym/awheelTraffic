@@ -6,6 +6,16 @@ function closeNav() {
   document.getElementById("fullOverlay").style.width = "0%";
 }
 
+function teamOverlay() {
+  document.getElementById("overlayProject").style.width = "0%";
+  document.getElementById("overlayTeam").style.display = "block";
+}
+
+function projectOverlay() {
+  document.getElementById("overlayTeam").style.display = "none";
+  document.getElementById("overlayProject").style.width = "100%";
+}
+
 require([
   "esri/Map",
   "esri/views/MapView",
