@@ -2,4 +2,10 @@
 https://atym.github.io/awheelTraffic/
 
 #Link to JSON traffic incident data
-https://data.austintexas.gov/resource/r3af-2r8x.json
+https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&traffic_report_status=ACTIVE
+
+#Link to API docs
+https://dev.socrata.com/foundry/data.austintexas.gov/r3af-2r8x
+
+#Link to ESRI javascript sandboxes
+https://developers.arcgis.com/javascript/latest/sample-code/index.html
