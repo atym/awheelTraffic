@@ -1,5 +1,7 @@
 function openNav() {
   document.getElementById("fullOverlay").style.width = "100%";
+  document.getElementById("overlayTeam").style.display = "block";
+  document.getElementById("overlayProject").style.display = "none";
 }
 
 function closeNav() {
@@ -7,13 +9,13 @@ function closeNav() {
 }
 
 function teamOverlay() {
-  document.getElementById("overlayProject").style.width = "0%";
   document.getElementById("overlayTeam").style.display = "block";
+  document.getElementById("overlayProject").style.display = "none";
 }
 
 function projectOverlay() {
+  document.getElementById("overlayProject").style.display = "block";
   document.getElementById("overlayTeam").style.display = "none";
-  document.getElementById("overlayProject").style.width = "100%";
 }
 
 require([
@@ -43,7 +45,7 @@ function(Map, MapView, BasemapGallery){
   view.ui.add(basemapGallery, {
     position: "top-left"
   });
-  
+
   view.ui.move("zoom", "bottom-left");		//Move Zoom to bottom left
 
 });
