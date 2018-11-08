@@ -1,3 +1,11 @@
+function openNav() {
+  document.getElementById("fullOverlay").style.width = "100%";
+}
+
+function closeNav() {
+  document.getElementById("fullOverlay").style.width = "0%";
+}
+
 require([
   "esri/Map",
   "esri/views/MapView",

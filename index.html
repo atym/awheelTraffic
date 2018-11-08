@@ -12,8 +12,42 @@
   </head>
   <body>
     <div id="mainLogo">
-      <!--<img src="./img/logo.png" alt="awheel intelligence logo" height="100" width="100">-->
-      <img src='./img/logo.png' onmouseover="this.src='./img/aboutlogo.png';" onmouseout="this.src='./img/logo.png';" height="100" width="100">
+      <img src='./img/logo.png' onmouseover="this.src='./img/logoabout.png';" onmouseout="this.src='./img/logo.png';" onclick="openNav()" height="100" width="100">
+    </div>
+    <div id="fullOverlay" class="overlay">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div class="overlay-content">
+          <div id="aboutNav">
+          <button id="aboutButtons">About Team</button>
+          <button id="aboutButtons">About Project</button>
+          </div>
+        <div id="overlayTeam">
+          <div class="about">
+            <h3>Jason Bartling</h3>
+            <img src="./img/biojason.jpg"/>
+              <p>
+                My name is Jason Bartling, and I live in San Marcos, TX.  I'm a GIS major at Texas State University.
+                It's great to finally be graduating this December!  Some things I enjoy are movies, music, and books.
+                In my spare time I've been trying to polish up on my Python programming skills and my drone piloting ability.
+              </p>
+          </div>
+          <div class="about">
+            <h3>Ian Kelly</h3>
+            <img src="./img/bioian.jpg">
+            <p>
+              I am a graduating senior GIS major. This is my first time coding but I enjoyed the difficult lessons and look forward to the final capstone project. I enjoy hiking and camping having recently visited Zion NP in Utah and look forward to an upcoming trip to Big Bend. The drone pictured was used in a UAS mapping project with Dr. Jensen.
+            </p>
+          </div>
+          <div class="about">
+            <h3>Brandon Rose</h3>
+            <img src="./img/biobrandon.jpg">
+            <p>
+              Currently I am a Graduate Student working toward my Masters of Geography at Texas State University. I graduated from Texas State with a bachelors in GIS and a minor in Computer Science in 2017. My areas of interest are Remote Sensing/GIS, Geovisualisation, and Physical Geography. Like my team members I also operate sUAS’s for both mapping and as a hobby.
+            </p>
+          </div>
+        </div>
+        <div id="overlayProject"></div>
+      </div>
     </div>
     <!--establishes the emtpy div into which the map will be loaded-->
     <div id="viewDiv"></div>
