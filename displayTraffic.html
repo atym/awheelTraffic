@@ -140,7 +140,7 @@
        * Define the renderer for symbolizing earthquakes
        **************************************************/
 
-      var quakesRenderer = {
+      /*var quakesRenderer = {
         type: "simple", // autocasts as new SimpleRenderer()
         symbol: {
           type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
@@ -153,35 +153,35 @@
             style: "solid"
           }
         }
-      };
+      };*/
 
-      view.when(function() {
+      /*view.when(function() {
         // Request the earthquake data from USGS when the view resolves
         getData()
           .then(createGraphics) // then send it to the createGraphics() method
           .then(createLayer) // when graphics are created, create the layer
           /*.then(createLegend)*/ // when layer is created, create the legend
           /*.catch(errback);*/
-      });
+      });*/
 
       // Request the earthquake data
-      function getData() {
+      /*function getData() {*/
 
         // data downloaded from the USGS at http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/ on 4/4/16
         // week.json represents recorded earthquakes between 03/28/2016 and 04/04/2016
 
-        var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&traffic_report_status=ACTIVE";
+        /*var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&traffic_report_status=ACTIVE";
 
         return esriRequest(url, {
           responseType: "json"
         });
-      }
+      }*/
 
       /**************************************************
        * Create graphics with returned geojson data
        **************************************************/
 
-      function createGraphics(response) {
+      /*function createGraphics(response) {
         // raw GeoJSON data
         var json = response.data;
 
@@ -204,26 +204,26 @@
             }
           };
         });
-      }
+      }*/
 
       /**************************************************
        * Create a FeatureLayer with the array of graphics
        **************************************************/
 
-      function createLayer(graphics) {
+      /*function createLayer(graphics) {
 
         layer = new FeatureLayer({
           source: graphics, // autocast as an array of esri/Graphic
-          // create an instance of esri/layers/support/Field for each field object
-          fields: fields, // This is required when creating a layer from Graphics
-          objectIdField: "ObjectID", // This must be defined when creating a layer from Graphics
-          renderer: quakesRenderer/*,*/ // set the visualization on the layer
-          /*popupTemplate: pTemplate*/
+
+          fields: fields, 
+          objectIdField: "ObjectID", 
+          renderer: quakesRenderer
+          
         });
 
         map.add(layer);
         return layer;
-      }
+      }*/
 
       /******************************************************************
        * Add layer to layerInfos in the legend
