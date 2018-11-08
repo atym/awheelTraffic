@@ -154,15 +154,18 @@
           }
         }
       };*/
-
-      /*view.when(function() {
         // Request the earthquake data from USGS when the view resolves
+      // then send it to the createGraphics() method
+      // when graphics are created, create the layer
+      // when layer is created, create the legend
+      /*view.when(function() {
+        
         getData()
-          .then(createGraphics) // then send it to the createGraphics() method
-          .then(createLayer) // when graphics are created, create the layer
-          /*.then(createLegend)*/ // when layer is created, create the legend
-          /*.catch(errback);*/
-     /* });*/
+          .then(createGraphics) 
+          .then(createLayer) 
+          .then(createLegend) 
+          .catch(errback);
+      });*/
 
       // Request the earthquake data
       /*function getData() {*/
