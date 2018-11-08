@@ -167,18 +167,15 @@
           .catch(errback);
       });*/
 
-      // Request the earthquake data
-      /*function getData() {*/
+      // Request the traffic incident data
+      function getData() {
 
-        // data downloaded from the USGS at http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/ on 4/4/16
-        // week.json represents recorded earthquakes between 03/28/2016 and 04/04/2016
-
-        /*var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&traffic_report_status=ACTIVE";
+        var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&traffic_report_status=ACTIVE";
 
         return esriRequest(url, {
           responseType: "json"
         });
-      }*/
+      }
 
       /**************************************************
        * Create graphics with returned geojson data
