@@ -10,7 +10,8 @@
     type: "GET",
     data: {
       "$limit" : 5000,
-      "$$app_token" : "EoIlIKmVmkrwWkHNv5TsgP1CM"
+      "$$app_token" : "EoIlIKmVmkrwWkHNv5TsgP1CM",
+      "$traffic_report_status: "ACTIVE"
         }
     }).done(function(data) {
     alert("Retrieved " + data.length + " records from the dataset!");
