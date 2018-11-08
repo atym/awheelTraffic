@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Create a FeatureLayer with client side graphics - 4.9</title>
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.9/"></script>
+
+  <script>
+    require([
+      "esri/views/MapView",
+      "esri/Map",
+      "esri/layers/FeatureLayer",
+      "esri/geometry/Point",
+      "esri/widgets/Legend",
+      "esri/request"
+    ], function(MapView, Map, FeatureLayer, Point, Legend, esriRequest) {
+
+      var layer/*, legend*/;
+
+      /**************************************************
+       * Define the specification for each field to create
+       * in the layer
+       **************************************************/
+
+      var fields = [
+      {
+        name: "ObjectID",
+        alias: "ObjectID",
+        type: "oid"
+      },
+      {
+        name: "issueReported",
+        alias: "issueReported",
+        type: "string"
+      }, {
+        name: "latitude",
+        alias: "latitude",
+        type: "double"
+      }, {
+        name: "longitude",
+        alias: "longitude",
+        type: "double"
+      }, {
+        name: "status",
+        alias: "status",
+        type: "string"
+      }, {
+        name: "statusDateTime",
+        alias: "statusDateTime",
+        type: "date"
+      }];
+
+      // Set up popup template for the layer
+      /*var pTemplate = {
+        title: "{title}",
+        content: [{
+          type: "fields",
+          fieldInfos: [{
+            fieldName: "place",
+            label: "Location",
+            visible: true
+          }, {
+            fieldName: "time",
+            label: "Date and time",
+            visible: true
+          }, {
+            fieldName: "mag",
+            label: "Magnitude",
+            visible: true
+          }, {
+            fieldName: "mmi",
+            label: "Intensity",
+            visible: true
+          }, {
+            fieldName: "depth",
+            label: "Depth",
+            visible: true
+          }, {
+            fieldName: "felt",
+            label: "Number who felt the quake",
+            visible: true,
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          }, {
+            fieldName: "sig",
+            label: "Significance",
+            visible: true
+          }, {
+            fieldName: "url",
+            label: "More info",
+            visible: true
+          }]
+        }],
+        fieldInfos: [{
+          fieldName: "time",
+          format: {
+            dateFormat: "short-date-short-time"
+          }
+        }]
+      };*/
+
+      /**************************************************
+       * Create the map and view
+       **************************************************/
+
+      var map = new Map({
+        basemap: "dark-gray"
+      });
+
+      // Create MapView
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-144.492, 62.771],
+        zoom: 5,
+        // customize ui padding for legend placement
+        /*ui: {
+          padding: {
+            bottom: 15,
+            right: 0
+          }
+        }*/
+      });
+
+      /**************************************************
+       * Define the renderer for symbolizing earthquakes
+       **************************************************/
+
+      var quakesRenderer = {
+        type: "simple", // autocasts as new SimpleRenderer()
+        symbol: {
+          type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+          style: "circle",
+          size: 20,
+          color: [211, 255, 0, 0],
+          outline: {
+            width: 1,
+            color: "#FF0055",
+            style: "solid"
+          }
+        }
+      };
+
+      view.when(function() {
+        // Request the earthquake data from USGS when the view resolves
+        getData()
+          .then(createGraphics) // then send it to the createGraphics() method
+          .then(createLayer) // when graphics are created, create the layer
+          /*.then(createLegend)*/ // when layer is created, create the legend
+          /*.catch(errback);*/
+      });
+
+      // Request the earthquake data
+      function getData() {
+
+        // data downloaded from the USGS at http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/ on 4/4/16
+        // week.json represents recorded earthquakes between 03/28/2016 and 04/04/2016
+
+        var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&traffic_report_status=ACTIVE";
+
+        return esriRequest(url, {
+          responseType: "json"
+        });
+      }
+
+      /**************************************************
+       * Create graphics with returned geojson data
+       **************************************************/
+
+      function createGraphics(response) {
+        // raw GeoJSON data
+        var json = response.data;
+
+        // Create an array of Graphics from each GeoJSON feature
+        return json.features.map(function(feature, i) {
+          return {
+            geometry: new Point({
+              x: feature.properties.longitude,
+              y: feature.properties.latitude
+            }),
+            // select only the attributes you care about
+            attributes: {
+              ObjectID: i,
+              address: feature.properties.address,
+              issueReported: feature.properties.issue_reported,
+              statusDateTime: feature.properties.traffic_report_status_date_time,
+              status: feature.properties.traffic_report_status,
+              latitude: feature.properties.latitude,
+              longitutde: feature.properties.longitude
+            }
+          };
+        });
+      }
+
+      /**************************************************
+       * Create a FeatureLayer with the array of graphics
+       **************************************************/
+
+      function createLayer(graphics) {
+
+        layer = new FeatureLayer({
+          source: graphics, // autocast as an array of esri/Graphic
+          // create an instance of esri/layers/support/Field for each field object
+          fields: fields, // This is required when creating a layer from Graphics
+          objectIdField: "ObjectID", // This must be defined when creating a layer from Graphics
+          renderer: quakesRenderer/*,*/ // set the visualization on the layer
+          /*popupTemplate: pTemplate*/
+        });
+
+        map.add(layer);
+        return layer;
+      }
+
+      /******************************************************************
+       * Add layer to layerInfos in the legend
+       ******************************************************************/
+
+      /*function createLegend(layer) {*/
+        // if the legend already exists, then update it with the new layer
+        /*if (legend) {
+          legend.layerInfos = [{
+            layer: layer,
+            title: "Magnitude"
+          }];
+        } else {
+          legend = new Legend({
+            view: view,
+            layerInfos: [
+            {
+              layer: layer,
+              title: "Earthquake"
+            }]
+          }, "infoDiv");
+        }
+      }*/
+
+      // Executes if data retrieval was unsuccessful.
+      /*function errback(error) {
+        console.error("Creating legend failed. ", error);
+      }*/
+
+    });
+  </script>
+  <body>
+  <div id="viewDiv"></div>
+</body>
+</html>
