@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $.ajax({
+    url: "https://data.austintexas.gov/resource/r3af-2r8x.json",
+    type: "GET",
+    data: {
+      "$limit" : 5000,
+      "$$app_token" : "EoIlIKmVmkrwWkHNv5TsgP1CM"
+        }
+    }).done(function(data) {
+    alert("Retrieved " + data.length + " records from the dataset!");
+    console.log(data);
+});
+</script>
+</head>
+<body>
+
+<div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
+
+<button>Get External Content</button>
+
+</body>
+</html>
+
+
