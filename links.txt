@@ -6,3 +6,6 @@ https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkH
 
 #Link to API docs
 https://dev.socrata.com/foundry/data.austintexas.gov/r3af-2r8x
+
+#Link to ESRI javascript sandboxes
+https://developers.arcgis.com/javascript/latest/sample-code/index.html
