@@ -33,5 +33,7 @@ function(Map, MapView, BasemapGallery){
   view.ui.add(basemapGallery, {
     position: "top-left"
   });
+  
+  view.ui.move("zoom", "bottom-left");		//Move Zoom to bottom left
 
 });
