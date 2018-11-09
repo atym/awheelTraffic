@@ -5,15 +5,26 @@ html, body, #viewDiv {
   width: 100%;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  float: none;
 }
 
 #mainLogo {
   z-index: 1;
   position: absolute;
-  margin-top: 25px;
-  margin-left: 91%;
+  right: 0;
+  margin-top: 2em;
+  margin-right: 2em;
   opacity: 0.9;
   cursor:pointer;
+}
+
+#basemapTab {
+  position: absolute;
+  z-index: 1;
+  height: 40%;
+  opacity: 0.9;
+  margin-top: 2em;
+  margin-left: 2em;
 }
 
 .overlay {
@@ -36,8 +47,10 @@ html, body, #viewDiv {
     text-align: center;
     margin-top: 10px;
     color: white;
-
+    word-wrap: break-word;
 }
+
+
 
 #aboutNav button {
 
@@ -57,11 +70,16 @@ html, body, #viewDiv {
   letter-spacing: 1px;
 }
 
+.overlay-content h2 {
+  margin-right: 1em;
+  margin-left: 1em;
+}
+
 .overlay-content p {
-  width:700px;
-  word-wrap: break-word;
   text-align: justify;
-  margin: auto;
+  padding-right: 6em;
+  padding-left: 6em;
+
 }
 
 .overlay a {
@@ -85,9 +103,9 @@ html, body, #viewDiv {
 }
 
 @media screen and (max-height: 450px) {
-  .overlay a {font-size: 20px}
+  .overlay-content p {font-size: 20px}
   .overlay .closebtn {
     font-size: 40px;
-    top: 15px;
-    right: 35px;
+    top: 2em;
+    right: 2em;
 }

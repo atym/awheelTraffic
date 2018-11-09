@@ -19,12 +19,12 @@ function(Map, MapView, BasemapGallery){
     });
 /*creates a variable to store new BasemapGallery and defines which view to add it to*/
   var basemapGallery = new BasemapGallery({
-    view: view
-  });
+    map: map
+  }, "basemapTab");
 /*adds a new ui element to our existing view and defines its position at the top right of the page*/
-  view.ui.add(basemapGallery, {
+  /*view.ui.add(basemapGallery, {
     position: "top-left"
-  });
+  });*/
 
   view.ui.move("zoom", "bottom-left");		//Move Zoom to bottom left
 
