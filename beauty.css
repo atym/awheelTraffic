@@ -54,6 +54,7 @@ html, body, #viewDiv {
 
 .overlay-content h3 {
   padding-bottom: 10px;
+  letter-spacing: 1px;
 }
 
 .overlay-content p {
