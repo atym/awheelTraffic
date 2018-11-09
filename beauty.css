@@ -12,10 +12,22 @@ html, body, #viewDiv {
   z-index: 1;
   position: absolute;
   right: 0;
-  margin-top: 2em;
-  margin-right: 2em;
+  margin-top: 1.5em;
+  margin-right: 1.5em;
   opacity: 0.9;
   cursor:pointer;
+}
+
+#toolBox {
+  background-color: rgba(255, 0, 0, 0.5);
+  margin-top: 160px;
+  margin-left: 1em;
+  height: 55%;
+  width: 25%;
+  border: solid;
+  border-width: thick;
+  position: absolute;
+  z-index: 1;
 }
 
 #basemapTab {
@@ -43,11 +55,10 @@ html, body, #viewDiv {
 .overlay-content {
     position: relative;
     top: 7%;
-    width: 100%;
     text-align: center;
     margin-top: 10px;
     color: white;
-    word-wrap: break-word;
+    /*word-wrap: break-word;*/
 }
 
 
@@ -77,15 +88,15 @@ html, body, #viewDiv {
 
 .overlay-content p {
   text-align: justify;
-  padding-right: 6em;
-  padding-left: 6em;
+  padding-right: 1.5em;
+  padding-left: 1.5em;
 
 }
 
 .overlay a {
-    padding: 8px;
+    padding: 5px;
     text-decoration: none;
-    font-size: 36px;
+    font-size: 50px;
     color: #818181;
     display: block;
     transition: 0.3s;
@@ -99,8 +110,32 @@ html, body, #viewDiv {
     position: absolute;
     top: 20px;
     right: 45px;
-    font-size: 60px;
+    font-size: 75px;
 }
+
+/*ESRI dark theme CSS*/
+/*.dark-theme .esri-widget,
+    .dark-theme .esri-widget-button,
+    .dark-theme .esri-menu,
+    .dark-theme .esri-popup-main,
+    .dark-theme .esri-popup .esri-pointer-direction,
+    .dark-theme .esri-button {
+      background-color: #242424;
+      color: #bdbdbd;
+    }
+
+    .dark-theme .esri-widget-button:focus,
+    .dark-theme .esri-widget-button:hover,
+    .dark-theme .esri-menu li:focus,
+    .dark-theme .esri-menu li:hover {
+      background-color: #333;
+      color: #d1d1d1;
+    }
+
+    .dark-theme .esri-button:focus,
+    .dark-theme .esri-button:hover {
+      color: #d1d1d1;
+    }*/
 
 @media screen and (max-height: 450px) {
   .overlay-content p {font-size: 20px}
