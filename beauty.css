@@ -78,7 +78,20 @@ body:not(.hide-overlay) {
 #aboutNav button {
 
   margin-bottom: 50px;
+  margin-left: 0.5em;
+  background-color: #e7e7e7; /* grey */
+    border: none;
+    color: black;
+    font-weight: bold;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
 }
+
 
 .overlay-content img {
   width: 150px;
