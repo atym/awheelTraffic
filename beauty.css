@@ -6,6 +6,15 @@ html, body, #viewDiv {
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
   float: none;
+  overflow: hidden;
+}
+
+body:not(.hide-overlay) {
+  overflow: hidden;
+}
+
+#viewDiv {
+  z-index: -1;
 }
 
 #mainLogo {
@@ -20,7 +29,7 @@ html, body, #viewDiv {
 
 #toolBox {
   background-color: rgba(255, 0, 0, 0.5);
-  margin-top: 160px;
+  margin-top: 15%;
   margin-left: 1em;
   height: 55%;
   width: 25%;
@@ -43,21 +52,24 @@ html, body, #viewDiv {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 99;
     top: 0;
     left: 0;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0, 0.9);
     overflow-x: hidden;
     transition: 0.5s;
+    overflow-y: scroll; /* has to be scroll, not auto */
+    -webkit-overflow-scrolling: touch;
 }
 
 .overlay-content {
     position: relative;
     top: 7%;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 85px;
     color: white;
+    overflow: scroll;
     /*word-wrap: break-word;*/
 }
 

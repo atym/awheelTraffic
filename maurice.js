@@ -23,22 +23,11 @@ function(Map, MapView, BasemapGallery, BasemapToggle){
 
     var toggle = new BasemapToggle({
       titleVisible: true,
-
-              // 2 - Set properties
-      view: view, // view that provides access to the map's 'topo' basemap
-      nextBasemap: "hybrid", // allows for toggling to the 'hybrid' basemap
+      view: view,
+      nextBasemap: "hybrid",
       });
-      // 3 - Call startup on the widget
-      toggle.startup();
+      view.ui.add(toggle, "top-left");
 
-      // Add the BasemapToggle widget to the top right corner of the view
-      view.ui.add(toggle, "bottom-left");
-
-
-  /*var basemapToggle = new BasemapToggle({
-  view: view,  // The view that provides access to the map's "streets" basemap
-  nextBasemap: "satellite"  // Allows for toggling to the "hybrid" basemap
-});*/
 /*creates a variable to store new BasemapGallery and defines which view to add it to*/
   /*var basemapGallery = new BasemapGallery({
     showArcGISBasemaps: true,
@@ -51,5 +40,4 @@ function(Map, MapView, BasemapGallery, BasemapToggle){
   });*/
 
   view.ui.move("zoom", "top-left");		//Move Zoom to top left
-
 });
