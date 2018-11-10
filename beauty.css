@@ -112,10 +112,11 @@ body:not(.hide-overlay) {
 }
 
 .overlay-content p {
+  max-width: 50em;
+  margin: auto;
   text-align: justify;
   padding-right: 1.5em;
   padding-left: 1.5em;
-
 }
 
 .overlay a {
