@@ -1,3 +1,5 @@
+var activeMenu = false;
+
 function openOverlay() {
   document.getElementById("fullOverlay").style.width = "100%";
   document.getElementById("overlayTeam").style.display = "block";
@@ -18,15 +20,19 @@ function projectOverlay() {
   document.getElementById("overlayTeam").style.display = "none";
 }
 
-function closeTap(tablinks, evt, titleMenu) {
+function closeTap(tablinks, evt, titleMenu, activeMenu) {
   var div1 = document.getElementById("boxContent");
   var event = evt;
 
-  console.log(event)
+  console.log(event);
+  console.log(activeMenu);
 
-
-    if (event.className = "w3-third tablink w3-bottombar w3-hover-light-grey w3-padding w3-border-red") {
+    if (activeMenu == true) {
       console.log("Hello World");
+      document.getElementById("boxContent").style.display = "none";
+      activeMenu = false;
+      console.log(activeMenu);
+
     }
 
 
@@ -44,9 +50,11 @@ function closeTap(tablinks, evt, titleMenu) {
 
 }
 
-function openMenu(evt, titleMenu) {
+function openMenu(evt, titleMenu, activeMenu) {
   var i, x, tablinks;
   x = document.getElementsByClassName("title");
+  activeMenu = true;
+  closeTap(tablinks, evt, titleMenu, activeMenu);
   for (i = 0; i < x.length; i++) {
     x[i].style.display = "none";
   }
@@ -57,7 +65,8 @@ function openMenu(evt, titleMenu) {
   document.getElementById(titleMenu).style.display = "block";
   evt.currentTarget.firstElementChild.className += " w3-border-red";
   document.getElementById("boxContent").style.display = "block";
-  closeTap(tablinks, evt, titleMenu);
+
+
 }
 
 function closeMenu(evt, titleMenu) {
@@ -72,7 +81,6 @@ function closeMenu(evt, titleMenu) {
   }
   document.getElementsByClassName("tablink") - " w3-border-red";*/
   document.getElementById("boxContent").style.display = "none";
-  closeMenu2();
 }
 
 /*function closeMenu2() {

@@ -206,6 +206,12 @@ width: 100%;
     margin-top: 60px;
   }
 
+  #aboutNav button {
+    margin-top: 0.5em;
+    font-weight: normal;
+    font-size: 0.9em;
+  }
+
   .overlay .closebtn {
     font-size: 40px;
     top: 0.10em;
@@ -215,6 +221,7 @@ width: 100%;
   #mainLogo {
     z-index: 1;
     position: absolute;
+    width: 100px;
     bottom: 0;
     left: 0;
     margin-left: 0.5em;
