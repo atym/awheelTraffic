@@ -31,8 +31,6 @@ body:not(.hide-overlay) {
   background-color: white;
   margin-top: 2em;
   margin-left: 1.5em;
-  height: 62%;
-  width: 28%;
   border: solid;
   border-width: 0px;
   position: absolute;
@@ -46,19 +44,24 @@ body:not(.hide-overlay) {
   color: rgba(53, 55, 53, 1);
   padding-top: 0.5px;
   padding-bottom: 0.5px;
+  padding-right: 2em;
+  padding-left: 2em;
+  width: 28em;
 }
 
 #boxMenu {
-
+width: 100%;
 }
 
 #boxContent {
   color: grey;
+  height: 30em;
+  width: 28em;
 }
 
 .w3-display-bottom {
-  margin-top: 330px;
-  margin-left: -25px;
+  margin-top: 16.5em;
+  margin-left: -0.80em;
   position: absolute;
 
 }
@@ -187,14 +190,19 @@ body:not(.hide-overlay) {
     .dark-theme .esri-button:hover {
       color: #d1d1d1;
     }*/
-@media screen and (max-height: 450px) {
+@media screen and (max-width: 450px) {
   .overlay-content img {
     height: 75px;
     width: 75px;
   }
 
   .overlay-content p {
-    font-size: 20px
+    font-size: 16px
+  }
+
+  .overlay-content {
+    padding-right: 0.5em;
+    padding-left: 0.5em;
   }
 
   .overlay .closebtn {
@@ -202,3 +210,46 @@ body:not(.hide-overlay) {
     top: 2em;
     right: 2em;
   }
+
+  #mainLogo {
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 0.5em;
+    margin-bottom: 1.75em;
+    opacity: 0.4;
+    cursor: pointer;
+  }
+
+  #toolBox {
+    margin: 0;
+    width: 100%;
+  }
+
+  #boxHeader {
+    width: 100%;
+  }
+
+  #boxHeader h2 {
+    font-size: 1.5em;
+  }
+
+  #boxMenu{
+    font-size: 12px;
+  }
+
+  #touchMenu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 0.5em;
+    margin-top: -6px;
+    font-size: 2.5em;
+  }
+
+  #boxContent {
+    width: 100%;
+    z-index: 99;
+  }
+}

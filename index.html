@@ -33,7 +33,7 @@
 
 </head>
 
-<body class="dark-theme">
+<body onload="touchMenu()" class="dark-theme">
 
   <div id="mainLogo">
     <img src='./img/logo.png' onmouseover="this.src='./img/logoabout.png';" onmouseout="this.src='./img/logo.png';" onclick="openOverlay()" height="100" width="100">
@@ -41,7 +41,7 @@
 
   <div id="toolBox">
     <div id="boxHeader">
-      <h2>Austin Traffic Incidents</h2>
+      <h2>Austin Traffic Incidents</h2><span onclick="showMenu()" id="touchMenu"></span>
     </div>
     <div id="boxMenu">
       <div class="w3-row">
@@ -56,21 +56,21 @@
         </a>
       </div>
     </div>
-    <div id="boxContent">
+    <div id="boxContent" style="display:none">
       <div id="Search" class="w3-container title">
-        <span onclick="closeMenu()" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
+        <span onclick="closeMenu(event, 'Search')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
         <h2>Search</h2>
         <p>Query the dataset and then display heatmap.</p>
       </div>
 
       <div id="Locate" class="w3-container title" style="display:none">
-        <span onclick="closeMenu()" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
+        <span onclick="closeMenu(event, 'Locate')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
         <h2>Locate</h2>
         <p>Input address to see incidents within a buffered distance.</p>
       </div>
 
       <div id="Other" class="w3-container title" style="display:none">
-        <span onclick="closeMenu()" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
+        <span onclick="closeMenu(event, 'Other')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
         <h2>Other</h2>
         <p>Maybe we move basemaps here or use this area to explain the other two tools.</p>
       </div>
