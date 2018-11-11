@@ -13,10 +13,6 @@ body:not(.hide-overlay) {
   overflow: hidden;
 }
 
-#viewDiv {
-  z-index: -1;
-}
-
 #mainLogo {
   z-index: 1;
   position: absolute;
@@ -25,6 +21,10 @@ body:not(.hide-overlay) {
   margin-right: 1.5em;
   opacity: 0.9;
   cursor: pointer;
+}
+
+.esri-basemap-toggle {
+  z-index: 0;
 }
 
 #toolBox {
@@ -189,6 +189,7 @@ width: 100%;
       color: #d1d1d1;
     }*/
 @media screen and (max-width: 450px) {
+
   .overlay-content img {
     height: 90px;
     width: 90px;
@@ -210,6 +211,10 @@ width: 100%;
     margin-top: 0.5em;
     font-weight: normal;
     font-size: 0.9em;
+  }
+
+  #byLine {
+    font-size: 1.1em;
   }
 
   .overlay .closebtn {
@@ -260,7 +265,7 @@ width: 100%;
 
   #boxContent {
     width: 100%;
-    z-index: 99;
+    z-index: 99 !important;
     height: 28em !important;
   }
 
