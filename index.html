@@ -45,19 +45,25 @@
     </div>
     <div id="boxMenu">
       <div class="w3-row">
+        <a href="javascript:void(0)" onclick="openMenu(event, 'Legend');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Legend</div>
+        </a>
         <a href="javascript:void(0)" onclick="openMenu(event, 'Search');">
           <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Search</div>
         </a>
         <a href="javascript:void(0)" onclick="openMenu(event, 'Locate');">
           <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Locate</div>
         </a>
-        <a href="javascript:void(0)" onclick="openMenu(event, 'Other');">
-          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Other</div>
-        </a>
       </div>
     </div>
     <div id="boxContent" style="display:none">
-      <div id="Search" class="w3-container title">
+      <div id="Legend" class="w3-container title">
+        <span onclick="closeMenu(event, 'Legend')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
+        <h2>Legend</h2>
+        <p>Display dynamic legend that can be hidden (most helpful on mobile).</p>
+      </div>
+
+      <div id="Search" class="w3-container title" style="display:none">
         <span onclick="closeMenu(event, 'Search')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
         <h2>Search</h2>
         <p>Query the dataset and then display heatmap.</p>
@@ -67,12 +73,6 @@
         <span onclick="closeMenu(event, 'Locate')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
         <h2>Locate</h2>
         <p>Input address to see incidents within a buffered distance.</p>
-      </div>
-
-      <div id="Other" class="w3-container title" style="display:none">
-        <span onclick="closeMenu(event, 'Other')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
-        <h2>Other</h2>
-        <p>Maybe we move basemaps here or use this area to explain the other two tools.</p>
       </div>
     </div>
   </div>
