@@ -18,6 +18,32 @@ function projectOverlay() {
   document.getElementById("overlayTeam").style.display = "none";
 }
 
+function closeTap(tablinks, evt, titleMenu) {
+  var div1 = document.getElementById("boxContent");
+  var event = evt;
+
+  console.log(event)
+
+
+    if (event.className = "w3-third tablink w3-bottombar w3-hover-light-grey w3-padding w3-border-red") {
+      console.log("Hello World");
+    }
+
+
+
+  /*if (div1.style.display == 'block') {
+      console.log(tablinks);
+      console.log(titleMenu);
+      console.log(evt);
+  }*/
+
+  /*else {
+        document.getElementById("boxMenu").style.display = 'block';
+
+}*/
+
+}
+
 function openMenu(evt, titleMenu) {
   var i, x, tablinks;
   x = document.getElementsByClassName("title");
@@ -31,6 +57,7 @@ function openMenu(evt, titleMenu) {
   document.getElementById(titleMenu).style.display = "block";
   evt.currentTarget.firstElementChild.className += " w3-border-red";
   document.getElementById("boxContent").style.display = "block";
+  closeTap(tablinks, evt, titleMenu);
 }
 
 function closeMenu(evt, titleMenu) {
@@ -39,23 +66,37 @@ function closeMenu(evt, titleMenu) {
   for (i = 0; i < x.length; i++) {
     x[i].style.display = "none";
   }
-  tablinks = document.getElementsByClassName("tablink");
+  /*tablinks = document.getElementsByClassName("tablink");
   for (i = 0; i < x.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" w3-border-red", "");
   }
-  document.getElementsByClassName("tablink") - " w3-border-red";
+  document.getElementsByClassName("tablink") - " w3-border-red";*/
   document.getElementById("boxContent").style.display = "none";
-  document.getElementById("boxMenu").style.display = "none";
+  closeMenu2();
 }
+
+/*function closeMenu2() {
+  var menu = document.getElementById("touchMenu");
+  var menuContent = menu.innerHTML;
+  console.log(menuContent);
+  if (menuContent = "&#9776;") {
+    document.getElementById("boxMenu").style.display = "none";
+  } else {
+    document.getElementById("boxMenu").style.display = "block";
+  }
+}*/
 
 function showMenu() {
   var div1 = document.getElementById("boxMenu");
   var div2 = document.getElementById("boxContent");
-    if (div1.style.display == 'none') {
-        div1.style.display = 'block'
-    } else {
-        closeMenu()
-}}
+  if (div1.style.display == 'none') {
+    div1.style.display = 'block'
+  } else {
+    closeMenu();
+    document.getElementById("boxMenu").style.display = 'none';
+
+  }
+}
 
 function touchMenu() {
   var w = window,
@@ -65,8 +106,15 @@ function touchMenu() {
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight || e.clientHeight || g.clientHeight;
 
-  if (x <= 450) {
-    document.getElementById("touchMenu").innerHTML = "&#9776;";
+  /*var z = document.getElementsByClassName("w3-third tablink w3-bottombar w3-hover-light-grey w3-padding");*/
+
+  /*if (x <= 450) {
+
+    /*for (i = 0; i < z.length; i++) {
+      z[i].style.display = "none";
+    }*/
+  /*  console.log(z);
+    /*document.getElementById("touchMenu").innerHTML = "&#9776;";
     document.getElementById("boxMenu").style.display = "none";
-  }
+  }*/
 }

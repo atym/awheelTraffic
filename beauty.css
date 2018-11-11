@@ -60,7 +60,7 @@ width: 100%;
 }
 
 .w3-display-bottom {
-  margin-top: 16.5em;
+  margin-top: 16.4em;
   margin-left: -0.80em;
   position: absolute;
 
@@ -93,9 +93,9 @@ width: 100%;
 
 .overlay-content {
   position: relative;
-  top: 7%;
+  top: 2.5em;
   text-align: center;
-  margin-top: 120px;
+  /*margin-top: 120px;*/
   color: white;
   overflow: scroll;
   /*word-wrap: break-word;*/
@@ -114,9 +114,7 @@ width: 100%;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  -webkit-transition-duration: 0.4s;
-  /* Safari */
-  transition-duration: 0.4s;
+  cursor: pointer;
 }
 
 .overlay-content img {
@@ -210,7 +208,7 @@ width: 100%;
 
   .overlay .closebtn {
     font-size: 40px;
-    top: 0.5em;
+    top: 0.10em;
     right: 0.5em;
   }
 
@@ -240,6 +238,7 @@ width: 100%;
 
   #boxMenu{
     font-size: 12px;
+
   }
 
   #touchMenu {
@@ -255,5 +254,16 @@ width: 100%;
   #boxContent {
     width: 100%;
     z-index: 99;
+    height: 28em !important;
   }
+
+  .w3-third {
+    width: 33.3333% !important;
+  }
+
+  .w3-display-bottom {
+    margin-top: 15em;
+    margin-left: -0.80em;
+    position: absolute;
+
 }
