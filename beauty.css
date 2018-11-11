@@ -192,8 +192,10 @@ width: 100%;
     }*/
 @media screen and (max-width: 450px) {
   .overlay-content img {
-    height: 75px;
-    width: 75px;
+    height: 90px;
+    width: 90px;
+    padding: 5px;
+    margin-top: -0.75em;
   }
 
   .overlay-content p {
@@ -203,12 +205,13 @@ width: 100%;
   .overlay-content {
     padding-right: 0.5em;
     padding-left: 0.5em;
+    margin-top: 60px;
   }
 
   .overlay .closebtn {
     font-size: 40px;
-    top: 2em;
-    right: 2em;
+    top: 0.5em;
+    right: 0.5em;
   }
 
   #mainLogo {
@@ -246,6 +249,7 @@ width: 100%;
     padding-right: 0.5em;
     margin-top: -4px;
     font-size: 2.5em;
+    cursor: pointer;
   }
 
   #boxContent {

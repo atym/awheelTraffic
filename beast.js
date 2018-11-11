@@ -49,8 +49,13 @@ function closeMenu(evt, titleMenu) {
 }
 
 function showMenu() {
-  document.getElementById("boxMenu").style.display = "block";
-}
+  var div1 = document.getElementById("boxMenu");
+  var div2 = document.getElementById("boxContent");
+    if (div1.style.display == 'none') {
+        div1.style.display = 'block'
+    } else {
+        closeMenu()
+}}
 
 function touchMenu() {
   var w = window,
