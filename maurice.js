@@ -26,7 +26,7 @@ function(Map, MapView, BasemapGallery, BasemapToggle){
       view: view,
       nextBasemap: "hybrid",
       });
-      view.ui.add(toggle, "top-left");
+      view.ui.add(toggle, "bottom-right");
 
 /*creates a variable to store new BasemapGallery and defines which view to add it to*/
   /*var basemapGallery = new BasemapGallery({
@@ -39,5 +39,5 @@ function(Map, MapView, BasemapGallery, BasemapToggle){
     position: "top-left"
   });*/
 
-  view.ui.move("zoom", "top-left");		//Move Zoom to top left
+  view.ui.move("zoom", "bottom-right");		//Move Zoom to top left
 });
