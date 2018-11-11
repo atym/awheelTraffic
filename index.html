@@ -1,117 +1,189 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>Austin Traffic Incidents</title>
-    <link rel="apple-touch-icon" href="./img/touch-icon-iphone.png">
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" type="text/css" href="beauty.css">
-     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <!--Stylesheet and JS file loaded from ESRI-->
-    <link rel="stylesheet" href="https://js.arcgis.com/4.8/esri/css/main.css">
-    <link type="text/css" rel="stylesheet" href='https://ajax.googleapis.com/ajax/libs/dojo/1.12.1/dijit/themes/claro/claro.css'>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="https://js.arcgis.com/4.8/"></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/dojo/1.12.1/dojo/dojo.js'></script>
-    <script src="maurice.js"></script>
-    <script src="beast.js"></script>
-    <script>dojoConfig = {parseOnLoad: true}</script>
-  </head>
-  <body class="dark-theme">
-    <div id="mainLogo">
-      <img src='./img/logo.png' onmouseover="this.src='./img/logoabout.png';" onmouseout="this.src='./img/logo.png';" onclick="openOverlay()" height="100" width="100">
-    </div>
-    <div id="toolBox">
-    </div>
-    <div id="fullOverlay" class="overlay">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeOverlay()">&times;</a>
-      <div class="overlay-content">
-          <div id="aboutNav">
-          <button id="aboutButtons" class="buttons" onclick="teamOverlay()">About Team</button>
-          <button id="aboutButtons" class="buttons" onclick="projectOverlay()">About Project</button>
-          </div>
-        <div id="overlayTeam">
-          <div class="about">
-            <h3>Jason Bartling</h3>
-            <img src="./img/biojason.jpg"/>
-              <p>
-                My name is Jason Bartling, and I live in San Marcos, TX.  I'm a GIS major at Texas State University.
-                It's great to finally be graduating this December!  Some things I enjoy are movies, music, and books.
-                In my spare time I've been trying to polish up on my Python programming skills and my drone piloting ability.
-              </p>
-          </div>
-          <div class="about">
-            <h3>Ian Kelly</h3>
-            <img src="./img/bioian.jpg">
-            <p>
-              I am a graduating senior GIS major. This is my first time coding but I enjoyed the difficult lessons and look forward to the final capstone project. I enjoy hiking and camping having recently visited Zion NP in Utah and look forward to an upcoming trip to Big Bend. The drone pictured was used in a UAS mapping project with Dr. Jensen.
-            </p>
-          </div>
-          <div class="about">
-            <h3>Brandon Rose</h3>
-            <img src="./img/biobrandon.jpg">
-            <p>
-              Currently I am a Graduate Student working toward my Masters of Geography at Texas State University. I graduated from Texas State with a bachelors in GIS and a minor in Computer Science in 2017. My areas of interest are Remote Sensing/GIS, Geovisualisation, and Physical Geography. Like my team members I also operate sUAS’s for both mapping and as a hobby.
-            </p>
-          </div>
-          <br>
-          <br>
-          <br>
-        </div>
-        <div id="overlayProject">
-          <h1>Austin Traffic Incidents</h1>
-            <h2>A project to map and visualize traffic incidents in Austin, TX</h2>
-            <br>
-            <br>
-          <h3>Introduction</h3>
-          <p>Austin is a bustling city with a diverse culinary experience, strong musical history, and plentiful outdoor opportunities in the hot sun and cool rivers. These factors help to draw new residents from other nearby cities and states to the growing metropolis. A report filed by the Texas Association of Realtors illustrates a comprehensive analysis of population change metrics in the state of Texas. They show that the city had a net gain of 16,890 new out-of-state residents in 2015 (Texas Association of Realtors 2015). This strong demand puts additional pressure on the existing city infrastructure. Austin’s lack of a city rail network directs much of the commuting traffic onto the Texas roadways with a large volume of vehicles required to transport the growing populous.
-            <br>
-            <br>
-            Traffic analysis is important for city officials to be able to make informed decisions about infrastructure. Two common methods of traffic analysis are travel demand modeling, estimating traffic based on housing units, and average daily traffic, an interpolation method to guess traffic at unknown locations (Bakiera et al. 2016). Austin Traffic Incidents proposes a third method for analysis by studying the spatial relationship of traffic incidents.
-            <br>
-            <br>
-            With the high number of vehicles on the road, drivers will need to be more cautious as the potential for being a victim of someone else’s error increases. One way to avoid traffic incidents is to research the areas of town that historically show a large amount of similar types of traffic events and bypass those more dangerous areas. Austin Traffic Incidents aims to become a tool that could be used by drivers in Austin to plan their daily commute to avoid areas that are more prone to traffic. The City of Austin provides their traffic incident data to the public for free, but it is difficult to discern meaningful patterns without performing a spatial analysis.</p>
-            <br>
-            <br>
-          <h3>Data and Methodology</h3>
-          <p>Data for this web map will be acquired from The City of Austin’s Open Data Portal. This portal provides easy access to a wide variety of datasets provided by the City of Austin, Texas. For this project, the awheel team identified several potential datasets to implement and determined the Real-Time Traffic Incident Reports dataset will be used. This dataset aggregates traffic incident information from law enforcement agencies in Travis County, Texas that are reported via an RSS feed. The data are near-real-time, pulling new incidents from the RSS feed every 5 minutes. The data portal also provides an API (Socrata Open Data) for querying the data, therefore enabling data used in this project to be updated near-real-time. The fields relevant to this project will be the date and time the incident occurred (Published Date), latitude, longitude, whether the incident is active (Status), and the type of incident reported. Austin Traffic Incidents will create a web interface for displaying historic traffic incidents with multiple temporal scales, a query function to search by incident type, a geocoder to search by an address, and a heat map showing the areas of greatest concentration of incidents. A web application is ideal as it allows easy deployment to the public and easy updating of the data that drives the model. The functionalities of our project will be accomplished using the ArcGIS JavaScript API with traffic incident data parsed from a JavaScript object notation (JSON) data file.  This is an open-standard data file format composed of attribute-value pairs that is language-independent.  See Figure 1 for an approximation of user interface design.</p>
-            <br>
-            <br>
-          <h3>Conclusion</h3>
-          <p>The final deliverable for this project will be an interactive map of recent traffic incidents, their severity, and proximate roads around Austin. When the application first loads only active incidents will be shown, but the user will also be able to show more historical data over months or years and filter by traffic incident type. With this project, our team hopes to educate travelers in the Austin area to the most dangerous roads in Austin that may be previously unknown to the public. If we have time, we’d also like to implement route navigation from one address to another that gives an indication of how dangerous the route is overall. This is a more complex feature involving network analysis and requires more research, so it may have to be an additional improvement that is not completed with the core project. Because of the dynamic nature of the web map, it can be used to not only address the needs of today, but also the needs of the future. The City of Austin could use this visual representation of traffic incident data to explain spatial trends to stakeholders involved in the planning and implementation of infrastructure.</p>
-            <br>
-            <br>
-          <h3>References</h3>
-          <p>Bakiera, A., R. Weaver, C. Hiner, and Y. Lu. 2016. Spatial analysis of traffic congestion and transit accessibility in Austin, Texas. https://digital.library.txstate.edu/bitstream/handle/10877/6323/BAKIERA-THESIS-2016.pdf?sequence=1 (last accessed 29 October 2018).
-            <br>
-            <br>
 
-            Texas Relocation Report. 2017. Texas Association of Realtors. https://www.texasrealestate.com/wp-content/uploads/2017TexasRelocationReport.pdf (last accessed 29 October 2018).
-            <br>
-            <br>
-            Transportation and Mobility. https://data.austintexas.gov/Transportation-and-Mobility/Real-Time-Traffic-Incident-Reports/dx9v-zd7x (last accessed 1 November 2018).</p>
-            <br>
-            <br>
-          <h3>Appendix</h3>
-          <p>Jason Bartling: Data and Methodology, and Conclusion
-            <br>
-            <br>
-              Ian Kelly: Introduction, References, and Proposal Design
-            <br>
-            <br>
-              Brandon Rose: Data and Methodology, and Web Application Prototype UI
-          </p>
-            <br>
-            <br>
-            <br>
-        </div>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <title>Austin Traffic Incidents</title>
+
+  <link rel="apple-touch-icon" href="./img/touch-icon-iphone.png">
+  <link rel="manifest" href="manifest.json">
+
+  <link rel="stylesheet" type="text/css" href="beauty.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <!--Stylesheet and JS file loaded from ESRI-->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.8/esri/css/main.css">
+  <link type="text/css" rel="stylesheet" href='https://ajax.googleapis.com/ajax/libs/dojo/1.12.1/dijit/themes/claro/claro.css'>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+  <script src="https://js.arcgis.com/4.8/"></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/dojo/1.12.1/dojo/dojo.js'></script>
+  <script src="maurice.js"></script>
+  <script src="beast.js"></script>
+  <script>
+    dojoConfig = {
+      parseOnLoad: true
+    }
+  </script>
+
+</head>
+
+<body class="dark-theme">
+
+  <div id="mainLogo">
+    <img src='./img/logo.png' onmouseover="this.src='./img/logoabout.png';" onmouseout="this.src='./img/logo.png';" onclick="openOverlay()" height="100" width="100">
+  </div>
+
+  <div id="toolBox">
+    <div id="boxHeader">
+      <h2>Austin Traffic Incidents</h2>
+    </div>
+    <div id="boxMenu">
+      <div class="w3-row">
+        <a href="javascript:void(0)" onclick="openMenu(event, 'Search');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Search</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openMenu(event, 'Locate');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Locate</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openMenu(event, 'Other');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Other</div>
+        </a>
       </div>
     </div>
-    <!--establishes the emtpy div into which the map will be loaded-->
-    <div id="viewDiv"></div>
+    <div id="boxContent">
+      <div id="Search" class="w3-container title">
+        <span onclick="closeMenu()" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
+        <h2>Search</h2>
+        <p>Query the dataset and then display heatmap.</p>
+      </div>
 
-  </body>
+      <div id="Locate" class="w3-container title" style="display:none">
+        <span onclick="closeMenu()" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
+        <h2>Locate</h2>
+        <p>Input address to see incidents within a buffered distance.</p>
+      </div>
+
+      <div id="Other" class="w3-container title" style="display:none">
+        <span onclick="closeMenu()" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
+        <h2>Other</h2>
+        <p>Maybe we move basemaps here or use this area to explain the other two tools.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="fullOverlay" class="overlay">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeOverlay()">&times;</a>
+    <div class="overlay-content">
+      <div id="aboutNav">
+        <button id="aboutButtons" class="buttons" onclick="teamOverlay()">About Team</button>
+        <button id="aboutButtons" class="buttons" onclick="projectOverlay()">About Project</button>
+      </div>
+      <div id="overlayTeam">
+        <div class="about">
+          <h3>Jason Bartling</h3>
+          <img src="./img/biojason.jpg" />
+          <p>
+            My name is Jason Bartling, and I live in San Marcos, TX. I'm a GIS major at Texas State University.
+            It's great to finally be graduating this December! Some things I enjoy are movies, music, and books.
+            In my spare time I've been trying to polish up on my Python programming skills and my drone piloting ability.
+          </p>
+        </div>
+        <div class="about">
+          <h3>Ian Kelly</h3>
+          <img src="./img/bioian.jpg">
+          <p>
+            I am a graduating senior GIS major. This is my first time coding but I enjoyed the difficult lessons and look forward to the final capstone project. I enjoy hiking and camping having recently visited Zion NP in Utah and look forward to
+            an upcoming trip to Big Bend. The drone pictured was used in a UAS mapping project with Dr. Jensen.
+          </p>
+        </div>
+        <div class="about">
+          <h3>Brandon Rose</h3>
+          <img src="./img/biobrandon.jpg">
+          <p>
+            Currently I am a Graduate Student working toward my Masters of Geography at Texas State University. I graduated from Texas State with a bachelors in GIS and a minor in Computer Science in 2017. My areas of interest are Remote
+            Sensing/GIS, Geovisualisation, and Physical Geography. Like my team members I also operate sUAS’s for both mapping and as a hobby.
+          </p>
+        </div>
+        <br>
+        <br>
+        <br>
+      </div>
+      <div id="overlayProject">
+        <h1>Austin Traffic Incidents</h1>
+        <h2>A project to map and visualize traffic incidents in Austin, TX</h2>
+        <br>
+        <br>
+        <h3>Introduction</h3>
+        <p>Austin is a bustling city with a diverse culinary experience, strong musical history, and plentiful outdoor opportunities in the hot sun and cool rivers. These factors help to draw new residents from other nearby cities and states to the
+          growing metropolis. A report filed by the Texas Association of Realtors illustrates a comprehensive analysis of population change metrics in the state of Texas. They show that the city had a net gain of 16,890 new out-of-state residents in
+          2015 (Texas Association of Realtors 2015). This strong demand puts additional pressure on the existing city infrastructure. Austin’s lack of a city rail network directs much of the commuting traffic onto the Texas roadways with a large
+          volume of vehicles required to transport the growing populous.
+          <br>
+          <br>
+          Traffic analysis is important for city officials to be able to make informed decisions about infrastructure. Two common methods of traffic analysis are travel demand modeling, estimating traffic based on housing units, and average daily
+          traffic, an interpolation method to guess traffic at unknown locations (Bakiera et al. 2016). Austin Traffic Incidents proposes a third method for analysis by studying the spatial relationship of traffic incidents.
+          <br>
+          <br>
+          With the high number of vehicles on the road, drivers will need to be more cautious as the potential for being a victim of someone else’s error increases. One way to avoid traffic incidents is to research the areas of town that
+          historically show a large amount of similar types of traffic events and bypass those more dangerous areas. Austin Traffic Incidents aims to become a tool that could be used by drivers in Austin to plan their daily commute to avoid areas
+          that are more prone to traffic. The City of Austin provides their traffic incident data to the public for free, but it is difficult to discern meaningful patterns without performing a spatial analysis.</p>
+        <br>
+        <br>
+        <h3>Data and Methodology</h3>
+        <p>Data for this web map will be acquired from The City of Austin’s Open Data Portal. This portal provides easy access to a wide variety of datasets provided by the City of Austin, Texas. For this project, the awheel team identified several
+          potential datasets to implement and determined the Real-Time Traffic Incident Reports dataset will be used. This dataset aggregates traffic incident information from law enforcement agencies in Travis County, Texas that are reported via an
+          RSS feed. The data are near-real-time, pulling new incidents from the RSS feed every 5 minutes. The data portal also provides an API (Socrata Open Data) for querying the data, therefore enabling data used in this project to be updated
+          near-real-time. The fields relevant to this project will be the date and time the incident occurred (Published Date), latitude, longitude, whether the incident is active (Status), and the type of incident reported. Austin Traffic Incidents
+          will create a web interface for displaying historic traffic incidents with multiple temporal scales, a query function to search by incident type, a geocoder to search by an address, and a heat map showing the areas of greatest
+          concentration of incidents. A web application is ideal as it allows easy deployment to the public and easy updating of the data that drives the model. The functionalities of our project will be accomplished using the ArcGIS JavaScript API
+          with traffic incident data parsed from a JavaScript object notation (JSON) data file. This is an open-standard data file format composed of attribute-value pairs that is language-independent. See Figure 1 for an approximation of user
+          interface design.</p>
+        <br>
+        <br>
+        <h3>Conclusion</h3>
+        <p>The final deliverable for this project will be an interactive map of recent traffic incidents, their severity, and proximate roads around Austin. When the application first loads only active incidents will be shown, but the user will also
+          be able to show more historical data over months or years and filter by traffic incident type. With this project, our team hopes to educate travelers in the Austin area to the most dangerous roads in Austin that may be previously unknown
+          to the public. If we have time, we’d also like to implement route navigation from one address to another that gives an indication of how dangerous the route is overall. This is a more complex feature involving network analysis and requires
+          more research, so it may have to be an additional improvement that is not completed with the core project. Because of the dynamic nature of the web map, it can be used to not only address the needs of today, but also the needs of the
+          future. The City of Austin could use this visual representation of traffic incident data to explain spatial trends to stakeholders involved in the planning and implementation of infrastructure.</p>
+        <br>
+        <br>
+        <h3>References</h3>
+        <p>Bakiera, A., R. Weaver, C. Hiner, and Y. Lu. 2016. Spatial analysis of traffic congestion and transit accessibility in Austin, Texas. https://digital.library.txstate.edu/bitstream/handle/10877/6323/BAKIERA-THESIS-2016.pdf?sequence=1 (last
+          accessed 29 October 2018).
+          <br>
+          <br>
+
+          Texas Relocation Report. 2017. Texas Association of Realtors. https://www.texasrealestate.com/wp-content/uploads/2017TexasRelocationReport.pdf (last accessed 29 October 2018).
+          <br>
+          <br>
+          Transportation and Mobility. https://data.austintexas.gov/Transportation-and-Mobility/Real-Time-Traffic-Incident-Reports/dx9v-zd7x (last accessed 1 November 2018).</p>
+        <br>
+        <br>
+        <h3>Appendix</h3>
+        <p>Jason Bartling: Data and Methodology, and Conclusion
+          <br>
+          <br>
+          Ian Kelly: Introduction, References, and Proposal Design
+          <br>
+          <br>
+          Brandon Rose: Data and Methodology, and Web Application Prototype UI
+        </p>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+  <!--establishes the emtpy div into which the map will be loaded-->
+  <div id="viewDiv"></div>
+
+</body>
+
 </html>
