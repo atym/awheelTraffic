@@ -33,20 +33,20 @@ require([
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend;
 
     /**************************************************
-     * Create feature for city limits boundary
-     **************************************************/
-
-	limits = new FeatureLayer({
-		url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer",
-		visible: false
-	});
-
-    /**************************************************
      * Create tile for road network
      **************************************************/
 
 	roads = new TileLayer({
 		url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer",
+		visible: false
+	});    
+	
+	/**************************************************
+     * Create feature for city limits boundary
+     **************************************************/
+
+	limits = new FeatureLayer({
+		url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer",
 		visible: false
 	});
 
@@ -131,7 +131,7 @@ require([
 
     map = new Map({
       basemap: "hybrid",
-      layers: [roads, limits]
+      layers: [limits, roads]
     });
 
     /**************************************************
