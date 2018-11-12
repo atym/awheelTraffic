@@ -32,7 +32,7 @@ body:not(.hide-overlay) {
   margin-right: 1.5em;
   opacity: 0.9;
   cursor: pointer;
-  z-index: 99;
+  z-index: 1;
 }
 
 .esri-basemap-toggle {
