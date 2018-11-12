@@ -32,6 +32,7 @@ body:not(.hide-overlay) {
   margin-right: 1.5em;
   opacity: 0.9;
   cursor: pointer;
+  z-index: 99;
 }
 
 .esri-basemap-toggle {
@@ -48,6 +49,7 @@ body:not(.hide-overlay) {
   z-index: 1;
   text-align: center;
   box-shadow: 4px 5px 5px black;
+  z-index: 99;
 }
 
 #boxHeader {
@@ -206,7 +208,9 @@ width: 100%;
     .dark-theme .esri-button:hover {
       color: #d1d1d1;
     }*/
-@media screen and (max-width: 450px) {
+
+
+@media only screen and (max-width: 450px) {
 
   .overlay-content img {
     height: 90px;
@@ -251,6 +255,7 @@ width: 100%;
     opacity: 0.9;
     cursor: pointer;
     width: 75px;
+    z-index: 1;
   }
 
   #mainLogo img {
@@ -300,5 +305,10 @@ width: 100%;
     margin-top: 15em;
     margin-left: -0.80em;
     position: absolute;
+  }
+}
 
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width : 451px) {
+/* Styles */
 }
