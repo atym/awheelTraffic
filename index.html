@@ -2,51 +2,82 @@
 
 <html>
 
+<script>
+/**************************************************
+ * WELCOME to the Index
+ **************************************************/
+/**************************************************
+ * AUSTIN TRAFFIC INCIDENTS
+ * by
+ * Jason Bartling
+ * Ian Kelly
+ * Brandon Rose
+ **************************************************/
+</script>
 <head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <script>
+  /**************************************************
+   * Apply mobile optimization metadata
+   **************************************************/
+  </script>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <title>Austin Traffic Incidents</title>
-
   <link rel="apple-touch-icon" href="./img/touch-icon-iphone.png">
   <link rel="manifest" href="manifest.json">
 
+  <title>Austin Traffic Incidents</title>
+
+  <script>
+  /**************************************************
+   * Load Stylesheets
+   * Beauty, W3, ESRI, Google Fonts
+   **************************************************/
+  </script>
   <link rel="stylesheet" type="text/css" href="beauty.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <!--Stylesheet and JS file loaded from ESRI-->
   <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
-  <!-- <link type="text/css" rel="stylesheet" href='https://ajax.googleapis.com/ajax/libs/dojo/1.12.1/dijit/themes/claro/claro.css'> -->
-  <!-- <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
+  <script>
+  /**************************************************
+   * Load JavaScript
+   * Maurice, Beast, and ESRI
+   **************************************************/
+  </script>
   <script src="https://js.arcgis.com/4.9/"></script>
-  <!-- <script src='https://ajax.googleapis.com/ajax/libs/dojo/1.12.1/dojo/dojo.js'></script> -->
   <script src="maurice.js"></script>
   <script src="beast.js"></script>
-  <!-- <script>
-    dojoConfig = {
-      parseOnLoad: true
-    }
-  </script> -->
 
 </head>
 
-<body class="dark-theme">
+<body>
 
+  <script>
+  /**************************************************
+   * Load JavaScript
+   * Maurice, Beast, and ESRI
+   **************************************************/
+  </script>
   <div id="mainLogo">
     <img src='./img/logo.png' onmouseover="this.src='./img/logoabout.png';" onmouseout="this.src='./img/logo.png';" onclick="openOverlay()" height="100" width="100">
   </div>
 
   <div id="toolBox">
 
-
     <div id="boxHeader">
       <h2>Austin Traffic Incidents</h2>
     </div>
 
-
+    <script>
+    /**************************************************
+     * Create tabbed menu, assign functions to click
+     **************************************************/
+    </script>
     <div id="boxMenu">
       <div class="w3-row">
         <a href="javascript:void(0)" onclick="openMenu(event, 'Legend');">
@@ -61,7 +92,11 @@
       </div>
     </div>
 
-
+    <script>
+    /**************************************************
+     * Create boxContent, assign functions to close on click
+     **************************************************/
+    </script>
     <div id="boxContent" style="display:none">
 
       <div id="Legend" class="w3-container title">
@@ -86,17 +121,33 @@
     </div>
   </div>
 
-
+  <script>
+  /**************************************************
+   * Create overlay, assign function to logo icon
+   **************************************************/
+  </script>
   <div id="fullOverlay" class="overlay">
     <a href="javascript:void(0)" class="closebtn" onclick="closeOverlay()">&times;</a>
 
     <div class="overlay-content">
 
+      <script>
+      /**************************************************
+       * Create overlay navigation, assign functions to click
+       * Switch between team info and project info
+       **************************************************/
+      </script>
       <div id="aboutNav">
         <button id="aboutButtons" class="buttons" onclick="teamOverlay()">About Team</button>
         <button id="aboutButtons" class="buttons" onclick="projectOverlay()">About Project</button>
       </div>
 
+      <script>
+      /**************************************************
+       * Information about team members
+       * Name, picture, about
+       **************************************************/
+      </script>
       <div id="overlayTeam">
         <div class="about">
           <h3>Jason Bartling</h3>
@@ -128,6 +179,11 @@
         <br>
       </div>
 
+      <script>
+      /**************************************************
+       * Information about project
+       **************************************************/
+      </script>
       <div id="overlayProject">
         <h2>Austin Traffic Incidents</h2>
         <br>
@@ -196,8 +252,12 @@
       </div>
     </div>
   </div>
-  
-  <!--establishes the emtpy div into which the map will be loaded-->
+
+  <script>
+  /**************************************************
+   * Create view for map to load into
+   **************************************************/
+  </script>
   <div id="viewDiv"></div>
 
 </body>
