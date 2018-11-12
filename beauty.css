@@ -367,10 +367,13 @@ and (max-width : 825px) {
 
   #boxHeader {
     width: 100%;
+    padding-top: 0.3em;
   }
 
   #boxHeader h2 {
     font-size: 1.5em;
+    height: 1.1em;
+    margin-top: -1px;
   }
 
   #boxMenu{
@@ -379,6 +382,8 @@ and (max-width : 825px) {
 
   .w3-third {
     width: 33.3333% !important;
+    height: 3em !important;
+    margin-top: -0.3em;
   }
 
   .w3-display-bottom {
@@ -394,6 +399,7 @@ and (max-width : 825px) {
   }
 
   #esriLegend {
+    margin-top: -3em;
     width: 12em;
 
   }
