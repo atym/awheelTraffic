@@ -250,6 +250,7 @@ width: 100%;
     margin-bottom: 1.75em;
     opacity: 0.9;
     cursor: pointer;
+    width: 75px;
   }
 
   #mainLogo img {
