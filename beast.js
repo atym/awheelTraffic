@@ -20,6 +20,14 @@ function projectOverlay() {
   document.getElementById("overlayTeam").style.display = "none";
 }
 
+function validate() {
+    if (document.getElementById('setBoundary').checked) {
+        alert("checked");
+    } else {
+        alert("You didn't check it! Let me check it for you.");
+    }
+}
+
 function closeTap(tablinks, evt, titleMenu, activeMenu) {
   var div1 = document.getElementById("boxContent");
   var event = evt;

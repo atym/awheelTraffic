@@ -11,8 +11,9 @@ require([
   /*below are required to run*/
   function(Map, MapView, BasemapGallery, BasemapToggle, FeatureLayer) {
 
-    const limits = new FeatureLayer({
-      url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer" // url to the city boundary ArcGIS service*/
+    var limits = new FeatureLayer({
+      url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer" /*url to the city boundary ArcGIS service*/
+
     });
 
     /*creates a new map variable and defines the basemap style and additional layers*/
@@ -52,6 +53,5 @@ require([
     });*/
 
     view.ui.move("zoom", "bottom-right"); //Move Zoom to top left
-
 
   });
