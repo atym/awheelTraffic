@@ -55,7 +55,7 @@ require([
      * Define the popup for info about incidents
      **************************************************/
     var pTemplate = {
-      title: "{issueReported}",
+      title: "<strong>{issueReported}</strong>",
       content: "Location: {address}<br> Time: {statusDateTime}"
     };
     /**************************************************
