@@ -16,7 +16,7 @@ require([
     "esri/layers/FeatureLayer",
     "esri/layers/TileLayer",
     "esri/geometry/Point",
-	  "esri/widgets/Legend",
+	"esri/widgets/Legend",
     "esri/request"
   ],
 
