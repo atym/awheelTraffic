@@ -16,6 +16,7 @@ require([
     "esri/layers/FeatureLayer",
     "esri/layers/TileLayer",
     "esri/geometry/Point",
+	"esri/widgets/Legend",
     "esri/request"
   ],
 
@@ -23,19 +24,19 @@ require([
    * Create magic mapping function
    **************************************************/
 
-  function(Map, MapView, BasemapToggle, FeatureLayer, TileLayer, Point, esriRequest) {
+  function(Map, MapView, BasemapToggle, FeatureLayer, TileLayer, Point, Legend, esriRequest) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, json;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend;
 
     /**************************************************
      * Create feature for city limits boundary
      **************************************************/
 
-    var limits = new FeatureLayer({
+    limits = new FeatureLayer({
       url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer"
     });
 
@@ -43,7 +44,7 @@ require([
      * Create tile for road network
      **************************************************/
 
-    var roads = new TileLayer({
+    roads = new TileLayer({
       url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer"
     });
 
@@ -52,7 +53,7 @@ require([
      * in the layer
      **************************************************/
 
-    var fields = [{
+    fields = [{
       name: "ObjectID",
       alias: "ObjectID",
       type: "oid"
@@ -86,7 +87,7 @@ require([
      * Define the popup for info about incidents
      **************************************************/
 
-    var pTemplate = {
+    pTemplate = {
       title: "<strong>{issueReported}</strong>",
       content: "Location: {address}<br> Time: {statusDateTime}"
     };
@@ -95,21 +96,38 @@ require([
      * Define the renderer for symbolizing incidents
      **************************************************/
 
-    var trafficRenderer = {
-      type: "simple", // autocasts as new SimpleRenderer()
-      symbol: {
-        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-        size: 10,
-        color: "#FF4000"
-      }
-    };
+	trafficRenderer = {
+		type: "unique-value",
+		field: "status", // autocasts as new SimpleRenderer()
+		defaultSymbol: {
+			type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+			size: 10,
+			color: "#FF4000"
+		},
+		uniqueValueInfos: [{
+			value: "ACTIVE",
+			symbol: {
+				type: "simple-marker",
+				size: 10,
+				color: "red"
+			}
+		}, {
+			value: "ARCHIVED",
+			symbol: {
+				type: "simple-marker",
+				size: 10,
+				color: "yellow"
+			}
+		}]
+	};
+
 
     /**************************************************
      * Create map and define basemap
      * Select layers to display on basemap
      **************************************************/
 
-    var map = new Map({
+    map = new Map({
       basemap: "hybrid",
       layers: [roads]
     });
@@ -118,7 +136,7 @@ require([
      * Assign map to it's HTML container, load extent
      **************************************************/
 
-    var view = new MapView({
+    view = new MapView({
       container: "viewDiv",
       map: map,
       zoom: 12,
@@ -154,7 +172,10 @@ require([
 
       getData()
         .then(createGraphics)
-        .then(createLayer);
+        .then(createLayer)
+		.then(createLegend);
+		
+		
     });
 
     /**************************************************
@@ -163,7 +184,7 @@ require([
 
     function getData() {
 
-      var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM";
+      var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$where=traffic_report_status_date_time>'2018-11-08'&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=3000";
       return esriRequest(url, {
         responseType: "json"
       });
@@ -177,7 +198,7 @@ require([
       // raw JSON data
       var json = response.data;
       // Create an array of Graphics from each JSON feature
-      return retFeatures = json.map(function(feature, i) {
+      return json.map(function(feature, i) {
         return {
           type: "point",
           geometry: new Point({
@@ -215,7 +236,24 @@ require([
       return trafficFLayer;
     }
 
-    /**************************************************
+	function createLegend(layer) {
+		// if the legend already exists, then update it with the new layer
+		if (legend) {
+			legend.layerInfos = [{
+				layer: layer,
+				title: "Status"
+			}];
+		} else {
+			legend = new Legend({
+				view: view,
+				layerInfos: [{
+					layer: layer,
+					title: "Status"
+				}]
+			}, "esriLegend");
+		}
+	}	
+	/**************************************************
      * MODIFY map widgets
      **************************************************/
 
