@@ -31,7 +31,10 @@ require([
      **************************************************/
 
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle;
-	var trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json?$where=traffic_report_status_date_time>'2018-11-11'&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=3000";
+	var trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
+							"?$where=traffic_report_status_date_time>'2018-11-11'" + 
+							"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" + 
+							"&$limit=3000";
 
     /**************************************************
      * Create tile for road network
