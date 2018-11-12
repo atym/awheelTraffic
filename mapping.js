@@ -36,17 +36,19 @@ require([
      * Create feature for city limits boundary
      **************************************************/
 
-    limits = new FeatureLayer({
-      url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer"
-    });
+	limits = new FeatureLayer({
+		url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer",
+		visible: false
+	});
 
     /**************************************************
      * Create tile for road network
      **************************************************/
 
-    roads = new TileLayer({
-      url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer"
-    });
+	roads = new TileLayer({
+		url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer",
+		visible: false
+	});
 
     /**************************************************
      * Define the specification for each field to create
@@ -129,7 +131,7 @@ require([
 
     map = new Map({
       basemap: "hybrid",
-      layers: [roads]
+      layers: [roads, limits]
     });
 
     /**************************************************
@@ -253,6 +255,24 @@ require([
 			}, "esriLegend");
 		}
 	}
+	
+	
+	var roadLayerToggle = document.getElementById("roadLayer");
+	var cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
+	/*****************************************************************
+	 * The visible property on the layer can be used to toggle the
+	 * layer's visibility in the view. When the visibility is turned off
+	 * the layer is still part of the map, which means you can access
+	 * its properties and perform analysis even though it isn't visible.
+	 *******************************************************************/
+	roadLayerToggle.addEventListener("change", function () {
+		roads.visible = roadLayerToggle.checked;
+	});
+	cityLimitsLayerToggle.addEventListener("change", function () {
+		limits.visible = cityLimitsLayerToggle.checked;
+	});
+	
+	
 	/**************************************************
      * MODIFY map widgets
      **************************************************/
