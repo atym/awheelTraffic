@@ -16,7 +16,7 @@ require([
     "esri/layers/FeatureLayer",
     "esri/layers/TileLayer",
     "esri/geometry/Point",
-	"esri/widgets/Legend",
+	  "esri/widgets/Legend",
     "esri/request"
   ],
 
@@ -174,8 +174,8 @@ require([
         .then(createGraphics)
         .then(createLayer)
 		.then(createLegend);
-		
-		
+
+
     });
 
     /**************************************************
@@ -252,7 +252,7 @@ require([
 				}]
 			}, "esriLegend");
 		}
-	}	
+	}
 	/**************************************************
      * MODIFY map widgets
      **************************************************/
