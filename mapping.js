@@ -16,7 +16,7 @@ require([
     "esri/layers/FeatureLayer",
     "esri/layers/TileLayer",
     "esri/geometry/Point",
-	  "esri/widgets/Legend",
+	"esri/widgets/Legend",
     "esri/request"
   ],
 
@@ -30,23 +30,29 @@ require([
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend;
-
-    /**************************************************
-     * Create feature for city limits boundary
-     **************************************************/
-
-    limits = new FeatureLayer({
-      url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer"
-    });
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle;
+	var trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
+							"?$where=traffic_report_status_date_time>'2018-11-11'" + 
+							"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" + 
+							"&$limit=3000";
 
     /**************************************************
      * Create tile for road network
      **************************************************/
 
-    roads = new TileLayer({
-      url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer"
-    });
+	roads = new TileLayer({
+		url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer",
+		visible: false
+	});    
+	
+	/**************************************************
+     * Create feature for city limits boundary
+     **************************************************/
+
+	limits = new FeatureLayer({
+		url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer",
+		visible: false
+	});
 
     /**************************************************
      * Define the specification for each field to create
@@ -101,21 +107,21 @@ require([
 		field: "status", // autocasts as new SimpleRenderer()
 		defaultSymbol: {
 			type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-			size: 10,
+			size: 8,
 			color: "#FF4000"
 		},
 		uniqueValueInfos: [{
 			value: "ACTIVE",
 			symbol: {
 				type: "simple-marker",
-				size: 10,
+				size: 8,
 				color: "red"
 			}
 		}, {
 			value: "ARCHIVED",
 			symbol: {
 				type: "simple-marker",
-				size: 10,
+				size: 8,
 				color: "yellow"
 			}
 		}]
@@ -129,7 +135,7 @@ require([
 
     map = new Map({
       basemap: "hybrid",
-      layers: [roads]
+      layers: [limits, roads]
     });
 
     /**************************************************
@@ -183,9 +189,8 @@ require([
      **************************************************/
 
     function getData() {
-
-      var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$where=traffic_report_status_date_time>'2018-11-08'&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=3000";
-      return esriRequest(url, {
+      
+      return esriRequest(trafficRequestURL, {
         responseType: "json"
       });
     };
@@ -253,6 +258,25 @@ require([
 			}, "esriLegend");
 		}
 	}
+	
+	
+	 roadLayerToggle = document.getElementById("roadLayer");
+	 cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
+	
+	/*****************************************************************
+	 * The visible property on the layer can be used to toggle the
+	 * layer's visibility in the view. When the visibility is turned off
+	 * the layer is still part of the map, which means you can access
+	 * its properties and perform analysis even though it isn't visible.
+	 *******************************************************************/
+	roadLayerToggle.addEventListener("change", function () {
+		roads.visible = roadLayerToggle.checked;
+	});
+	cityLimitsLayerToggle.addEventListener("change", function () {
+		limits.visible = cityLimitsLayerToggle.checked;
+	});
+	
+	
 	/**************************************************
      * MODIFY map widgets
      **************************************************/

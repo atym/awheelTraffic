@@ -102,11 +102,13 @@
 
       <div id="Legend" class="w3-container title">
         <span onclick="closeMenu(event, 'Legend')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
-        <h2>Legend</h2>
-        <p>Display dynamic legend that can be hidden (most helpful on mobile).</p>
+      <h2>Legend</h2>
+      <p>Display dynamic legend that can be hidden (most helpful on mobile).</p>
+        <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
+		  <br>
+        <label><input type="checkbox" id="roadLayer"> Road Network</label>
+		  <br>
 		  <div id="esriLegend"></div>
-        <label><input onclick="validate()" id="setBoundary" type="checkbox" name="checkbox" value="value">City Limits</label>
-        <label><input type="checkbox" name="checkbox2" value="value">Road Network</label>
       </div>
 
       <div id="Search" class="w3-container title" style="display:none">

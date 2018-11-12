@@ -32,7 +32,7 @@ body:not(.hide-overlay) {
   margin-right: 1.5em;
   opacity: 0.9;
   cursor: pointer;
-  z-index: 99;
+  z-index: 1;
 }
 
 .esri-basemap-toggle {
@@ -207,13 +207,12 @@ width: 100%;
       color: #d1d1d1;
     }*/
 
-
+/* Smartphones (portrait) ----------- */
 @media only screen and (max-width: 450px) {
 
   .overlay-content img {
     height: 90px;
     width: 90px;
-    padding: 5px;
     margin-top: -0.75em;
   }
 
@@ -279,7 +278,7 @@ width: 100%;
 
   }
 
-  #touchMenu {
+  /*#touchMenu {
     position: absolute;
     top: 0;
     right: 0;
@@ -287,7 +286,7 @@ width: 100%;
     margin-top: -4px;
     font-size: 2.5em;
     cursor: pointer;
-  }
+  }*/
 
   #boxContent {
     width: 100%;
@@ -307,6 +306,107 @@ width: 100%;
 }
 
 /* Smartphones (landscape) ----------- */
-@media only screen and (min-width : 451px) {
-/* Styles */
+@media only screen
+and (min-width : 451px)
+and (max-width : 825px) {
+
+  .overlay-content img {
+    height: 90px;
+    width: 90px;
+    margin-top: -0.75em;
+  }
+
+  .overlay-content p {
+    font-size: 16px
+  }
+
+  .overlay-content {
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+    margin-top: 60px;
+  }
+
+  #aboutNav button {
+    margin-top: 0.5em;
+    font-weight: normal;
+    font-size: 0.9em;
+  }
+
+  #byLine {
+    font-size: 1.1em;
+  }
+
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 0.10em;
+    right: 0.5em;
+  }
+
+  #mainLogo {
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 0.5em;
+    margin-bottom: 1.75em;
+    opacity: 0.9;
+    cursor: pointer;
+    width: 75px;
+    z-index: 1;
+  }
+
+  #mainLogo img {
+    width: 75px;
+    height: 75px;
+  }
+
+  #toolBox {
+    margin: 0;
+    width: 100%;
+  }
+
+  #boxHeader {
+    width: 100%;
+    padding-top: 0.3em;
+  }
+
+  #boxHeader h2 {
+    font-size: 1.5em;
+    height: 1.1em;
+    margin-top: -1px;
+  }
+
+  #boxMenu{
+    font-size: 12px;
+  }
+
+  .w3-third {
+    width: 33.3333% !important;
+    height: 3em !important;
+    margin-top: -0.3em;
+  }
+
+  .w3-display-bottom {
+    margin-top: 15em;
+    margin-left: -0.80em;
+    position: absolute;
+  }
+
+  #boxContent {
+    width: 100%;
+    z-index: 99 !important;
+    height: 20em !important;
+  }
+
+  #esriLegend {
+    margin-top: -3em;
+    width: 12em;
+
+  }
+
+  .w3-button {
+    margin-top: 0;
+    bottom: 0;
+    margin-bottom: 1em;
+  }
 }
