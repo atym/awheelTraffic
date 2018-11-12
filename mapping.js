@@ -30,7 +30,7 @@ require([
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle;
 
     /**************************************************
      * Create tile for road network
@@ -186,7 +186,7 @@ require([
 
     function getData() {
 
-      var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$where=traffic_report_status_date_time>'2018-11-08'&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=3000";
+      var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$where=traffic_report_status_date_time>'2018-11-10'&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=3000";
       return esriRequest(url, {
         responseType: "json"
       });
@@ -257,8 +257,9 @@ require([
 	}
 	
 	
-	var roadLayerToggle = document.getElementById("roadLayer");
-	var cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
+	 roadLayerToggle = document.getElementById("roadLayer");
+	 cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
+	
 	/*****************************************************************
 	 * The visible property on the layer can be used to toggle the
 	 * layer's visibility in the view. When the visibility is turned off
