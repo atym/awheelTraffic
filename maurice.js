@@ -163,7 +163,7 @@ require([
 
     function getData() {
 
-      var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&traffic_report_status=ACTIVE";
+      var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM";
       return esriRequest(url, {
         responseType: "json"
       });
