@@ -106,15 +106,16 @@ width: 100%;
   position: relative;
   top: 2.5em;
   text-align: center;
-  /*margin-top: 120px;*/
+  margin-top: 120px;
   color: white;
   overflow: scroll;
-  /*word-wrap: break-word;*/
+  word-wrap: break-word;
 }
 
 #aboutNav button {
   margin-bottom: 50px;
   margin-left: 0.5em;
+  margin-top: 5px;
   background-color: #e7e7e7;
   /* grey */
   border: none;
@@ -126,6 +127,7 @@ width: 100%;
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
+  height: auto;
 }
 
 .overlay-content img {
