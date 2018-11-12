@@ -40,9 +40,13 @@
   </div>
 
   <div id="toolBox">
+
+
     <div id="boxHeader">
-      <h2>Austin Traffic Incidents</h2><span onclick="showMenu()" id="touchMenu"></span>
+      <h2>Austin Traffic Incidents</h2>
     </div>
+
+
     <div id="boxMenu">
       <div class="w3-row">
         <a href="javascript:void(0)" onclick="openMenu(event, 'Legend');">
@@ -56,13 +60,16 @@
         </a>
       </div>
     </div>
+
+
     <div id="boxContent" style="display:none">
+
       <div id="Legend" class="w3-container title">
         <span onclick="closeMenu(event, 'Legend')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
         <h2>Legend</h2>
         <p>Display dynamic legend that can be hidden (most helpful on mobile).</p>
         <label><input onclick="validate()" id="setBoundary" type="checkbox" name="checkbox" value="value">City Limits</label>
-
+        <label><input type="checkbox" name="checkbox2" value="value">Road Network</label>
       </div>
 
       <div id="Search" class="w3-container title" style="display:none">
@@ -79,13 +86,17 @@
     </div>
   </div>
 
+
   <div id="fullOverlay" class="overlay">
     <a href="javascript:void(0)" class="closebtn" onclick="closeOverlay()">&times;</a>
+
     <div class="overlay-content">
+
       <div id="aboutNav">
         <button id="aboutButtons" class="buttons" onclick="teamOverlay()">About Team</button>
         <button id="aboutButtons" class="buttons" onclick="projectOverlay()">About Project</button>
       </div>
+
       <div id="overlayTeam">
         <div class="about">
           <h3>Jason Bartling</h3>
@@ -116,6 +127,7 @@
         <br>
         <br>
       </div>
+
       <div id="overlayProject">
         <h2>Austin Traffic Incidents</h2>
         <br>
@@ -184,6 +196,7 @@
       </div>
     </div>
   </div>
+  
   <!--establishes the emtpy div into which the map will be loaded-->
   <div id="viewDiv"></div>
 
