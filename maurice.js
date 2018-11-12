@@ -14,6 +14,7 @@ require([
     "esri/views/MapView",
     "esri/widgets/BasemapToggle",
     "esri/layers/FeatureLayer",
+    "esri/layers/TileLayer",
     "esri/geometry/Point",
     "esri/request"
   ],
@@ -22,7 +23,7 @@ require([
    * Create magic mapping function
    **************************************************/
 
-  function(Map, MapView, BasemapToggle, FeatureLayer, Point, esriRequest) {
+  function(Map, MapView, BasemapToggle, FeatureLayer, TileLayer, Point, esriRequest) {
 
     /**************************************************
      * VARIABLES
@@ -36,6 +37,14 @@ require([
 
     var limits = new FeatureLayer({
       url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer"
+    });
+
+    /**************************************************
+     * Create tile for road network
+     **************************************************/
+
+    var roads = new TileLayer({
+      url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer"
     });
 
     /**************************************************
@@ -97,11 +106,12 @@ require([
 
     /**************************************************
      * Create map and define basemap
+     * Select layers to display on basemap
      **************************************************/
 
     var map = new Map({
-      basemap: "dark-gray",
-      layers: [limits]
+      basemap: "hybrid",
+      layers: [roads]
     });
 
     /**************************************************
@@ -130,9 +140,8 @@ require([
     var toggle = new BasemapToggle({
       titleVisible: true,
       view: view,
-      nextBasemap: "hybrid",
+      nextBasemap: "dark-gray",
     });
-    view.ui.add(toggle, "bottom-right");
 
     /**************************************************
      * Request the  data from data.austin when the
@@ -207,10 +216,10 @@ require([
     }
 
     /**************************************************
-     * Modify page elements
+     * MODIFY map widgets
      **************************************************/
 
     view.ui.move("zoom", "bottom-right"); //Move Zoom to top left
-
+    view.ui.add(toggle, "bottom-right");  //Add Basemap toggle
 
   });
