@@ -102,6 +102,10 @@ width: 100%;
   -webkit-overflow-scrolling: touch;
 }
 
+.overlay::-webkit-scrollbar {
+  display: none;
+}
+
 .overlay-content {
   position: relative;
   top: 2.5em;
@@ -112,15 +116,17 @@ width: 100%;
   word-wrap: break-word;
 }
 
+.overlay-content::-webkit-scrollbar {
+  display: none;
+}
+
 #aboutNav button {
   margin-bottom: 50px;
   margin-left: 0.5em;
   margin-top: 5px;
   background-color: #e7e7e7;
-  /* grey */
   border: none;
   color: black;
-  font-weight: bold;
   padding: 10px 25px;
   text-align: center;
   text-decoration: none;
