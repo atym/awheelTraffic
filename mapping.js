@@ -103,21 +103,21 @@ require([
 		field: "status", // autocasts as new SimpleRenderer()
 		defaultSymbol: {
 			type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-			size: 10,
+			size: 8,
 			color: "#FF4000"
 		},
 		uniqueValueInfos: [{
 			value: "ACTIVE",
 			symbol: {
 				type: "simple-marker",
-				size: 10,
+				size: 8,
 				color: "red"
 			}
 		}, {
 			value: "ARCHIVED",
 			symbol: {
 				type: "simple-marker",
-				size: 10,
+				size: 8,
 				color: "yellow"
 			}
 		}]
@@ -186,7 +186,7 @@ require([
 
     function getData() {
 
-      var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$where=traffic_report_status_date_time>'2018-11-10'&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=3000";
+      var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$where=traffic_report_status_date_time>'2018-11-11'&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=3000";
       return esriRequest(url, {
         responseType: "json"
       });
