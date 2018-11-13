@@ -18,7 +18,7 @@ require([
     "esri/layers/VectorTileLayer",
     "esri/layers/TileLayer",
     "esri/geometry/Point",
-	  "esri/widgets/Legend",
+    "esri/widgets/Legend",
     "esri/request"
   ],
 
@@ -32,54 +32,72 @@ require([
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite;
 
     /**************************************************
      * Load initial batch of traffic data from COA
      * JSON data over Socrata API
      **************************************************/
 
-	  trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
-							"?$where=traffic_report_status_date_time>'2018-11-11'" +
-							"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
-							"&$limit=3000";
-
-              lightRoads = new VectorTileLayer({
-                      url: "http://www.arcgis.com/sharing/rest/content/items/63c47b7177f946b49902c24129b87252/resources/styles/root.json?f=pjson",
-                      visible: true
-                    });
-
-                darkRoads = new VectorTileLayer({
-                      url: "https://www.arcgis.com/sharing/rest/content/items/86f556a2d1fd468181855a35e344567f/resources/styles/root.json?f=pjson",
-                      visible: false
-                      });
-
-
-
-              vectorRoads = new Basemap({
-                  baseLayers: [lightRoads, darkRoads],
-                  title: "Roads",
-                  id: "roads",
-                  thumbnailUrl: "https://stamen-tiles.a.ssl.fastly.net/terrain/10/177/409.png"
-                });
+    trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
+      "?$where=traffic_report_status_date_time>'2018-11-11'" +
+      "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
+      "&$limit=3000";
 
     /**************************************************
-     * Create tile for road network
+     * Create variables for vector layers
+     * Combine layers into new basemap
+     * Visibility is important for dark mode
+     * Assign custom URL for basemapToggleButton
      **************************************************/
 
-    roads = new TileLayer({
-		url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer",
-		visible: false
-	  });
+    lightRoads = new VectorTileLayer({
+      url: "http://www.arcgis.com/sharing/rest/content/items/63c47b7177f946b49902c24129b87252/resources/styles/root.json?f=pjson",
+      visible: true
+    });
 
-	/**************************************************
+    darkRoads = new VectorTileLayer({
+      url: "https://www.arcgis.com/sharing/rest/content/items/86f556a2d1fd468181855a35e344567f/resources/styles/root.json?f=pjson",
+      visible: false
+    });
+
+    vectorRoads = new Basemap({
+      baseLayers: [lightRoads, darkRoads],
+      title: "Streets",
+      id: "streets",
+      thumbnailUrl: "./img/streets_day_map.jpg"
+    });
+
+    /**************************************************
+     * Create variables for satellite base and Reference
+     * New basemap with those layers combined
+     * Assign custom URL for basemapToggleButton
+     **************************************************/
+
+    satelliteBase = new TileLayer({
+      url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+    });
+
+    satelliteReference = new VectorTileLayer({
+      url: "http://www.arcgis.com/sharing/rest/content/items/30d6b8271e1849cd9c3042060001f425/resources/styles/root.json?f=pjson"
+    });
+
+    satellite = new Basemap({
+      baseLayers: [satelliteBase, satelliteReference],
+      title: "Satellite",
+      id: "satellite",
+      thumbnailUrl: "./img/imagery_hybrid.jpg"
+    });
+
+    /**************************************************
      * Create feature for city limits boundary
+     * Hide this layer
      **************************************************/
 
-	  limits = new FeatureLayer({
-		url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer",
-		visible: false
-  	});
+    limits = new FeatureLayer({
+      url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer",
+      visible: false
+    });
 
     /**************************************************
      * Define the specification for each field to create
@@ -129,30 +147,30 @@ require([
      * Define the renderer for symbolizing incidents
      **************************************************/
 
-	  trafficRenderer = {
-  		type: "unique-value",
-  		field: "status", // autocasts as new SimpleRenderer()
-  		defaultSymbol: {
-  			type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-  			size: 8,
-  			color: "#FF4000"
-		},
-  		uniqueValueInfos: [{
-  			value: "ACTIVE",
-  			symbol: {
-  				type: "simple-marker",
-  				size: 8,
-  				color: "red"
-			}
-		}, {
-  			value: "ARCHIVED",
-  			symbol: {
-  				type: "simple-marker",
-  				size: 8,
-  				color: "yellow"
-			}
-		}]
-	};
+    trafficRenderer = {
+      type: "unique-value",
+      field: "status", // autocasts as new SimpleRenderer()
+      defaultSymbol: {
+        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+        size: 8,
+        color: "#FF4000"
+      },
+      uniqueValueInfos: [{
+        value: "ACTIVE",
+        symbol: {
+          type: "simple-marker",
+          size: 8,
+          color: "red"
+        }
+      }, {
+        value: "ARCHIVED",
+        symbol: {
+          type: "simple-marker",
+          size: 8,
+          color: "yellow"
+        }
+      }]
+    };
 
     /**************************************************
      * Create map and define basemap
@@ -175,8 +193,6 @@ require([
       center: [-97.775462, 30.270076]
     });
 
-
-
     /**************************************************
      * Once the limits layer loads, set the view's extent to the fullextent
      **************************************************/
@@ -192,7 +208,7 @@ require([
     baseToggle = new BasemapToggle({
       titleVisible: true,
       view: view,
-      nextBasemap: "satellite"
+      nextBasemap: satellite
     });
 
     /**************************************************
@@ -207,7 +223,7 @@ require([
       getData()
         .then(createGraphics)
         .then(createLayer)
-		.then(createLegend);
+        .then(createLegend);
 
 
     });
@@ -269,47 +285,46 @@ require([
       return trafficFLayer;
     }
 
-	function createLegend(layer) {
-		// if the legend already exists, then update it with the new layer
-		if (legend) {
-			legend.layerInfos = [{
-				layer: layer,
-				title: "Status"
-			}];
-		} else {
-			legend = new Legend({
-				view: view,
-				layerInfos: [{
-					layer: layer,
-					title: "Status"
-				}]
-			}, "esriLegend");
-		}
-	}
+    function createLegend(layer) {
+      // if the legend already exists, then update it with the new layer
+      if (legend) {
+        legend.layerInfos = [{
+          layer: layer,
+          title: "Status"
+        }];
+      } else {
+        legend = new Legend({
+          view: view,
+          layerInfos: [{
+            layer: layer,
+            title: "Status"
+          }]
+        }, "esriLegend");
+      }
+    }
 
+    darkModeToggle = document.getElementById("darkMode");
+    cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
 
-	 darkModeToggle = document.getElementById("darkMode");
-	 cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
+    /*****************************************************************
+     * The visible property on the layer can be used to toggle the
+     * layer's visibility in the view. When the visibility is turned off
+     * the layer is still part of the map, which means you can access
+     * its properties and perform analysis even though it isn't visible.
+     *******************************************************************/
 
-	/*****************************************************************
-	 * The visible property on the layer can be used to toggle the
-	 * layer's visibility in the view. When the visibility is turned off
-	 * the layer is still part of the map, which means you can access
-	 * its properties and perform analysis even though it isn't visible.
-	 *******************************************************************/
-	darkModeToggle.addEventListener("change", function () {
-		darkRoads.visible = darkModeToggle.checked;
-	});
-	cityLimitsLayerToggle.addEventListener("change", function () {
-		limits.visible = cityLimitsLayerToggle.checked;
-	});
+    darkModeToggle.addEventListener("change", function() {
+      darkRoads.visible = darkModeToggle.checked;
+    });
+    cityLimitsLayerToggle.addEventListener("change", function() {
+      limits.visible = cityLimitsLayerToggle.checked;
+    });
 
-
-	/**************************************************
+    /**************************************************
      * MODIFY map widgets
      **************************************************/
 
     view.ui.move("zoom", "bottom-right"); //Move Zoom to top left
-    view.ui.add(baseToggle, "bottom-right");  //Add Basemap toggle
+    view.ui.add(baseToggle, "bottom-right"); //Add Basemap toggle
 
   });
