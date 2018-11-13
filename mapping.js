@@ -15,7 +15,6 @@ require([
     "esri/widgets/BasemapToggle",
     "esri/layers/FeatureLayer",
     "esri/layers/TileLayer",
-    "esri/layers/VectorTileLayer",
     "esri/geometry/Point",
 	  "esri/widgets/Legend",
     "esri/request"
@@ -25,13 +24,13 @@ require([
    * Create magic mapping function
    **************************************************/
 
-  function(Map, MapView, BasemapToggle, FeatureLayer, TileLayer, VectorTileLayer, Point, Legend, esriRequest) {
+  function(Map, MapView, BasemapToggle, FeatureLayer, TileLayer, Point, Legend, esriRequest) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, baseNavigation;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle;
 
     /**************************************************
      * Load initial batch of traffic data from COA
@@ -138,13 +137,10 @@ require([
      * Create map and define basemap
      * Select layers to display on basemap
      **************************************************/
-    baseNavigation = new VectorTileLayer({
-      url: "http://www.arcgis.com/sharing/rest/content/items/63c47b7177f946b49902c24129b87252/resources/styles/root.json?f=pjson"
-    });
-
+    
     map = new Map({
-      basemap: "dark-gray",
-      layers: [baseNavigation, roads]
+      basemap: "hybrid",
+      layers: [limits, roads]
     });
 
     /**************************************************
