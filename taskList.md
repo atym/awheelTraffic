@@ -11,13 +11,14 @@
     -   [ ] crash, hazard, informational
 -   [ ] update legend with optional layers
 -   [ ] fit legend in div
-    -   [ ] special attention to landscape mobile
+    -   [ ] **special attention** to landscape mobile
 
 #### search
 
 -   [ ] need html buttons for user input
 -   [ ] query js function
 -   [ ] heatmap toggle, based on query results
+-   [ ] search based on times of day, show me accidents from Mondays at 5pm
 
 #### locate
 
@@ -56,4 +57,3 @@
 -   [ ] service worker for ios and android to cache api calls
 -   [ ] double tap to zoom on mobile
     -   [ ] [Link](https://gis.stackexchange.com/questions/102380/double-tap-on-the-map-not-work-in-the-chrome-of-nexus-7)
-    
