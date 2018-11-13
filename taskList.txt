@@ -15,9 +15,15 @@ Upcoming
 	style
 		revisit color of title bar
 		clean css and comment
+	tooltips
+	
 
 In-Progress
 
+
 Completed
 
+
 Wish List
+
+        Click Menu Open / Click Menu Closed
