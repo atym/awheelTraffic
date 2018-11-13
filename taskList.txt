@@ -1,0 +1,23 @@
+Upcoming
+
+  legend
+		update with Jasons unique values for incident
+		fit legend in div
+	search
+		need buttons for input
+		query function
+		heatmap
+	locate
+		geocoder or search widget
+		research output from search to buffer
+		mobile location finder
+		buffer
+	style
+		revisit color of title bar
+		clean css and comment
+
+In-Progress
+
+Completed
+
+Wish List
