@@ -12,3 +12,6 @@ https://dev.socrata.com/foundry/data.austintexas.gov/r3af-2r8x
 
 #Link to ESRI javascript sandboxes
 https://developers.arcgis.com/javascript/latest/sample-code/index.html
+
+#Markdown Cheatsheet
+https://github.com/tchapi/markdown-cheatsheet/blob/master/README.md
