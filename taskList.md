@@ -3,6 +3,8 @@
 -   [x] ~~this is a complete item~~ @ipk
 -   [ ] this is an incomplete item
 
+    *markdown cheatsheet on linkList*
+
 ## To-Do
 
 #### legend
