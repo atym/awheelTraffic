@@ -54,3 +54,6 @@
     -   [ ] this would also be helpful to understand the accuracy of reported time, does time represent when incident occurred or ended?
 -   [ ] popup for add to home screen on ios and android
 -   [ ] service worker for ios and android to cache api calls
+-   [ ] double tap to zoom on mobile
+    -   [ ] [Link](https://gis.stackexchange.com/questions/102380/double-tap-on-the-map-not-work-in-the-chrome-of-nexus-7)
+    
