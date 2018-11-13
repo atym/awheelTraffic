@@ -16,6 +16,7 @@ Upcoming
 		revisit color of title bar
 		clean css and comment
 	tooltips
+	aboutHelper
 	
 
 In-Progress
