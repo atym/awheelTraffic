@@ -11,9 +11,11 @@
 
 require([
     "esri/Map",
+    "esri/Basemap",
     "esri/views/MapView",
     "esri/widgets/BasemapToggle",
     "esri/layers/FeatureLayer",
+    "esri/layers/VectorTileLayer",
     "esri/layers/TileLayer",
     "esri/geometry/Point",
 	  "esri/widgets/Legend",
@@ -24,13 +26,13 @@ require([
    * Create magic mapping function
    **************************************************/
 
-  function(Map, MapView, BasemapToggle, FeatureLayer, TileLayer, Point, Legend, esriRequest) {
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, esriRequest) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads;
 
     /**************************************************
      * Load initial batch of traffic data from COA
@@ -41,6 +43,25 @@ require([
 							"?$where=traffic_report_status_date_time>'2018-11-11'" +
 							"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
 							"&$limit=3000";
+
+              lightRoads = new VectorTileLayer({
+                      url: "http://www.arcgis.com/sharing/rest/content/items/63c47b7177f946b49902c24129b87252/resources/styles/root.json?f=pjson",
+                      visible: true
+                    });
+
+                darkRoads = new VectorTileLayer({
+                      url: "https://www.arcgis.com/sharing/rest/content/items/86f556a2d1fd468181855a35e344567f/resources/styles/root.json?f=pjson",
+                      visible: false
+                      });
+
+
+
+              vectorRoads = new Basemap({
+                  baseLayers: [lightRoads, darkRoads],
+                  title: "Roads",
+                  id: "roads",
+                  thumbnailUrl: "https://stamen-tiles.a.ssl.fastly.net/terrain/10/177/409.png"
+                });
 
     /**************************************************
      * Create tile for road network
@@ -137,10 +158,10 @@ require([
      * Create map and define basemap
      * Select layers to display on basemap
      **************************************************/
-    
+
     map = new Map({
-      basemap: "hybrid",
-      layers: [limits, roads]
+      basemap: vectorRoads,
+      layers: [limits]
     });
 
     /**************************************************
@@ -153,6 +174,8 @@ require([
       zoom: 12,
       center: [-97.775462, 30.270076]
     });
+
+
 
     /**************************************************
      * Once the limits layer loads, set the view's extent to the fullextent
@@ -169,7 +192,7 @@ require([
     baseToggle = new BasemapToggle({
       titleVisible: true,
       view: view,
-      nextBasemap: "dark-gray",
+      nextBasemap: "satellite"
     });
 
     /**************************************************
@@ -265,7 +288,7 @@ require([
 	}
 
 
-	 roadLayerToggle = document.getElementById("roadLayer");
+	 darkModeToggle = document.getElementById("darkMode");
 	 cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
 
 	/*****************************************************************
@@ -274,8 +297,8 @@ require([
 	 * the layer is still part of the map, which means you can access
 	 * its properties and perform analysis even though it isn't visible.
 	 *******************************************************************/
-	roadLayerToggle.addEventListener("change", function () {
-		roads.visible = roadLayerToggle.checked;
+	darkModeToggle.addEventListener("change", function () {
+		darkRoads.visible = darkModeToggle.checked;
 	});
 	cityLimitsLayerToggle.addEventListener("change", function () {
 		limits.visible = cityLimitsLayerToggle.checked;
