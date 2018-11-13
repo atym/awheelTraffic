@@ -15,6 +15,7 @@ require([
     "esri/widgets/BasemapToggle",
     "esri/layers/FeatureLayer",
     "esri/layers/TileLayer",
+    "esri/layers/VectorTileLayer",
     "esri/geometry/Point",
 	  "esri/widgets/Legend",
     "esri/request"
@@ -24,35 +25,41 @@ require([
    * Create magic mapping function
    **************************************************/
 
-  function(Map, MapView, BasemapToggle, FeatureLayer, TileLayer, Point, Legend, esriRequest) {
+  function(Map, MapView, BasemapToggle, FeatureLayer, TileLayer, VectorTileLayer, Point, Legend, esriRequest) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle;
-	var trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
-							"?$where=traffic_report_status_date_time>'2018-11-11'" + 
-							"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" + 
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, baseNavigation;
+
+    /**************************************************
+     * Load initial batch of traffic data from COA
+     * JSON data over Socrata API
+     **************************************************/
+
+	  trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
+							"?$where=traffic_report_status_date_time>'2018-11-11'" +
+							"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
 							"&$limit=3000";
 
     /**************************************************
      * Create tile for road network
      **************************************************/
 
-	roads = new TileLayer({
+    roads = new TileLayer({
 		url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer",
 		visible: false
-	});    
-	
+	  });
+
 	/**************************************************
      * Create feature for city limits boundary
      **************************************************/
 
-	limits = new FeatureLayer({
+	  limits = new FeatureLayer({
 		url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer",
 		visible: false
-	});
+  	});
 
     /**************************************************
      * Define the specification for each field to create
@@ -102,40 +109,42 @@ require([
      * Define the renderer for symbolizing incidents
      **************************************************/
 
-	trafficRenderer = {
-		type: "unique-value",
-		field: "status", // autocasts as new SimpleRenderer()
-		defaultSymbol: {
-			type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-			size: 8,
-			color: "#FF4000"
+	  trafficRenderer = {
+  		type: "unique-value",
+  		field: "status", // autocasts as new SimpleRenderer()
+  		defaultSymbol: {
+  			type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+  			size: 8,
+  			color: "#FF4000"
 		},
-		uniqueValueInfos: [{
-			value: "ACTIVE",
-			symbol: {
-				type: "simple-marker",
-				size: 8,
-				color: "red"
+  		uniqueValueInfos: [{
+  			value: "ACTIVE",
+  			symbol: {
+  				type: "simple-marker",
+  				size: 8,
+  				color: "red"
 			}
 		}, {
-			value: "ARCHIVED",
-			symbol: {
-				type: "simple-marker",
-				size: 8,
-				color: "yellow"
+  			value: "ARCHIVED",
+  			symbol: {
+  				type: "simple-marker",
+  				size: 8,
+  				color: "yellow"
 			}
 		}]
 	};
-
 
     /**************************************************
      * Create map and define basemap
      * Select layers to display on basemap
      **************************************************/
+    baseNavigation = new VectorTileLayer({
+      url: "http://www.arcgis.com/sharing/rest/content/items/63c47b7177f946b49902c24129b87252/resources/styles/root.json?f=pjson"
+    });
 
     map = new Map({
-      basemap: "hybrid",
-      layers: [limits, roads]
+      basemap: "dark-gray",
+      layers: [baseNavigation, roads]
     });
 
     /**************************************************
@@ -161,7 +170,7 @@ require([
      * Create basemap toggle and style it
      **************************************************/
 
-    var toggle = new BasemapToggle({
+    baseToggle = new BasemapToggle({
       titleVisible: true,
       view: view,
       nextBasemap: "dark-gray",
@@ -189,7 +198,7 @@ require([
      **************************************************/
 
     function getData() {
-      
+
       return esriRequest(trafficRequestURL, {
         responseType: "json"
       });
@@ -258,11 +267,11 @@ require([
 			}, "esriLegend");
 		}
 	}
-	
-	
+
+
 	 roadLayerToggle = document.getElementById("roadLayer");
 	 cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
-	
+
 	/*****************************************************************
 	 * The visible property on the layer can be used to toggle the
 	 * layer's visibility in the view. When the visibility is turned off
@@ -275,13 +284,13 @@ require([
 	cityLimitsLayerToggle.addEventListener("change", function () {
 		limits.visible = cityLimitsLayerToggle.checked;
 	});
-	
-	
+
+
 	/**************************************************
      * MODIFY map widgets
      **************************************************/
 
     view.ui.move("zoom", "bottom-right"); //Move Zoom to top left
-    view.ui.add(toggle, "bottom-right");  //Add Basemap toggle
+    view.ui.add(baseToggle, "bottom-right");  //Add Basemap toggle
 
   });
