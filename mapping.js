@@ -46,10 +46,7 @@ require([
      * Create tile for road network
      **************************************************/
 
-    roads = new TileLayer({
-		url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer",
-		visible: false
-	  });
+    
 
 	/**************************************************
      * Create feature for city limits boundary
@@ -137,7 +134,7 @@ require([
      * Create map and define basemap
      * Select layers to display on basemap
      **************************************************/
-    
+
     map = new Map({
       basemap: "hybrid",
       layers: [limits, roads]
