@@ -30,7 +30,7 @@ require([
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, streetType;
 
     /**************************************************
      * Load initial batch of traffic data from COA
@@ -42,11 +42,16 @@ require([
 							"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
 							"&$limit=3000";
 
+    streetType = "streets-navigation-vector"
+
     /**************************************************
      * Create tile for road network
      **************************************************/
 
-    
+    roads = new TileLayer({
+		url: "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer",
+		visible: false
+	  });
 
 	/**************************************************
      * Create feature for city limits boundary
@@ -136,7 +141,7 @@ require([
      **************************************************/
 
     map = new Map({
-      basemap: "hybrid",
+      basemap: streetType,
       layers: [limits, roads]
     });
 
@@ -166,7 +171,7 @@ require([
     baseToggle = new BasemapToggle({
       titleVisible: true,
       view: view,
-      nextBasemap: "dark-gray",
+      nextBasemap: "satellite"
     });
 
     /**************************************************

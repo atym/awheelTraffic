@@ -33,6 +33,7 @@
 
 -   [ ] revisit color of title bar
 -   [ ] clean css and comment
+  - [ ] create custom css for dark mode, update text and toolbox background on click
 
 #### mobile
 
