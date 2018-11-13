@@ -25,7 +25,8 @@
    **************************************************/
   </script>
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Austin Traffic">
   <link rel="apple-touch-icon" href="./img/touch-icon-iphone.png">
   <link rel="manifest" href="manifest.json">
 
@@ -118,13 +119,13 @@
         <div id="incidentList"></div>
 		<script>
 		/****************************************************************
-		* Dynamically populate html with form elements for incident types 
+		* Dynamically populate html with form elements for incident types
 		****************************************************************/
 			require([
 					"esri/request"
 					],
 					function(esriRequest){
-					
+
 							var html="";
 
 							var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$query=SELECT%20DISTINCT%20issue_reported";
@@ -138,14 +139,14 @@
 									html+="</p>";
 									console.log(json[i].issue_reported);
 								};
-								
+
 								document.getElementById("incidentList").innerHTML = html;
 							});
-							
-							
-					
+
+
+
 			});
-			
+
 	</script>
       </div>
 
