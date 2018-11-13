@@ -24,10 +24,14 @@
 ###style
  
 * revisit color of title bar
+* clean css and comment
+
+###mobile
+
 * symbology scale with device size
 * research ios landscape status fix
 * retina display 192dpi
-* clean css and comment
+* add ios splash screen for pwa
 		
 ###other
  
@@ -48,3 +52,5 @@
 * click menu open / click menu close
 * different renderer for roads?
 * contact traffic dataset owner for incident type desriptions
+* pop up for add to home screen on ios and android
+* service worker for ios and android to cache api calls
