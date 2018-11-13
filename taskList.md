@@ -2,7 +2,9 @@
 
 ###legend
  
-* update with Jasons unique values for incident, maybe classify
+* update with Jason's unique values for incident type, maybe classify
+     * crash, hazard, informational
+* update legend with optional layers
 * fit legend in div
      * special attention to landscape mobile
 		
@@ -22,13 +24,16 @@
 ###style
  
 * revisit color of title bar
-* research ios landscape fix
+* symbology scale with device size
+* research ios landscape status fix
+* retina display 192dpi
 * clean css and comment
 		
 ###other
  
 * tooltips for toolbox
 * dynamic default map extent based on screen
+* icons that load only for active incidents (initial display) based on three classes
 * aboutHelper
     * research logo mods for better         about identification, maybe re-position logo elements and add unicode tooltip
 	
@@ -40,5 +45,6 @@
 
 ##Wish List
 
-* click menu open / click menu closed
+* click menu open / click menu close
 * different renderer for roads?
+* contact traffic dataset owner for incident type desriptions
