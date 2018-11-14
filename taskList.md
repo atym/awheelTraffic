@@ -45,19 +45,23 @@
 #### other
 
 -   [ ] tooltips for toolbox
+- [ ] fix home button to use default extent
+-   [ ] add refresh button to each toolbox window
+      - [ ] refresh should reload entire map, not html doc
 -   [ ] dynamic default map extent based on screen
 -   [ ] icons that load only for active incidents (initial display) based on three classes
 -   [ ] aboutHelper
     -   [ ] research logo mods for better         about identification, maybe re-position logo elements and add unicode tooltip
-  - [ ] add footer for copyright info
+  - [x] ~~add footer for copyright info~~ @ipk
 
 ## Wish List
 
--   [ ] click menu open / click menu close
--   [ ] different renderer for roads?
+-   [x] ~~click menu open / click menu close~~ @ipk
+-   [x] ~~different renderer for roads?~~ @ipk
 -   [ ] contact traffic dataset owner for incident type desriptions
     -   [ ] this would also be helpful to understand the accuracy of reported time, does time represent when incident occurred or ended?
 -   [ ] popup for add to home screen on ios and android
 -   [ ] service worker for ios and android to cache api calls
+  - [ ] cookie storage to remember dark/light mode toggle pwa
 -   [ ] double tap to zoom on mobile
     -   [ ] [Link](https://gis.stackexchange.com/questions/102380/double-tap-on-the-map-not-work-in-the-chrome-of-nexus-7)

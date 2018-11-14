@@ -38,30 +38,11 @@ function projectOverlay() {
 }
 
 /**************************************************
- * Show boxContent when menu bar button clicked
- * Define button style (selected)
- **************************************************/
-
-function openMenu(evt, titleMenu) {
-  var i, x, tablinks;
-  x = document.getElementsByClassName("title");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablink");
-  for (i = 0; i < x.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" w3-border-red", "");
-  }
-  document.getElementById(titleMenu).style.display = "block";
-  evt.currentTarget.firstElementChild.className += " w3-border-red";
-  document.getElementById("boxContent").style.display = "block";
-}
-
-/**************************************************
- * Close boxContent on carot click
+ * Close boxContent on click, carot and menu
  **************************************************/
 
 function closeMenu(evt, titleMenu) {
+
   var i, x, tablinks;
   x = document.getElementsByClassName("title");
   for (i = 0; i < x.length; i++) {
@@ -71,7 +52,47 @@ function closeMenu(evt, titleMenu) {
 }
 
 /**************************************************
- * Swap stylesheet for dark mode
+ * Show boxContent when menu bar button clicked
+ * Define button style (selected)
+ **************************************************/
+
+function openMenu(evt, titleMenu) {
+  var i, x, y, n, m, tablinks, red;
+  tablinks = document.getElementsByClassName("tablink");
+  x = document.getElementsByClassName("title");
+  y = document.getElementById("boxContent");
+  z = "";
+  red = evt.currentTarget.firstElementChild.className;
+  n = red.includes("red");
+
+  function open() {
+
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+
+    for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" w3-border-red", "");
+    }
+
+    document.getElementById(titleMenu).style.display = "block";
+    evt.currentTarget.firstElementChild.className += " w3-border-red";
+    document.getElementById("boxContent").style.display = "block";
+  }
+
+  if (n == false) {
+    open();
+
+  } else if (n == true && y.style.display == "block") {
+    closeMenu(evt, titleMenu);
+
+  } else {
+    open();
+  }
+}
+
+/**************************************************
+ * Activate dark mode
  **************************************************/
 darkModeToggle = document.getElementById("darkMode");
 
