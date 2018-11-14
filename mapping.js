@@ -314,7 +314,13 @@ require([
      *******************************************************************/
 
     darkModeToggle.addEventListener("change", function() {
-      darkRoads.visible = darkModeToggle.checked;
+      if (darkModeToggle.checked) {
+        darkRoads.visible = true;
+        lightRoads.visible = false;
+      } else {
+        lightRoads.visible = true;
+        darkRoads.visible = false;
+      }
     });
     cityLimitsLayerToggle.addEventListener("change", function() {
       limits.visible = cityLimitsLayerToggle.checked;

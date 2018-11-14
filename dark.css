@@ -1,0 +1,418 @@
+/**************************************************
+ * WELCOME to Beauty
+ **************************************************/
+/**************************************************
+ * AUSTIN TRAFFIC INCIDENTS
+ * by
+ * Jason Bartling
+ * Ian Kelly
+ * Brandon Rose
+ **************************************************/
+
+html, body, #viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  float: none;
+  overflow: hidden;
+}
+
+body:not(.hide-overlay) {
+  overflow: hidden;
+}
+
+#mainLogo {
+  z-index: 1;
+  position: absolute;
+  right: 0;
+  margin-top: 1.5em;
+  margin-right: 1.5em;
+  opacity: 0.9;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.esri-basemap-toggle {
+  z-index: 0;
+}
+
+#toolBox {
+  background-color: white;
+  margin-top: 2em;
+  margin-left: 1.5em;
+  border: solid;
+  border-width: 0px;
+  position: absolute;
+  z-index: 1;
+  text-align: center;
+  box-shadow: 4px 5px 5px black;
+  z-index: 99;
+}
+
+#boxHeader {
+  background-color: black;
+  color: white;
+  padding-top: 0.5px;
+  padding-bottom: 0.5px;
+  padding-right: 2em;
+  padding-left: 2em;
+  width: 28em;
+}
+
+#boxMenu {
+width: 100%;
+background-color: gray;
+}
+
+#boxContent {
+  color: black;
+  height: 30em;
+  width: 28em;
+  background-color: grey;
+}
+
+.w3-display-bottom {
+  margin-top: 16.4em;
+  margin-left: -0.80em;
+  position: absolute;
+
+}
+
+#basemapTab {
+  position: absolute;
+  z-index: 1;
+  height: 40%;
+  opacity: 0.9;
+  margin-top: 2em;
+  margin-left: 2em;
+}
+
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;
+  overflow-y: scroll;
+  /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
+}
+
+.overlay::-webkit-scrollbar {
+  display: none;
+}
+
+.overlay-content {
+  position: relative;
+  top: 2.5em;
+  text-align: center;
+  margin-top: 120px;
+  color: white;
+  overflow: scroll;
+  word-wrap: break-word;
+}
+
+.overlay-content::-webkit-scrollbar {
+  display: none;
+}
+
+#aboutNav button {
+  margin-bottom: 50px;
+  margin-top: 5px;
+  background-color: #e7e7e7;
+  border: none;
+  color: black;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  height: auto;
+}
+
+.overlay-content img {
+  width: 150px;
+  height: 150px;
+  border-radius: 25px;
+  margin-bottom: 10px;
+}
+
+.overlay-content h3 {
+  padding-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.overlay-content h2 {
+  margin-right: 1em;
+  margin-left: 1em;
+}
+
+.overlay-content p {
+  max-width: 50em;
+  margin: auto;
+  text-align: justify;
+  padding-right: 1.5em;
+  padding-left: 1.5em;
+  margin-bottom: 40px;
+}
+
+.overlay a {
+  padding: 5px;
+  text-decoration: none;
+  font-size: 50px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 75px;
+}
+
+/*ESRI dark theme CSS*/
+.dark-theme .esri-widget,
+    .dark-theme .esri-widget-button,
+    .dark-theme .esri-menu,
+    .dark-theme .esri-popup-main,
+    .dark-theme .esri-popup .esri-pointer-direction,
+    .dark-theme .esri-button {
+      background-color: #242424;
+      color: #bdbdbd;
+    }
+
+    .esri-basemap-toggle {
+      color: black !important;
+    }
+
+    .dark-theme .esri-widget-button:focus,
+    .dark-theme .esri-widget-button:hover,
+    .dark-theme .esri-menu li:focus,
+    .dark-theme .esri-menu li:hover {
+      background-color: #333;
+      color: #d1d1d1;
+    }
+
+    .dark-theme .esri-button:focus,
+    .dark-theme .esri-button:hover {
+      color: #d1d1d1;
+    }
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width: 450px) {
+
+  .overlay-content img {
+    height: 90px;
+    width: 90px;
+    margin-top: -0.75em;
+  }
+
+  .overlay-content p {
+    font-size: 16px
+  }
+
+  .overlay-content {
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+    margin-top: 60px;
+  }
+
+  #aboutNav button {
+    margin-top: 0.5em;
+    font-weight: normal;
+    font-size: 0.9em;
+  }
+
+  #byLine {
+    font-size: 1.1em;
+  }
+
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 0.10em;
+    right: 0.5em;
+  }
+
+  #mainLogo {
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 0.5em;
+    margin-bottom: 1.75em;
+    opacity: 0.9;
+    cursor: pointer;
+    width: 75px;
+    z-index: 1;
+  }
+
+  #mainLogo img {
+    width: 75px;
+    height: 75px;
+  }
+
+  #toolBox {
+    margin: 0;
+    width: 100%;
+  }
+
+  #boxHeader {
+    width: 100%;
+  }
+
+  #boxHeader h2 {
+    font-size: 1.5em;
+  }
+
+  #boxMenu{
+    font-size: 12px;
+
+  }
+
+  /*#touchMenu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 0.5em;
+    margin-top: -4px;
+    font-size: 2.5em;
+    cursor: pointer;
+  }*/
+
+  #boxContent {
+    width: 100%;
+    z-index: 99 !important;
+    height: 28em !important;
+  }
+
+  .w3-third {
+    width: 33.3333% !important;
+  }
+
+  .w3-display-bottom {
+    margin-top: 15em;
+    margin-left: -0.80em;
+    position: absolute;
+  }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 451px)
+and (max-width : 825px) {
+
+  .overlay-content img {
+    height: 90px;
+    width: 90px;
+    margin-top: -0.75em;
+  }
+
+  .overlay-content p {
+    font-size: 16px
+  }
+
+  .overlay-content {
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+    margin-top: 60px;
+  }
+
+  #aboutNav button {
+    margin-top: 0.5em;
+    font-weight: normal;
+    font-size: 0.9em;
+  }
+
+  #byLine {
+    font-size: 1.1em;
+  }
+
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 0.10em;
+    right: 0.5em;
+  }
+
+  #mainLogo {
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 0.5em;
+    margin-bottom: 1.75em;
+    opacity: 0.9;
+    cursor: pointer;
+    width: 75px;
+    z-index: 1;
+  }
+
+  #mainLogo img {
+    width: 75px;
+    height: 75px;
+  }
+
+  #toolBox {
+    margin: 0;
+    width: 100%;
+  }
+
+  #boxHeader {
+    width: 100%;
+    padding-top: 0.3em;
+  }
+
+  #boxHeader h2 {
+    font-size: 1.5em;
+    height: 1.1em;
+    margin-top: -1px;
+  }
+
+  #boxMenu{
+    font-size: 12px;
+  }
+
+  .w3-third {
+    width: 33.3333% !important;
+    height: 3em !important;
+    margin-top: -0.3em;
+  }
+
+  .w3-display-bottom {
+    margin-top: 15em;
+    margin-left: -0.80em;
+    position: absolute;
+  }
+
+  #boxContent {
+    width: 100%;
+    z-index: 99 !important;
+    height: 20em !important;
+  }
+
+  #esriLegend {
+    margin-top: -3em;
+    width: 12em;
+
+  }
+
+  .w3-button {
+    margin-top: 0;
+    bottom: 0;
+    margin-bottom: 1em;
+  }
+}
