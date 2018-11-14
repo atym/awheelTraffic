@@ -38,10 +38,10 @@
    * Beauty, W3, ESRI, Google Fonts
    **************************************************/
   </script>
-  <link rel="stylesheet" type="text/css" href="beauty.css">
+  <link id="pagestyle" rel="stylesheet" type="text/css" href="beauty.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <!--Stylesheet and JS file loaded from ESRI-->
   <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
+  <link id="darkTheme" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
   <script>
@@ -107,7 +107,7 @@
       <p>Display dynamic legend that can be hidden (most helpful on mobile).</p>
         <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
 		  <br>
-        <label><input type="checkbox" id="darkMode"> Dark Mode</label>
+        <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('dark.css')"> Dark Mode</label>
 		  <br>
 		  <div id="esriLegend"></div>
       </div>

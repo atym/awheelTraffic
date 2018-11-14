@@ -38,19 +38,6 @@ function projectOverlay() {
 }
 
 /**************************************************
- * Checkbox functionalities
- * City Limits and Road Network
- **************************************************/
-
-function validate() {
-  if (document.getElementById('setBoundary').checked) {
-    alert("checked");
-  } else {
-    alert("You didn't check it! Let me check it for you.");
-  }
-}
-
-/**************************************************
  * Show boxContent when menu bar button clicked
  * Define button style (selected)
  **************************************************/
@@ -81,4 +68,19 @@ function closeMenu(evt, titleMenu) {
     x[i].style.display = "none";
   }
   document.getElementById("boxContent").style.display = "none";
+}
+
+/**************************************************
+ * Swap stylesheet for dark mode
+ **************************************************/
+darkModeToggle = document.getElementById("darkMode");
+
+function swapStyleSheet(sheet) {
+  if (darkModeToggle.checked) {
+    document.getElementById("pagestyle").setAttribute("href", sheet);
+    document.getElementById("darkTheme").setAttribute("href", "https://js.arcgis.com/4.9/esri/themes/dark/main.css")
+  } else {
+    document.getElementById("pagestyle").setAttribute("href", "beauty.css");
+    document.getElementById("darkTheme").setAttribute("href", "")
+  }
 }
