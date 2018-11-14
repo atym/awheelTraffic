@@ -281,6 +281,11 @@ body:not(.hide-overlay) {
   display: none;
 }
 
+#incidentTypes {
+	position: relative;
+	top: 80px;
+}
+
 /*ESRI dark theme CSS*/
 /*.dark-theme .esri-widget,
     .dark-theme .esri-widget-button,
