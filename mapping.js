@@ -142,7 +142,7 @@ require([
      **************************************************/
 
     trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
-      "?$where=traffic_report_status_date_time>'2018-11-11'" +
+      "?$where=traffic_report_status_date_time>'2018-11-13'" +
       "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
       "&$limit=3000";
 
