@@ -123,6 +123,25 @@ body:not(.hide-overlay) {
   background-color: #242424;
 }
 
+#legendInfo {
+  width: 1.6em;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+#legendSpinner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 0.3em;
+  margin-left: 0.5em;
+  padding: 1em;
+  cursor: pointer;
+}
+
 .w3-display-bottom {
   margin-top: 16.4em;
   margin-left: -0.80em;

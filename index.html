@@ -122,12 +122,16 @@
         <div id="esriLegend"></div>
         <img id="legendInfo" class="toolInfo" src="./infoLight.svg" alt="Legend Info">
         <i id="legendSpinner" class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>
-    
+
       </div>
 
       <div id="Search" class="w3-container title" style="display:none">
         <span onclick="closeMenu(event, 'Search')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
         <h2>Search</h2>
+        <div id="incidentList">
+			<label for="incidentTypes">Incident Types:</label>
+			<select id="incidentTypes" size="5"></select>
+		</div>
         <!--<p>Query the dataset and then display heatmap.</p>-->
       </div>
 
