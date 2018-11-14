@@ -316,6 +316,7 @@ require([
      * the layer is still part of the map, which means you can access
      * its properties and perform analysis even though it isn't visible.
      *******************************************************************/
+     
     darkModeToggle = document.getElementById("darkMode");
     cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
 

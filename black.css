@@ -239,15 +239,15 @@ body:not(.hide-overlay) {
 
 #darkFooter {
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
-  z-index: 50;
+  z-index: 1;
   bottom: 0;
-  margin-bottom: 1.5em;
-  font-size: 0.7em;
-  height: 1.2em;
+  padding-bottom: 1.3em;
+  font-size: 0.75em;
+  height: 2.4em;
   padding-left: 0.5em;
-  color: #C3C3C3;
+  color: #555555;
 }
 
 /*ESRI dark theme CSS*/
