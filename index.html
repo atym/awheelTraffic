@@ -44,6 +44,7 @@
   <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
   <link id="darkTheme" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <script>
     /**************************************************
@@ -120,6 +121,9 @@
         <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('black.css')"> Dark Mode</label>
         <br>
         <div id="esriLegend"></div>
+        <img id="legendInfo" class="toolInfo" src="./infoLight.svg" alt="Legend Info">
+        <i id="legendSpinner" class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>
+    
       </div>
 
       <div id="Search" class="w3-container title" style="display:none">
@@ -127,6 +131,7 @@
         <h2>Search</h2>
         <!--<p>Query the dataset and then display heatmap.</p>-->
         <div id="incidentList"></div>
+        <img id="searchInfo" class="toolInfo" src="./infoLight.svg" alt="Search Info">
         <script>
           /****************************************************************
            * Dynamically populate html with form elements for incident types

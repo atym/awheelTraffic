@@ -116,3 +116,17 @@ function swapStyleSheet(sheet) {
     document.getElementById("xinfoDarkIcon").style.display = "none";
   }
 }
+
+/**************************************************
+ * Animate map refresh icon
+ **************************************************/
+ function spinTimer() {
+   setTimeout(function(){
+     document.getElementById("legendSpinner").setAttribute("class", "fa fa-refresh fa-lg");
+   }, 5000)
+ }
+
+function spinLegend() {
+  document.getElementById("legendSpinner").setAttribute("class", "fa fa-refresh fa-spin fa-lg");
+  spinTimer();
+}
