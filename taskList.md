@@ -49,6 +49,7 @@
 -   [ ] icons that load only for active incidents (initial display) based on three classes
 -   [ ] aboutHelper
     -   [ ] research logo mods for better         about identification, maybe re-position logo elements and add unicode tooltip
+  - [ ] add footer for copyright info
 
 ## Wish List
 

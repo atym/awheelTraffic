@@ -76,11 +76,22 @@ function closeMenu(evt, titleMenu) {
 darkModeToggle = document.getElementById("darkMode");
 
 function swapStyleSheet(sheet) {
+  // when darkmode is enabled, do these things
   if (darkModeToggle.checked) {
     document.getElementById("pagestyle").setAttribute("href", sheet);
-    document.getElementById("darkTheme").setAttribute("href", "https://js.arcgis.com/4.9/esri/themes/dark/main.css")
+    document.getElementById("darkTheme").setAttribute("href", "https://js.arcgis.com/4.9/esri/themes/dark/main.css");
+    document.getElementById("infoLightButton").style.display = "none";
+    document.getElementById("xinfoDarkButton").style.display = "block";
+    document.getElementById("xinfoDarkIcon").style.display = "block";
+    document.getElementById("lightFooter").style.display = "none";
+    document.getElementById("darkFooter").style.display = "block";
+    // when darkmode is disabled, do these things
   } else {
     document.getElementById("pagestyle").setAttribute("href", "beauty.css");
-    document.getElementById("darkTheme").setAttribute("href", "")
+    document.getElementById("darkTheme").setAttribute("href", "");
+    document.getElementById("infoLightButton").style.display = "block";
+    document.getElementById("lightFooter").style.display = "block";
+    document.getElementById("darkFooter").style.display = "none";
+    document.getElementById("xinfoDarkIcon").style.display = "none";
   }
 }

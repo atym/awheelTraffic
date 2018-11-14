@@ -8,10 +8,10 @@
  * Ian Kelly
  * Brandon Rose
  **************************************************/
- /**************************************************
+/**************************************************
   * Changes from Beauty
+  * toolbox (background color)
   **************************************************/
-
 html, body, #viewDiv {
   padding: 0;
   margin: 0;
@@ -43,45 +43,90 @@ body:not(.hide-overlay) {
 }
 
 #toolBox {
-  background-color: white;
+  background-color: none;
   margin-top: 2em;
   margin-left: 1.5em;
   border: solid;
   border-width: 0px;
   position: absolute;
-  z-index: 1;
   text-align: center;
-  box-shadow: 4px 5px 5px black;
+  box-shadow: 0 0 15px #149FEC;
   z-index: 99;
 }
 
 #boxHeader {
-  background-color: black;
-  color: white;
+  background-color: #2E2E30;
+  color: #BBC2C6;
   padding-top: 0.5px;
   padding-bottom: 0.5px;
   padding-right: 2em;
   padding-left: 2em;
   width: 28em;
+  cursor: pointer;
+}
+
+#boxHeader:hover {
+  background-color: #1E2128;
+}
+
+#boxHeader h2 {
+  margin-left: 1.7em;
+}
+
+#darkModeLogo {
+  position: absolute;
+  z-index: 99;
+  left: 0;
+  margin-top: 1.2em;
+  margin-left: 1.7em;
+  width: 2em;
+}
+
+#lightModeLogo {
+  display: none;
+}
+
+#xinfoDarkButton {
+  position: absolute;
+  z-index: 1;
+  padding: 0.3em;
+  bottom: 0;
+  margin-bottom: 4.8em;
+  margin-left: 1em;
+  background-color: #1B1B1B;
+  box-shadow: 0px 0px 5px green;
+  cursor: pointer;
+}
+
+#xinfoDarkButton:hover {
+  box-shadow: 0px 0px 20px green;
+}
+
+#xinfoDarkIcon {
+  width: 1.5em;
 }
 
 #boxMenu {
-width: 100%;
-background-color: gray;
+  width: 100%;
+  background-color: #414141;
+  color: #BBC2C6;
+}
+
+.w3-hover:hover {
+  background-color: #182326;
 }
 
 #boxContent {
-  color: black;
+  color: #BBC2C6;
   height: 30em;
   width: 28em;
-  background-color: grey;
+  background-color: #242424;
 }
 
 .w3-display-bottom {
   margin-top: 16.4em;
   margin-left: -0.80em;
   position: absolute;
-
 }
 
 #basemapTab {
@@ -188,37 +233,53 @@ background-color: gray;
   font-size: 75px;
 }
 
+#lightFooter {
+  display: none;
+}
+
+#darkFooter {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  z-index: 50;
+  bottom: 0;
+  margin-bottom: 1.5em;
+  font-size: 0.7em;
+  height: 1.2em;
+  padding-left: 0.5em;
+  color: #C3C3C3;
+}
+
 /*ESRI dark theme CSS*/
 .dark-theme .esri-widget,
-    .dark-theme .esri-widget-button,
-    .dark-theme .esri-menu,
-    .dark-theme .esri-popup-main,
-    .dark-theme .esri-popup .esri-pointer-direction,
-    .dark-theme .esri-button {
-      background-color: #242424;
-      color: #bdbdbd;
-    }
+.dark-theme .esri-widget-button,
+.dark-theme .esri-menu,
+.dark-theme .esri-popup-main,
+.dark-theme .esri-popup .esri-pointer-direction,
+.dark-theme .esri-button {
+  background-color: #242424;
+  color: #bdbdbd;
+}
 
-    .esri-basemap-toggle {
-      color: black !important;
-    }
+.esri-basemap-toggle {
+  color: black !important;
+}
 
-    .dark-theme .esri-widget-button:focus,
-    .dark-theme .esri-widget-button:hover,
-    .dark-theme .esri-menu li:focus,
-    .dark-theme .esri-menu li:hover {
-      background-color: #333;
-      color: #d1d1d1;
-    }
+.dark-theme .esri-widget-button:focus,
+.dark-theme .esri-widget-button:hover,
+.dark-theme .esri-menu li:focus,
+.dark-theme .esri-menu li:hover {
+  background-color: #333;
+  color: #d1d1d1;
+}
 
-    .dark-theme .esri-button:focus,
-    .dark-theme .esri-button:hover {
-      color: #d1d1d1;
-    }
+.dark-theme .esri-button:focus,
+.dark-theme .esri-button:hover {
+  color: #d1d1d1;
+}
 
 /* Smartphones (portrait) ----------- */
 @media only screen and (max-width: 450px) {
-
   .overlay-content img {
     height: 90px;
     width: 90px;
@@ -269,6 +330,15 @@ background-color: gray;
     height: 75px;
   }
 
+  #darkModeLogo {
+    position: absolute;
+    z-index: 99;
+    left: 0;
+    margin-top: 0.75em;
+    margin-left: 2.1em;
+    width: 2em;
+  }
+
   #toolBox {
     margin: 0;
     width: 100%;
@@ -282,9 +352,8 @@ background-color: gray;
     font-size: 1.5em;
   }
 
-  #boxMenu{
+  #boxMenu {
     font-size: 12px;
-
   }
 
   /*#touchMenu {
@@ -296,7 +365,6 @@ background-color: gray;
     font-size: 2.5em;
     cursor: pointer;
   }*/
-
   #boxContent {
     width: 100%;
     z-index: 99 !important;
@@ -315,10 +383,7 @@ background-color: gray;
 }
 
 /* Smartphones (landscape) ----------- */
-@media only screen
-and (min-width : 451px)
-and (max-width : 825px) {
-
+@media only screen and (min-width : 451px) and (max-width : 825px) {
   .overlay-content img {
     height: 90px;
     width: 90px;
@@ -385,7 +450,7 @@ and (max-width : 825px) {
     margin-top: -1px;
   }
 
-  #boxMenu{
+  #boxMenu {
     font-size: 12px;
   }
 
@@ -410,7 +475,6 @@ and (max-width : 825px) {
   #esriLegend {
     margin-top: -3em;
     width: 12em;
-
   }
 
   .w3-button {

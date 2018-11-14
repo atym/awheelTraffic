@@ -19,6 +19,7 @@ require([
     "esri/layers/TileLayer",
     "esri/geometry/Point",
     "esri/widgets/Legend",
+    "esri/widgets/Home",
     "esri/request"
   ],
 
@@ -26,23 +27,13 @@ require([
    * Create magic mapping function
    **************************************************/
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, esriRequest) {
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, esriRequest) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite;
-
-    /**************************************************
-     * Load initial batch of traffic data from COA
-     * JSON data over Socrata API
-     **************************************************/
-
-    trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
-      "?$where=traffic_report_status_date_time>'2018-11-11'" +
-      "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
-      "&$limit=3000";
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, vp;
 
     /**************************************************
      * Create variables for vector layers
@@ -91,13 +82,68 @@ require([
 
     /**************************************************
      * Create feature for city limits boundary
-     * Hide this layer
+     * Hide this layer from view
+     * CURRENTLY CONTROLLER OF DEFAULT EXTENT
+     * DEMOTE ORDER WHEN EXTENT UPDATE COMPLETE
      **************************************************/
 
     limits = new FeatureLayer({
       url: "https://services9.arcgis.com/E9UVIqvAicEqTOkL/arcgis/rest/services/acl2018/FeatureServer",
       visible: false
     });
+
+    /**************************************************
+     * Create map and define basemap
+     * Select layers to display on basemap
+     **************************************************/
+
+    map = new Map({
+      basemap: vectorRoads,
+      layers: [limits]
+    });
+
+    /**************************************************
+     * Assign map to it's HTML container, load extent
+     **************************************************/
+
+    view = new MapView({
+      container: "viewDiv",
+      map: map,
+      zoom: 12,
+      center: [-97.775462, 30.270076]
+    });
+
+    /**************************************************
+     * Once the limits layer loads, set the view's extent to the fullextent
+     **************************************************/
+
+    limits.when(function() {
+      view.extent = limits.fullExtent;
+    });
+
+    /**************************************************
+     * Create basemap toggle and style it
+     **************************************************/
+
+    baseToggle = new BasemapToggle({
+      titleVisible: true,
+      view: view,
+      nextBasemap: satellite
+    });
+
+    homeBtn = new Home({
+      view: view
+    });
+
+    /**************************************************
+     * Load initial batch of traffic data from COA
+     * JSON data over Socrata API
+     **************************************************/
+
+    trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
+      "?$where=traffic_report_status_date_time>'2018-11-11'" +
+      "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
+      "&$limit=3000";
 
     /**************************************************
      * Define the specification for each field to create
@@ -171,45 +217,6 @@ require([
         }
       }]
     };
-
-    /**************************************************
-     * Create map and define basemap
-     * Select layers to display on basemap
-     **************************************************/
-
-    map = new Map({
-      basemap: vectorRoads,
-      layers: [limits]
-    });
-
-    /**************************************************
-     * Assign map to it's HTML container, load extent
-     **************************************************/
-
-    view = new MapView({
-      container: "viewDiv",
-      map: map,
-      zoom: 12,
-      center: [-97.775462, 30.270076]
-    });
-
-    /**************************************************
-     * Once the limits layer loads, set the view's extent to the fullextent
-     **************************************************/
-
-    limits.when(function() {
-      view.extent = limits.fullExtent;
-    });
-
-    /**************************************************
-     * Create basemap toggle and style it
-     **************************************************/
-
-    baseToggle = new BasemapToggle({
-      titleVisible: true,
-      view: view,
-      nextBasemap: satellite
-    });
 
     /**************************************************
      * Request the  data from data.austin when the
@@ -303,15 +310,14 @@ require([
       }
     }
 
-    darkModeToggle = document.getElementById("darkMode");
-    cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
-
     /*****************************************************************
      * The visible property on the layer can be used to toggle the
      * layer's visibility in the view. When the visibility is turned off
      * the layer is still part of the map, which means you can access
      * its properties and perform analysis even though it isn't visible.
      *******************************************************************/
+    darkModeToggle = document.getElementById("darkMode");
+    cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
 
     darkModeToggle.addEventListener("change", function() {
       if (darkModeToggle.checked) {
@@ -327,10 +333,12 @@ require([
     });
 
     /**************************************************
-     * MODIFY map widgets
+     * ADD and MODIFY map widgets
      **************************************************/
 
-    view.ui.move("zoom", "bottom-right"); //Move Zoom to top left
+    view.ui.move("zoom", "bottom-right"); //Move Zoom
     view.ui.add(baseToggle, "bottom-right"); //Add Basemap toggle
+    view.ui.add(homeBtn, "bottom-left"); // Add the home button
+
 
   });

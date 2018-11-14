@@ -18,3 +18,6 @@ https://github.com/tchapi/markdown-cheatsheet/blob/master/README.md
 
 ### Mastering Markdown ###
 https://guides.github.com/features/mastering-markdown/
+
+### ArcGIS API for JavaScript MINI ###
+https://github.com/Esri/arcgis-js-api

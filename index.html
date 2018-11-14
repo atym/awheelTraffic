@@ -3,7 +3,7 @@
 <html>
 
 <script>
-/**************************************************
+  /**************************************************
  * WELCOME to the Index
  **************************************************/
 /**************************************************
@@ -14,13 +14,14 @@
  * Brandon Rose
  **************************************************/
 </script>
+
 <head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <script>
-  /**************************************************
+    /**************************************************
    * Apply mobile optimization metadata
    **************************************************/
   </script>
@@ -33,19 +34,19 @@
   <title>Austin Traffic Incidents</title>
 
   <script>
-  /**************************************************
+    /**************************************************
    * Load Stylesheets
-   * Beauty, W3, ESRI, Google Fonts
+   * Beauty, W3, ESRI, Google Fonts, Font Awesome
    **************************************************/
   </script>
   <link id="pagestyle" rel="stylesheet" type="text/css" href="beauty.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
   <link id="darkTheme" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
 
   <script>
-  /**************************************************
+    /**************************************************
    * Load JavaScript
    * Mapping, Animate, and ESRI
    **************************************************/
@@ -60,23 +61,32 @@
 <body>
 
   <script>
-  /**************************************************
+    /**************************************************
    * Create logo div
    * mouseover and click functions
    **************************************************/
   </script>
-  <div id="mainLogo">
-    <img src='./img/logo.png' onmouseover="this.src='./img/logoabout.png';" onmouseout="this.src='./img/logo.png';" onclick="openOverlay()" height="100" width="100">
-  </div>
+
+  <div id="infoLightButton" onclick="openOverlay()"><img id="infoLightIcon" src="./infoLight.svg" alt="info icon"></div>
+
+  <div id="xinfoDarkButton" onclick="openOverlay()"><img id="xinfoDarkIcon" src="./infoDark.svg" alt="info icon"></div>
+
+
+  <!--   <div id="mainLogo">
+          <img src='./img/logo.png' height="100" width="100">
+        </div> -->
+
 
   <div id="toolBox">
 
-    <div id="boxHeader">
+    <div id="boxHeader" onclick="openOverlay()">
+      <img id="lightModeLogo" src="logoBlack.png" alt="awheel logo">
+      <img id="darkModeLogo" src="logoGrey.png" alt="awheel logo">
       <h2>Austin Traffic Incidents</h2>
     </div>
 
     <script>
-    /**************************************************
+      /**************************************************
      * Create tabbed menu, assign function to click
      **************************************************/
     </script>
@@ -95,7 +105,7 @@
     </div>
 
     <script>
-    /**************************************************
+      /**************************************************
      * Create boxContent div, assign functions to close on click
      **************************************************/
     </script>
@@ -103,13 +113,13 @@
 
       <div id="Legend" class="w3-container title">
         <span onclick="closeMenu(event, 'Legend')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
-      <h2>Legend</h2>
-      <p>Display dynamic legend that can be hidden (most helpful on mobile).</p>
+        <h2>Legend</h2>
+        <p>Display dynamic legend that can be hidden (most helpful on mobile).</p>
         <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
-		  <br>
+        <br>
         <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('black.css')"> Dark Mode</label>
-		  <br>
-		  <div id="esriLegend"></div>
+        <br>
+        <div id="esriLegend"></div>
       </div>
 
       <div id="Search" class="w3-container title" style="display:none">
@@ -117,37 +127,36 @@
         <h2>Search</h2>
         <!--<p>Query the dataset and then display heatmap.</p>-->
         <div id="incidentList"></div>
-		<script>
-		/****************************************************************
-		* Dynamically populate html with form elements for incident types
-		****************************************************************/
-			require([
-					"esri/request"
-					],
-					function(esriRequest){
+        <script>
+          /****************************************************************
+           * Dynamically populate html with form elements for incident types
+           ****************************************************************/
+          require([
+              "esri/request"
+            ],
+            function(esriRequest) {
 
-							var html="";
+              var html = "";
 
-							var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$query=SELECT%20DISTINCT%20issue_reported";
-							esriRequest(url, {
-								responseType: "json"
-							}).then(function(response){
-								var json=response.data;
-								for (i in json){
-									html+="<p>";
-									html+=json[i].issue_reported;
-									html+="</p>";
-									console.log(json[i].issue_reported);
-								};
+              var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$query=SELECT%20DISTINCT%20issue_reported";
+              esriRequest(url, {
+                responseType: "json"
+              }).then(function(response) {
+                var json = response.data;
+                for (i in json) {
+                  html += "<p>";
+                  html += json[i].issue_reported;
+                  html += "</p>";
+                  console.log(json[i].issue_reported);
+                };
 
-								document.getElementById("incidentList").innerHTML = html;
-							});
+                document.getElementById("incidentList").innerHTML = html;
+              });
 
 
 
-			});
-
-	</script>
+            });
+        </script>
       </div>
 
       <div id="Locate" class="w3-container title" style="display:none">
@@ -159,9 +168,9 @@
   </div>
 
   <script>
-  /**************************************************
-   * Create overlay, assign function to logo icon
-   **************************************************/
+    /**************************************************
+     * Create overlay, assign function to logo icon
+     **************************************************/
   </script>
   <div id="fullOverlay" class="overlay">
     <a href="javascript:void(0)" class="closebtn" onclick="closeOverlay()">&times;</a>
@@ -169,10 +178,10 @@
     <div class="overlay-content">
 
       <script>
-      /**************************************************
-       * Create overlay navigation, assign functions to click
-       * Switch between team info and project info
-       **************************************************/
+        /**************************************************
+         * Create overlay navigation, assign functions to click
+         * Switch between team info and project info
+         **************************************************/
       </script>
       <div id="aboutNav">
         <button id="aboutButtons" class="buttons" onclick="teamOverlay()">About Team</button>
@@ -180,10 +189,10 @@
       </div>
 
       <script>
-      /**************************************************
-       * Information about team members
-       * Name, picture, about
-       **************************************************/
+        /**************************************************
+         * Information about team members
+         * Name, picture, about
+         **************************************************/
       </script>
       <div id="overlayTeam">
         <div class="about">
@@ -217,9 +226,9 @@
       </div>
 
       <script>
-      /**************************************************
-       * Information about project
-       **************************************************/
+        /**************************************************
+         * Information about project
+         **************************************************/
       </script>
       <div id="overlayProject">
         <h2>Austin Traffic Incidents</h2>
@@ -290,13 +299,16 @@
     </div>
   </div>
 
+
+  <div id="lightFooter">Footer information will appear here.</div>
+  <div id="darkFooter">Footer information will appear here.</div>
+
   <script>
-  /**************************************************
-   * Create view for map to load into
-   **************************************************/
+    /**************************************************
+     * Create view for map to load into
+     **************************************************/
   </script>
   <div id="viewDiv"></div>
-
 </body>
 
 </html>
