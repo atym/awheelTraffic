@@ -125,9 +125,18 @@
         <span onclick="closeMenu(event, 'Search')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
         <h2>Search</h2>
         <!--<p>Query the dataset and then display heatmap.</p>-->
-        <div id="incidentList">
+        <div id="searchOptions">
+
+			<div id="dateRange">
+				<label for="dateRange">Date Range:</label><br>
+				<input type="radio" name="dateRange" value="7">Last 7 Days<br>
+				<input type="radio" name="dateRange" value="30">Last 30 days <br>
+				<input type="radio" name="dateRange" value="90">Last 90 days <br>
+				
+			</div>
 			<label for="incidentTypes">Incident Types:</label>
-			<select id="incidentTypes" size="5"></select>
+			<select id="incidentTypes" <!--size="5"-->></select>
+			
 		</div>
       </div>
 
