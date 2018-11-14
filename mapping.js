@@ -33,7 +33,7 @@ require([
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, vp;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn;
 
     /**************************************************
      * Create variables for vector layers
@@ -62,6 +62,7 @@ require([
     /**************************************************
      * Create variables for satellite base and Reference
      * New basemap with those layers combined
+     * order of array determines stacking order
      * Assign custom URL for basemapToggleButton
      **************************************************/
 
@@ -348,7 +349,7 @@ require([
      * the layer is still part of the map, which means you can access
      * its properties and perform analysis even though it isn't visible.
      *******************************************************************/
-     
+
     darkModeToggle = document.getElementById("darkMode");
     cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
 

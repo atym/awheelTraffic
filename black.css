@@ -248,6 +248,7 @@ body:not(.hide-overlay) {
   height: 2.4em;
   padding-left: 0.5em;
   color: #555555;
+  display: none;
 }
 
 /*ESRI dark theme CSS*/
