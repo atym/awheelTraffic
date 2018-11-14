@@ -55,7 +55,6 @@
   <script src="mapping.js"></script>
   <script src="animate.js"></script>
 
-
 </head>
 
 <body>
@@ -126,37 +125,10 @@
         <span onclick="closeMenu(event, 'Search')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
         <h2>Search</h2>
         <!--<p>Query the dataset and then display heatmap.</p>-->
-        <div id="incidentList"></div>
-        <script>
-          /****************************************************************
-           * Dynamically populate html with form elements for incident types
-           ****************************************************************/
-          require([
-              "esri/request"
-            ],
-            function(esriRequest) {
-
-              var html = "";
-
-              var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$query=SELECT%20DISTINCT%20issue_reported";
-              esriRequest(url, {
-                responseType: "json"
-              }).then(function(response) {
-                var json = response.data;
-                for (i in json) {
-                  html += "<p>";
-                  html += json[i].issue_reported;
-                  html += "</p>";
-                  console.log(json[i].issue_reported);
-                };
-
-                document.getElementById("incidentList").innerHTML = html;
-              });
-
-
-
-            });
-        </script>
+        <div id="incidentList">
+			<label for="incidentTypes">Incident Types:</label>
+			<select id="incidentTypes" size="5"></select>
+		</div>
       </div>
 
       <div id="Locate" class="w3-container title" style="display:none">
