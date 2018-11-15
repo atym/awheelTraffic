@@ -123,6 +123,25 @@ body:not(.hide-overlay) {
   background-color: #242424;
 }
 
+#legendInfo {
+  width: 1.6em;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+#legendSpinner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 0.3em;
+  margin-left: 0.5em;
+  padding: 1em;
+  cursor: pointer;
+}
+
 .w3-display-bottom {
   margin-top: 16.4em;
   margin-left: -0.80em;
@@ -277,6 +296,17 @@ body:not(.hide-overlay) {
 .dark-theme .esri-button:focus,
 .dark-theme .esri-button:hover {
   color: #d1d1d1;
+}
+
+.esri-basemap-toggle__title {
+  color: ##3C3C3C;
+  background-color: #1B1B1B;
+}
+
+/*change background color under basemap*/
+
+.esri-view-root {
+  background-color:black;
 }
 
 /* Smartphones (portrait) ----------- */

@@ -21,3 +21,6 @@ https://guides.github.com/features/mastering-markdown/
 
 ### ArcGIS API for JavaScript MINI ###
 https://github.com/Esri/arcgis-js-api
+
+### Tippy JS Tooltips ###
+https://atomiks.github.io/tippyjs/

@@ -20,6 +20,7 @@ require([
     "esri/geometry/Point",
     "esri/widgets/Legend",
     "esri/widgets/Home",
+    "esri/widgets/ScaleBar",
     "esri/request"
   ],
 
@@ -27,13 +28,13 @@ require([
    * Create magic mapping function
    **************************************************/
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, esriRequest) {
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, esriRequest) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar;
 
     /**************************************************
      * Create variables for vector layers
@@ -142,7 +143,7 @@ require([
      **************************************************/
 
     trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
-      "?$where=traffic_report_status_date_time>'2018-11-11'" +
+      "?$where=traffic_report_status_date_time>'2018-11-13'" +
       "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
       "&$limit=3000";
 
@@ -233,7 +234,7 @@ require([
         .then(createLayer)
         .then(createLegend);
 
-		populateSearch();
+      populateSearch();
     });
 
     /**************************************************
@@ -310,38 +311,42 @@ require([
         }, "esriLegend");
       }
     }
-	
-	/**********************************************************************
-    * Dynamically populate Search tab with form elements for incident types
-    **********************************************************************/
-	function populateSearch(){
-		      
-              var html = "";
-			  var incidentSelect = document.getElementById("incidentTypes");
 
-              var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$query=SELECT%20DISTINCT%20issue_reported";
-              
-			  esriRequest(url, {
-                responseType: "json"
-              }).then(function(response) {
-                var json = response.data;
-                
-				for (i in json) {
-                  /*html += "<p>";
-                  html += json[i].issue_reported;
-                  html += "</p>";*/
-				  var option = document.createElement("option");
-				  option.text = json[i].issue_reported;
-				  option.value = json[i].issue_reported;
-				  incidentSelect.add(option);
-				  
-				  
-                  
-                };
-				
-				//document.getElementById("incidentList").innerHTML = html;
-				});
-	}
+    /**********************************************************************
+     * Dynamically populate Search tab with form elements for incident types
+     **********************************************************************/
+    function populateSearch() {
+
+      var html = "";
+      var incidentSelect = document.getElementById("incidentTypes");
+
+      var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$query=SELECT%20DISTINCT%20issue_reported";
+
+      esriRequest(url, {
+        responseType: "json"
+      }).then(function(response) {
+        var json = response.data;
+
+        for (i in json) {
+          /*html += "<p>";
+          html += json[i].issue_reported;
+          html += "</p>";*/
+          var option = document.createElement("option");
+          option.text = json[i].issue_reported;
+          option.value = json[i].issue_reported;
+          incidentSelect.add(option);
+
+        };
+
+        //document.getElementById("incidentList").innerHTML = html;
+      });
+    }
+
+     scaleBar = new ScaleBar({
+     	view: view,
+     	unit: "dual"
+     	
+		});
 
     /*****************************************************************
      * The visible property on the layer can be used to toggle the
@@ -349,6 +354,11 @@ require([
      * the layer is still part of the map, which means you can access
      * its properties and perform analysis even though it isn't visible.
      *******************************************************************/
+
+    if (localStorage.getItem("mode") == "dark") {
+      darkRoads.visible = true;
+      lightRoads.visible = false;
+    }
 
     darkModeToggle = document.getElementById("darkMode");
     cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
@@ -373,6 +383,7 @@ require([
     view.ui.move("zoom", "bottom-right"); //Move Zoom
     view.ui.add(baseToggle, "bottom-right"); //Add Basemap toggle
     view.ui.add(homeBtn, "bottom-left"); // Add the home button
+    view.ui.add(scaleBar, "top-right");
 
 
   });
