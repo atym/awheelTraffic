@@ -233,7 +233,7 @@ require([
         .then(createLayer)
         .then(createLegend);
 
-		populateSearch();
+      populateSearch();
     });
 
     /**************************************************
@@ -310,38 +310,36 @@ require([
         }, "esriLegend");
       }
     }
-	
-	/**********************************************************************
-    * Dynamically populate Search tab with form elements for incident types
-    **********************************************************************/
-	function populateSearch(){
-		      
-              var html = "";
-			  var incidentSelect = document.getElementById("incidentTypes");
 
-              var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$query=SELECT%20DISTINCT%20issue_reported";
-              
-			  esriRequest(url, {
-                responseType: "json"
-              }).then(function(response) {
-                var json = response.data;
-                
-				for (i in json) {
-                  /*html += "<p>";
-                  html += json[i].issue_reported;
-                  html += "</p>";*/
-				  var option = document.createElement("option");
-				  option.text = json[i].issue_reported;
-				  option.value = json[i].issue_reported;
-				  incidentSelect.add(option);
-				  
-				  
-                  
-                };
-				
-				//document.getElementById("incidentList").innerHTML = html;
-				});
-	}
+    /**********************************************************************
+     * Dynamically populate Search tab with form elements for incident types
+     **********************************************************************/
+    function populateSearch() {
+
+      var html = "";
+      var incidentSelect = document.getElementById("incidentTypes");
+
+      var url = "https://data.austintexas.gov/resource/r3af-2r8x.json?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$query=SELECT%20DISTINCT%20issue_reported";
+
+      esriRequest(url, {
+        responseType: "json"
+      }).then(function(response) {
+        var json = response.data;
+
+        for (i in json) {
+          /*html += "<p>";
+          html += json[i].issue_reported;
+          html += "</p>";*/
+          var option = document.createElement("option");
+          option.text = json[i].issue_reported;
+          option.value = json[i].issue_reported;
+          incidentSelect.add(option);
+
+        };
+
+        //document.getElementById("incidentList").innerHTML = html;
+      });
+    }
 
     /*****************************************************************
      * The visible property on the layer can be used to toggle the
@@ -349,6 +347,12 @@ require([
      * the layer is still part of the map, which means you can access
      * its properties and perform analysis even though it isn't visible.
      *******************************************************************/
+
+    var darkCookieMap = document.cookie;
+    if (darkCookieMap == "dark") {
+      darkRoads.visible = true;
+      lightRoads.visible = false;
+    }
 
     darkModeToggle = document.getElementById("darkMode");
     cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");

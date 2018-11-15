@@ -106,6 +106,7 @@ function swapStyleSheet(sheet) {
     document.getElementById("xinfoDarkIcon").style.display = "block";
     document.getElementById("lightFooter").style.display = "none";
     document.getElementById("darkFooter").style.display = "block";
+    document.cookie = "dark; expires=Tue, 31 Dec 2030 12:00:00 UTC; path=/;";
     // when darkmode is disabled, do these things
   } else {
     document.getElementById("pagestyle").setAttribute("href", "beauty.css");
@@ -114,17 +115,29 @@ function swapStyleSheet(sheet) {
     document.getElementById("lightFooter").style.display = "block";
     document.getElementById("darkFooter").style.display = "none";
     document.getElementById("xinfoDarkIcon").style.display = "none";
+    document.cookie = "dark; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
+}
+
+/**************************************************
+ * Cookie to remember dark mode setting
+ **************************************************/
+function checkCookie() {
+  var darkCookie = document.cookie;
+  if (darkCookie == "dark") {
+    document.getElementById("darkMode").checked = true;
+    swapStyleSheet("black.css");
   }
 }
 
 /**************************************************
  * Animate map refresh icon
  **************************************************/
- function spinTimer() {
-   setTimeout(function(){
-     document.getElementById("legendSpinner").setAttribute("class", "fa fa-refresh fa-lg");
-   }, 5000)
- }
+function spinTimer() {
+  setTimeout(function() {
+    document.getElementById("legendSpinner").setAttribute("class", "fa fa-refresh fa-lg");
+  }, 5000)
+}
 
 function spinLegend() {
   document.getElementById("legendSpinner").setAttribute("class", "fa fa-refresh fa-spin fa-lg");
