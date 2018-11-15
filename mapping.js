@@ -142,8 +142,6 @@ require([
       view: view
     }, "esriLocate");
 
-
-
     /**************************************************
      * Load initial batch of traffic data from COA
      * JSON data over Socrata API
