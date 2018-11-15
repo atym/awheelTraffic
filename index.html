@@ -49,12 +49,14 @@
   <script>
     /**************************************************
    * Load JavaScript
-   * Mapping, Animate, and ESRI
+   * Mapping, Animate, ESRI, Tippy JS
    **************************************************/
   </script>
   <script src="https://js.arcgis.com/4.9/"></script>
+
   <script src="mapping.js"></script>
   <script src="animate.js"></script>
+  <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
 
 </head>
 
@@ -67,7 +69,7 @@
    **************************************************/
   </script>
 
-  <div id="infoLightButton" onclick="openOverlay()"><img id="infoLightIcon" src="./infoLight.svg" alt="info icon"></div>
+  <div id="infoLightButton" onclick="openOverlay()" data-tippy="About this web map"><img id="infoLightIcon" src="./infoLight.svg" alt="info icon"></div>
 
   <div id="xinfoDarkButton" onclick="openOverlay()"><img id="xinfoDarkIcon" src="./infoDark.svg" alt="info icon"></div>
 
@@ -119,9 +121,12 @@
         <br>
         <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('black.css')"> Dark Mode</label>
         <br>
+        <label data-tippy="Inactive"><input type="checkbox" id="beginner"> Beginner Mode</label>
+        <br>
         <div id="esriLegend"></div>
-        <img id="legendInfo" class="toolInfo" src="./infoLight.svg" alt="Legend Info">
-        <i id="legendSpinner" class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>
+        <img id="legendInfo" data-tippy="Use the legend tool for viewing the symbol definitions used on the map and to toggle visual customizations" class="tooltip" src="./infoLight.svg" alt="Legend Info">
+
+        <i id="legendSpinner" data-tippy="Refresh Map (inactive)" class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>
 
       </div>
 

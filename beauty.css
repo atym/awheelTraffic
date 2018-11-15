@@ -151,7 +151,7 @@ body:not(.hide-overlay) {
 
 .w3-display-bottom {
   margin-top: 16.4em;
-  margin-left: -0.80em;
+  margin-left: -1em;
   position: absolute;
 }
 
@@ -408,7 +408,7 @@ body:not(.hide-overlay) {
 
   .w3-display-bottom {
     margin-top: 15em;
-    margin-left: -0.80em;
+    margin-left: -1em;
     position: absolute;
   }
 }
