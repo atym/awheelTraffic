@@ -348,8 +348,7 @@ require([
      * its properties and perform analysis even though it isn't visible.
      *******************************************************************/
 
-    var darkCookieMap = document.cookie;
-    if (darkCookieMap == "dark") {
+    if (localStorage.getItem("mode") == "dark") {
       darkRoads.visible = true;
       lightRoads.visible = false;
     }

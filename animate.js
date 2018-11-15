@@ -106,7 +106,8 @@ function swapStyleSheet(sheet) {
     document.getElementById("xinfoDarkIcon").style.display = "block";
     document.getElementById("lightFooter").style.display = "none";
     document.getElementById("darkFooter").style.display = "block";
-    document.cookie = "dark; expires=Tue, 31 Dec 2030 12:00:00 UTC; path=/;";
+    localStorage.setItem("mode", "dark");
+
     // when darkmode is disabled, do these things
   } else {
     document.getElementById("pagestyle").setAttribute("href", "beauty.css");
@@ -115,16 +116,34 @@ function swapStyleSheet(sheet) {
     document.getElementById("lightFooter").style.display = "block";
     document.getElementById("darkFooter").style.display = "none";
     document.getElementById("xinfoDarkIcon").style.display = "none";
-    document.cookie = "dark; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    localStorage.setItem("mode", "light");
   }
 }
 
 /**************************************************
  * Cookie to remember dark mode setting
  **************************************************/
-function checkCookie() {
+/*function checkCookie() {
   var darkCookie = document.cookie;
   if (darkCookie == "dark") {
+    document.getElementById("darkMode").checked = true;
+    swapStyleSheet("black.css");
+  }
+}*/
+
+/*document.cookie = "dark; expires=Tue, 31 Dec 2030 12:00:00 UTC; path=/;";*/
+
+/*
+document.cookie = "dark; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";*/
+
+/**************************************************
+ * HTML5 Web Storage for dark mode setting
+ * This function checks the cookie created by
+ * swapStyleSheet()
+ **************************************************/
+
+function checkCookie() {
+  if (localStorage.getItem("mode") == "dark") {
     document.getElementById("darkMode").checked = true;
     swapStyleSheet("black.css");
   }
