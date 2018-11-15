@@ -120,14 +120,22 @@
         <p>Display dynamic legend that can be hidden (most helpful on mobile).</p>
         <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
         <br>
+
         <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('black.css')"> Dark Mode</label>
+
         <br>
-        <label data-tippy="Inactive"><input type="checkbox" id="beginner"> Beginner Mode</label>
+
+        <!-- <label data-tippy="Inactive"><input type="checkbox" id="beginner"> Beginner Mode</label> -->
+
         <br>
         <div id="esriLegend"></div>
         <img id="legendInfo" data-tippy="Use the legend tool for viewing the symbol definitions used on the map and to toggle visual customizations" class="tooltip" src="./infoLight.svg" alt="Legend Info">
 
-        <i id="legendSpinner" data-tippy="Reset map view to active incidents" class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>
+        <i id="legendSpinner"
+        data-tippy="<label><input type='checkbox' id='beginner'> Beginner Mode</label><br><label><input type='checkbox' id='beginner'> Other Option</label><br><label><input type='checkbox' id='beginner'> Another Option</label><br>"
+         data-tippy-interactive="true"
+           data-tippy-placement="bottom"
+         class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>
 
       </div>
 
