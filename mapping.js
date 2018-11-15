@@ -150,7 +150,7 @@ require([
      **************************************************/
 
     trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
-      "?$where=traffic_report_status_date_time>'2018-11-13'" +
+      "?$where=traffic_report_status='ACTIVE'" +
       "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
       "&$limit=3000";
 
@@ -207,21 +207,21 @@ require([
       field: "status", // autocasts as new SimpleRenderer()
       defaultSymbol: {
         type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-        size: 8,
+        size: 10,
         color: "#FF4000"
       },
       uniqueValueInfos: [{
         value: "ACTIVE",
         symbol: {
           type: "simple-marker",
-          size: 8,
+          size: 10,
           color: "red"
         }
       }, {
         value: "ARCHIVED",
         symbol: {
           type: "simple-marker",
-          size: 8,
+          size: 10,
           color: "yellow"
         }
       }]
