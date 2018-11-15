@@ -20,6 +20,7 @@ require([
     "esri/geometry/Point",
     "esri/widgets/Legend",
     "esri/widgets/Home",
+    "esri/widgets/ScaleBar",
     "esri/request"
   ],
 
@@ -27,13 +28,13 @@ require([
    * Create magic mapping function
    **************************************************/
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, esriRequest) {
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, esriRequest) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar;
 
     /**************************************************
      * Create variables for vector layers
@@ -341,6 +342,12 @@ require([
       });
     }
 
+     scaleBar = new ScaleBar({
+     	view: view,
+     	unit: "dual"
+     	
+		});
+
     /*****************************************************************
      * The visible property on the layer can be used to toggle the
      * layer's visibility in the view. When the visibility is turned off
@@ -376,6 +383,7 @@ require([
     view.ui.move("zoom", "bottom-right"); //Move Zoom
     view.ui.add(baseToggle, "bottom-right"); //Add Basemap toggle
     view.ui.add(homeBtn, "bottom-left"); // Add the home button
+    view.ui.add(scaleBar, "top-right");
 
 
   });
