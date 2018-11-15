@@ -138,13 +138,13 @@
          class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>
 
       </div>
-      
+
 	  <!--<p>Query the dataset and then display heatmap.</p>-->
       <div id="Search" class="w3-container title" style="display:none">
         <span onclick="closeMenu(event, 'Search')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
         <h2>Search</h2>
 
-        
+
         <div id="searchOptions">
 
 			<div id="dateRange">
@@ -152,24 +152,26 @@
 				<input type="radio" name="dateRange" value="7">Last 7 Days<br>
 				<input type="radio" name="dateRange" value="30">Last 30 days <br>
 				<input type="radio" name="dateRange" value="90">Last 90 days <br>
-				
+
 			</div>
 
         <div id="incidentList">
 
 			<label for="incidentTypes">Incident Types:</label>
 			<select id="incidentTypes"></select>
-			
+
 		</div>
-		
-        
+
+
 		</div>
       </div>
-	  
+
       <div id="Locate" class="w3-container title" style="display:none">
         <span onclick="closeMenu(event, 'Locate')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
         <h2>Locate</h2>
+
         <p>Input address to see incidents within a buffered distance.</p>
+        <div id="esriLocate"></div>
       </div>
     </div>
   </div>

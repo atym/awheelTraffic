@@ -21,6 +21,7 @@ require([
     "esri/widgets/Legend",
     "esri/widgets/Home",
     "esri/widgets/ScaleBar",
+    "esri/widgets/Search",
     "esri/request"
   ],
 
@@ -28,13 +29,13 @@ require([
    * Create magic mapping function
    **************************************************/
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, esriRequest) {
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, esriRequest) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget;
 
     /**************************************************
      * Create variables for vector layers
@@ -136,6 +137,12 @@ require([
     homeBtn = new Home({
       view: view
     });
+
+    locateWidget = new Search({
+      view: view
+    }, "esriLocate");
+
+
 
     /**************************************************
      * Load initial batch of traffic data from COA
