@@ -138,7 +138,7 @@ document.cookie = "dark; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";*/
 
 /**************************************************
  * HTML5 Web Storage for dark mode setting
- * This function checks the cookie created by
+ * This function checks the storage object created by
  * swapStyleSheet()
  **************************************************/
 
