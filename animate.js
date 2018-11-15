@@ -143,6 +143,7 @@ document.cookie = "dark; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";*/
  **************************************************/
 
 function checkCookie() {
+  mobileTasks();
   if (localStorage.getItem("mode") == "dark") {
     document.getElementById("darkMode").checked = true;
     swapStyleSheet("black.css");
@@ -161,4 +162,22 @@ function spinTimer() {
 function spinLegend() {
   document.getElementById("legendSpinner").setAttribute("class", "fa fa-refresh fa-spin fa-lg");
   spinTimer();
+}
+
+/**************************************************
+ * CHECK DEVICE SCREEN SIZE
+ **************************************************/
+
+ function mobileTasks() {
+     w = window,
+     d = document,
+     e = d.documentElement,
+     g = d.getElementsByTagName('body')[0],
+     x = w.innerWidth || e.clientWidth || g.clientWidth,
+     y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+      if (x<= 450) {
+        console.log("This looks like a mobile device!");
+      }
+
 }

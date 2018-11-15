@@ -345,7 +345,7 @@ require([
      scaleBar = new ScaleBar({
      	view: view,
      	unit: "dual"
-     	
+
 		});
 
     /*****************************************************************
@@ -384,6 +384,7 @@ require([
     view.ui.add(baseToggle, "bottom-right"); //Add Basemap toggle
     view.ui.add(homeBtn, "bottom-left"); // Add the home button
     view.ui.add(scaleBar, "top-right");
+
 
 
   });
