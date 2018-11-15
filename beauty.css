@@ -282,8 +282,18 @@ body:not(.hide-overlay) {
 }
 
 #incidentTypes {
-	position: relative;
-	top: 80px;
+	/*position: relative;
+	top: 80px;*/
+}
+
+#searchOptions {
+	border: 1px solid black;
+}
+
+#dateRange {
+	border: 1px solid black;
+	text-align: left;
+	margin-left: 0;
 }
 
 /*ESRI dark theme CSS*/
