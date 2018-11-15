@@ -21,14 +21,17 @@ require([
     "esri/widgets/Legend",
     "esri/widgets/Home",
     "esri/widgets/ScaleBar",
-    "esri/request"
+    "esri/request",
+    "dojo/dom",
+	"dojo/on"
   ],
 
   /**************************************************
    * Create magic mapping function
    **************************************************/
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, esriRequest) {
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, 
+		esriRequest, dom, on) {
 
     /**************************************************
      * VARIABLES
@@ -247,6 +250,34 @@ require([
         responseType: "json"
       });
     };
+	
+	/*********************************************************
+	*  Add query parameters to json request and redisplay map 
+	*********************************************************/
+	function runSearch(){
+		
+		var now = new Date();
+
+		var today = now.getTime();
+
+		var millisecondsInDay = 86400000;
+
+		var days = 30;
+
+		var timeoffset = days * millisecondsInDay;
+
+		var queryTime = today - timeoffset;
+
+		var queryDate = new Date(queryTime);
+
+		var queryDateYYYY = queryDate.getFullYear();
+
+		var queryDateMM = queryDate.getMonth() + 1;
+
+		var queryDateDD = queryDate.getDate();
+
+		var queryDateString = queryDateYYYY + "-" + queryDateMM + "-" + queryDateDD;
+	}
 
     /**************************************************
      * Create graphics with returned json data
