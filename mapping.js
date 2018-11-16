@@ -38,7 +38,8 @@ require([
      **************************************************/
 
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar;
-
+    var jsonRecordsReturned;
+	
     /**************************************************
      * Create variables for vector layers
      * Combine layers into new basemap
@@ -232,44 +233,54 @@ require([
 
     view.when(function() {
 
-      getData()
+      getData(trafficRequestURL)
         .then(createGraphics)
         .then(createLayer)
         .then(createLegend);
 
       populateSearch();
+	  on(dom.byId("submitButton"), "click", runSearch);
     });
 
     /**************************************************
      * Request traffic incident data
      **************************************************/
 
-    function getData() {
+    function getData(jsonURL) {
 
-      return esriRequest(trafficRequestURL, {
+      return esriRequest(jsonURL, {
         responseType: "json"
       });
     };
 	
 	/*********************************************************
 	*  Add query parameters to json request and redisplay map 
+	*
+	*  To do:  Need to check number of results returned before trying to create graphics 
 	*********************************************************/
 	function runSearch(){
 		
+		//Get current date
 		var now = new Date();
-
+        
+		//Use current date to get current time in milliseconds
 		var today = now.getTime();
-
+        
 		var millisecondsInDay = 86400000;
-
-		var days = 30;
-
+        
+		//Parameter for amount of days to subtract from current date
+		var days = dom.byId("daysFromDate").value;
+		var incidentType = dom.byId("incidentTypes").value;
+        
+		//Multiply the number of days by milliseconds to get time in milliseconds to subtract from current time
 		var timeoffset = days * millisecondsInDay;
 
 		var queryTime = today - timeoffset;
-
+        
+		//Create new date object with adjusted date for query using time in milliseconds
 		var queryDate = new Date(queryTime);
-
+        
+		//Get different date parts to form query date string 
 		var queryDateYYYY = queryDate.getFullYear();
 
 		var queryDateMM = queryDate.getMonth() + 1;
@@ -277,6 +288,20 @@ require([
 		var queryDateDD = queryDate.getDate();
 
 		var queryDateString = queryDateYYYY + "-" + queryDateMM + "-" + queryDateDD;
+		
+		var searchURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
+		"?$where=traffic_report_status_date_time>"+"'"+queryDateString+"'"+
+		" AND issue_reported="+"'"+incidentType+"'"+
+		"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM";
+		
+		console.log("Query params: "+queryDateString+" "+incidentType);
+		
+		map.remove(trafficFLayer);
+		
+	    getData(searchURL)
+        .then(createGraphics)
+        .then(createLayer)
+        .then(createLegend);
 	}
 
     /**************************************************
@@ -359,9 +384,7 @@ require([
         var json = response.data;
 
         for (i in json) {
-          /*html += "<p>";
-          html += json[i].issue_reported;
-          html += "</p>";*/
+
           var option = document.createElement("option");
           option.text = json[i].issue_reported;
           option.value = json[i].issue_reported;
@@ -369,7 +392,6 @@ require([
 
         };
 
-        //document.getElementById("incidentList").innerHTML = html;
       });
     }
 
