@@ -22,7 +22,7 @@
 
   <script>
     /**************************************************
-   * Apply mobile optimization metadata
+   * Apply MOBILE optimization metadata
    **************************************************/
   </script>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,7 +35,7 @@
 
   <script>
     /**************************************************
-   * Load Stylesheets
+   * LOAD STYLESHEETS
    * Beauty, W3, ESRI, Google Fonts, Font Awesome
    **************************************************/
   </script>
@@ -48,12 +48,11 @@
 
   <script>
     /**************************************************
-   * Load JavaScript
+   * LOAD JAVASCRIPT
    * Mapping, Animate, ESRI, Tippy JS
    **************************************************/
   </script>
   <script src="https://js.arcgis.com/4.9/"></script>
-
   <script src="mapping.js"></script>
   <script src="animate.js"></script>
   <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
@@ -65,14 +64,14 @@
 
   <script>
     /**************************************************
-   * Create logo div
+   * Create LOGO div
    * mouseover and click functions
    **************************************************/
   </script>
 
-  <div id="infoLightButton" onclick="openOverlay()" data-tippy="About this web map"><img id="infoLightIcon" src="./infoLight.svg" alt="info icon"></div>
+  <div id="infoLightButton" onclick="openOverlay()" data-tippy="About this web map"><img id="infoLightIcon" src="./img/infoLight.svg" alt="info icon"></div>
 
-  <div id="xinfoDarkButton" onclick="openOverlay()"><img id="xinfoDarkIcon" src="./infoDark.svg" alt="info icon"></div>
+  <div id="xinfoDarkButton" onclick="openOverlay()"><img id="xinfoDarkIcon" src="./img/infoDark.svg" alt="info icon"></div>
 
 
   <!--   <div id="mainLogo">
@@ -83,14 +82,14 @@
   <div id="toolBox">
 
     <div id="boxHeader" onclick="openOverlay()">
-      <img id="lightModeLogo" src="logoBlack.png" alt="awheel logo">
-      <img id="darkModeLogo" src="logoGrey.png" alt="awheel logo">
+      <img id="lightModeLogo" src="./img/logoBlack.png" alt="awheel logo">
+      <img id="darkModeLogo" src="./img/logoGrey.png" alt="awheel logo">
       <h2>Austin Traffic Incidents</h2>
     </div>
 
     <script>
       /**************************************************
-     * Create tabbed menu, assign function to click
+     * Create tabbed MENU, assign function to click
      **************************************************/
     </script>
     <div id="boxMenu">
@@ -109,7 +108,7 @@
 
     <script>
       /**************************************************
-     * Create boxContent div, assign functions to close on click
+     * Create BOXCONTENT div, assign functions to close on click
      **************************************************/
     </script>
     <div id="boxContent" style="display:none">
@@ -125,11 +124,13 @@
 
         <br>
 
+        <label><input type="checkbox" id="darkMode"> Traffic</label>
+
         <!-- <label data-tippy="Inactive"><input type="checkbox" id="beginner"> Beginner Mode</label> -->
 
         <br>
         <div id="esriLegend"></div>
-        <img id="legendInfo" data-tippy="Use the legend tool for viewing the symbol definitions used on the map and to toggle visual customizations" class="tooltip" src="./infoLight.svg" alt="Legend Info">
+        <img id="legendInfo" data-tippy="Use the legend tool for viewing the symbol definitions used on the map and to toggle visual customizations" class="tooltip" src="./img/infoLight.svg" alt="Legend Info">
 
         <i id="legendSpinner"
         data-tippy="<label><input type='checkbox' id='beginner'> Beginner Mode</label><br><label><input type='checkbox' id='beginner'> Other Option</label><br><label><input type='checkbox' id='beginner'> Another Option</label><br>"
