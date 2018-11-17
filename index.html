@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- <html manifest="cache.manifest"> -->
+<!--<html manifest="cache.manifest">-->
 <html>
 
 <script>
@@ -39,9 +39,9 @@
    * Beauty, W3, ESRI, Google Fonts, Font Awesome
    **************************************************/
   </script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
   <link id="pagestyle" rel="stylesheet" type="text/css" href="beauty.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
   <link id="darkTheme" rel="stylesheet"> <!-- empty style to be filled with dark on JS -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -69,9 +69,7 @@
    **************************************************/
   </script>
 
-  <div id="infoLightButton" onclick="openOverlay()" data-tippy="About this web map"><img id="infoLightIcon" src="./img/infoLight.svg" alt="info icon"></div>
-
-  <div id="xinfoDarkButton" onclick="openOverlay()"><img id="xinfoDarkIcon" src="./img/infoDark.svg" alt="info icon"></div>
+  <div id="infoButton" class="esri-icon-description" aria-label="close icon" onclick="openOverlay()"></div>
 
 
   <!--   <div id="mainLogo">
@@ -124,7 +122,7 @@
 
         <br>
 
-        <label><input type="checkbox" id="darkMode"> Traffic</label>
+        <label><input type="checkbox" id="currentTraffic"> Traffic</label>
 
         <!-- <label data-tippy="Inactive"><input type="checkbox" id="beginner"> Beginner Mode</label> -->
 

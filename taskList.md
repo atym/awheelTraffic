@@ -27,7 +27,9 @@
 -   [ ] geocoder or search widget
 -   [ ] research output from locate to buffer
 -   [ ] mobile location finder
--   [ ] user adjustable buffer distance
+-   [ ] user adjustable buffer distance/ 1 or 5
+  - [ ] use buffer to only display points that intersect
+  - [ ] display graph with distribution of incident types within radius
 
 #### style
 
@@ -65,3 +67,7 @@
   - [ ] cookie storage to remember dark/light mode toggle pwa
 -   [ ] double tap to zoom on mobile
     -   [ ] [Link](https://gis.stackexchange.com/questions/102380/double-tap-on-the-map-not-work-in-the-chrome-of-nexus-7)
+
+
+
+https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.day/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ
