@@ -43,10 +43,12 @@
 -   [ ] research ios landscape status fix
 -   [ ] retina display 192dpi
 -   [ ] add ios splash screen for pwa
+- [ ] add popup on mobile for detected screen size <450 with option for vector or raster (HD vs SD)(Wifi&LTE vs 3G&E)...option to remember user choice for next visit. only show message on mobile so not obtrusive to desktop experience, but provides better load times for those on a slower connection. dont use words vector and raster, too confusing. hd and sd are button with big text and the network connection is a subtitle.
 
 #### other
 
 -   [ ] tooltips for toolbox
+- [ ] fix time in popup to be more legible, unscramble
 - [ ] fix home button to use default extent
 -   [ ] add refresh button to each toolbox window
       - [ ] refresh should reload entire map, not html doc
