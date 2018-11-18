@@ -27,7 +27,9 @@
 -   [ ] geocoder or search widget
 -   [ ] research output from locate to buffer
 -   [ ] mobile location finder
--   [ ] user adjustable buffer distance
+-   [ ] user adjustable buffer distance/ 1 or 5
+  - [ ] use buffer to only display points that intersect
+  - [ ] display graph with distribution of incident types within radius
 
 #### style
 
@@ -41,10 +43,12 @@
 -   [ ] research ios landscape status fix
 -   [ ] retina display 192dpi
 -   [ ] add ios splash screen for pwa
+- [ ] add popup on mobile for detected screen size <450 with option for vector or raster (HD vs SD)(Wifi&LTE vs 3G&E)...option to remember user choice for next visit. only show message on mobile so not obtrusive to desktop experience, but provides better load times for those on a slower connection. dont use words vector and raster, too confusing. hd and sd are button with big text and the network connection is a subtitle.
 
 #### other
 
 -   [ ] tooltips for toolbox
+- [ ] fix time in popup to be more legible, unscramble
 - [ ] fix home button to use default extent
 -   [ ] add refresh button to each toolbox window
       - [ ] refresh should reload entire map, not html doc
@@ -65,3 +69,7 @@
   - [ ] cookie storage to remember dark/light mode toggle pwa
 -   [ ] double tap to zoom on mobile
     -   [ ] [Link](https://gis.stackexchange.com/questions/102380/double-tap-on-the-map-not-work-in-the-chrome-of-nexus-7)
+
+
+
+https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.day/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ

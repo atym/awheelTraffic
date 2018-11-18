@@ -12,6 +12,8 @@
 /**************************************************
  * Open and Close full screen overlay on logo click
  **************************************************/
+var lolo = location.hostname;
+console.log(location);
 
 function openOverlay() {
   document.getElementById("fullOverlay").style.width = "100%";
@@ -99,13 +101,12 @@ darkModeToggle = document.getElementById("darkMode");
 function swapStyleSheet(sheet) {
   // when darkmode is enabled, do these things
   if (darkModeToggle.checked) {
-    document.getElementById("xinfoDarkIcon").style.display = "block";
-    document.getElementById("xinfoDarkButton").style.display = "block";
+
+
     document.getElementById("pagestyle").setAttribute("href", sheet);
-    document.getElementById("xinfoDarkIcon").style.display = "block";
-    document.getElementById("xinfoDarkButton").style.display = "block";
+
     document.getElementById("darkTheme").setAttribute("href", "https://js.arcgis.com/4.9/esri/themes/dark/main.css");
-    document.getElementById("infoLightButton").style.display = "none";
+
     document.getElementById("lightFooter").style.display = "none";
     document.getElementById("darkFooter").style.display = "block";
     localStorage.setItem("mode", "dark");
@@ -114,10 +115,10 @@ function swapStyleSheet(sheet) {
   } else {
     document.getElementById("pagestyle").setAttribute("href", "beauty.css");
     document.getElementById("darkTheme").setAttribute("href", "");
-    document.getElementById("infoLightButton").style.display = "block";
+    
     document.getElementById("lightFooter").style.display = "block";
     document.getElementById("darkFooter").style.display = "none";
-    document.getElementById("xinfoDarkIcon").style.display = "none";
+
     localStorage.setItem("mode", "light");
   }
 }
@@ -145,7 +146,6 @@ document.cookie = "dark; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";*/
  **************************************************/
 
 function checkCookie() {
-  mobileTasks();
   if (localStorage.getItem("mode") == "dark") {
     document.getElementById("darkMode").checked = true;
     swapStyleSheet("black.css");
@@ -170,7 +170,7 @@ function spinLegend() {
  * CHECK DEVICE SCREEN SIZE
  **************************************************/
 
- function mobileTasks() {
+ /*function mobileTasks() {
      w = window,
      d = document,
      e = d.documentElement,
@@ -182,4 +182,4 @@ function spinLegend() {
         console.log("This looks like a mobile device!");
       }
 
-}
+}*/

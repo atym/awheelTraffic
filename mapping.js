@@ -21,24 +21,27 @@ require([
     "esri/widgets/Legend",
     "esri/widgets/Home",
     "esri/widgets/ScaleBar",
+    "esri/widgets/Search",
+    "esri/layers/BaseTileLayer",
+    "esri/widgets/Locate",
     "esri/request",
     "dojo/dom",
-	"dojo/on",
-	"esri/core/promiseUtils"
-  ],
+	  "dojo/on",
+	  "esri/core/promiseUtils"],
 
   /**************************************************
    * Create magic mapping function
    **************************************************/
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, 
+
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
 		esriRequest, dom, on, promiseUtils) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic;;
     var json, recordsReturned;
 	
     /**************************************************
@@ -99,6 +102,74 @@ require([
       visible: false
     });
 
+    // *******************************************************
+    // Custom tile layer class code
+    // Create a subclass of BaseTileLayer
+    // *******************************************************
+
+    var TileLayer = BaseTileLayer.createSubclass({
+      properties: {
+        urlTemplate: null
+
+      },
+
+      // generate the tile url for a given level, row and column
+      getTileUrl: function(level, row, col) {
+        return this.urlTemplate.replace("[z]", level).replace("[x]",
+          col).replace("[y]", row);
+      },
+
+      // This method fetches tiles for the specified level and size.
+      // Override this method to process the data returned from the server.
+      fetchTile: function(level, row, col) {
+
+        // call getTileUrl() method to construct the URL to tiles
+        // for a given level, row and col provided by the LayerView
+        var url = this.getTileUrl(level, row, col);
+
+        // request for tiles based on the generated url
+        return esriRequest(url, {
+            responseType: "image"
+          })
+          .then(function(response) {
+            // when esri request resolves successfully
+            // get the image from the response
+            var image = response.data;
+            var width = this.tileInfo.size[0];
+            var height = this.tileInfo.size[0];
+
+            // create a canvas with 2D rendering context
+            var canvas = document.createElement("canvas");
+            var context = canvas.getContext("2d");
+            canvas.width = width;
+            canvas.height = height;
+
+
+
+            // Draw the blended image onto the canvas.
+            context.drawImage(image, 0, 0, width, height);
+
+            return canvas;
+          }.bind(this));
+      }
+    });
+
+    // *******************************************************
+    // Start of JavaScript application
+    // *******************************************************
+
+
+    // Create a new instance of the TintLayer and set its properties
+    var lightTrafficTiles = new TileLayer({
+      urlTemplate: "https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.day/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ",
+      visible: false
+    });
+
+    var darkTrafficTiles = new TileLayer({
+      urlTemplate: "https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.night/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ",
+      visible: false
+    });
+
     /**************************************************
      * Create map and define basemap
      * Select layers to display on basemap
@@ -106,7 +177,7 @@ require([
 
     map = new Map({
       basemap: vectorRoads,
-      layers: [limits]
+      layers: [limits, lightTrafficTiles, darkTrafficTiles]
     });
 
     /**************************************************
@@ -142,13 +213,21 @@ require([
       view: view
     });
 
+    locateWidget = new Search({
+      view: view
+    }, "esriLocate");
+
+    var locateBtn = new Locate({
+      view: view
+    });
+
     /**************************************************
      * Load initial batch of traffic data from COA
      * JSON data over Socrata API
      **************************************************/
 
     trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
-      "?$where=traffic_report_status_date_time>'2018-11-13'" +
+      "?$where=traffic_report_status='ACTIVE'" +
       "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
       "&$limit=3000";
 
@@ -205,21 +284,21 @@ require([
       field: "status", // autocasts as new SimpleRenderer()
       defaultSymbol: {
         type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-        size: 8,
+        size: 10,
         color: "#FF4000"
       },
       uniqueValueInfos: [{
         value: "ACTIVE",
         symbol: {
           type: "simple-marker",
-          size: 8,
+          size: 13,
           color: "red"
         }
       }, {
         value: "ARCHIVED",
         symbol: {
           type: "simple-marker",
-          size: 8,
+          size: 10,
           color: "yellow"
         }
       }]
@@ -455,12 +534,20 @@ require([
 
       });
     }
-	
-     scaleBar = new ScaleBar({
-     	view: view,
-     	unit: "dual"
 
-		});
+    /**************************************************
+     * Create custom tile layer for live traffic conditions
+     * Refreshes request with z,x,y for current view
+     * Requires 2 IDs for request in URL
+     **************************************************/
+
+
+
+    scaleBar = new ScaleBar({
+      view: view,
+      unit: "dual"
+
+    });
 
     /*****************************************************************
      * The visible property on the layer can be used to toggle the
@@ -468,26 +555,77 @@ require([
      * the layer is still part of the map, which means you can access
      * its properties and perform analysis even though it isn't visible.
      *******************************************************************/
+     var roadTrafficStyle = "";
+     var trafficVisible = false;
+
+     darkModeToggle = document.getElementById("darkMode");
+     cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
+     currentTrafficToggle = document.getElementById("currentTraffic");
+
 
     if (localStorage.getItem("mode") == "dark") {
       darkRoads.visible = true;
       lightRoads.visible = false;
+      roadTrafficStyle = "dark";
+      currentTrafficToggle.checked = false;
     }
 
-    darkModeToggle = document.getElementById("darkMode");
-    cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
-
     darkModeToggle.addEventListener("change", function() {
-      if (darkModeToggle.checked) {
+      if (darkModeToggle.checked && trafficVisible == false) {
         darkRoads.visible = true;
         lightRoads.visible = false;
+        roadTrafficStyle = "dark";
+        darkTrafficTiles.visible = false;
+        lightTrafficTiles.visible = false;
+      } else if (darkModeToggle.checked && trafficVisible == true){
+        lightRoads.visible = false;
+        darkRoads.visible = true;
+        roadTrafficStyle = "dark";
+        lightTrafficTiles.visible = false;
+        darkTrafficTiles.visible = true;
+      } else if (darkRoads.visible == true && trafficVisible == false){
+        lightRoads.visible = true;
+        darkRoads.visible = false;
+        roadTrafficStyle = "light";
+        lightTrafficTiles.visible = false;
+        darkTrafficTiles.visible = false;
       } else {
         lightRoads.visible = true;
         darkRoads.visible = false;
+        roadTrafficStyle = "light";
+        lightTrafficTiles.visible = true;
+        darkTrafficTiles.visible = false;
       }
     });
+
+
+
     cityLimitsLayerToggle.addEventListener("change", function() {
       limits.visible = cityLimitsLayerToggle.checked;
+    });
+
+    /**************************************************
+     * Current traffic conditions style for darkmode
+     **************************************************/
+
+    currentTrafficToggle.addEventListener("change", function() {
+      if (lightTrafficTiles.visible == true || darkTrafficTiles.visible == true) {
+        lightTrafficTiles.visible = false;
+        darkTrafficTiles.visible = false;
+        trafficVisible = false;
+      }
+
+      else if (roadTrafficStyle == "dark") {
+        darkTrafficTiles.visible = true;
+        lightTrafficTiles.visible = false;
+        trafficVisible = true;
+        roadTrafficStyle = "dark";
+      } else {
+        lightTrafficTiles.visible = true;
+        darkTrafficTiles.visible = false;
+        trafficVisible = true;
+        roadTrafficStyle = "light";
+      }
     });
 
     /**************************************************
@@ -498,7 +636,9 @@ require([
     view.ui.add(baseToggle, "bottom-right"); //Add Basemap toggle
     view.ui.add(homeBtn, "bottom-left"); // Add the home button
     view.ui.add(scaleBar, "top-right");
-
+    view.ui.add(locateBtn, {
+      position: "bottom-left"
+    });
 
 
   });
