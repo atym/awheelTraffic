@@ -65,6 +65,7 @@
 -   [ ] contact traffic dataset owner for incident type desriptions
     -   [ ] this would also be helpful to understand the accuracy of reported time, does time represent when incident occurred or ended?
 -   [ ] popup for add to home screen on ios and android
+  - [ ] purchase domain name awheeltraffic.com
 -   [ ] service worker for ios and android to cache api calls
   - [ ] cookie storage to remember dark/light mode toggle pwa
 -   [ ] double tap to zoom on mobile
