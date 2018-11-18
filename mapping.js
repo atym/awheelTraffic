@@ -364,6 +364,10 @@ require([
 			
 			return;
 		}
+		else if (days > 365){
+			alert ("Please enter a number that is 365 or less.");
+			return;
+		}
 		//var incidentTypes = dom.byId("incidentTypes").value;
 		
 		var incidentTypes = [];
