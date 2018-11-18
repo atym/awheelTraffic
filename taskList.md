@@ -18,7 +18,7 @@
 #### search
 
 -   [ ] need html buttons for user input
--   [ ] query js function
+-   [X] query js function @jb
 -   [ ] heatmap toggle, based on query results
 -   [ ] search based on times of day, show me accidents from Mondays at 5pm
 
