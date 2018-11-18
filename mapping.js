@@ -23,7 +23,8 @@ require([
     "esri/widgets/ScaleBar",
     "esri/request",
     "dojo/dom",
-	"dojo/on"
+	"dojo/on",
+	"esri/core/promiseUtils"
   ],
 
   /**************************************************
@@ -31,7 +32,7 @@ require([
    **************************************************/
 
   function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, 
-		esriRequest, dom, on) {
+		esriRequest, dom, on, promiseUtils) {
 
     /**************************************************
      * VARIABLES
@@ -237,8 +238,11 @@ require([
         .then(createGraphics)
         .then(createLayer)
         .then(createLegend);
-
+      
+	  // Populate the select list with all of the possible incident types JB
       populateSearch();
+	  
+	  // Run the search once the submit button has been clicked JB
 	  on(dom.byId("submitButton"), "click", runSearch);
     });
 
@@ -254,9 +258,9 @@ require([
     };
 	
 	/*********************************************************
-	*  Add query parameters to json request and redisplay map 
+	*  Add query parameters to JSON request and redisplay map 
 	*
-	*  To do:  Need to check number of results returned before trying to create graphics 
+	*  Function author:  JB
 	*********************************************************/
 	function runSearch(){
 		
@@ -270,7 +274,38 @@ require([
         
 		//Parameter for amount of days to subtract from current date
 		var days = dom.byId("daysFromDate").value;
-		var incidentType = dom.byId("incidentTypes").value;
+		//var incidentTypes = dom.byId("incidentTypes").value;
+		var incidentTypes = [];
+		var incidentTypesString = "(";
+		
+		// Get array of dom options properties for the select list 
+		var options = dom.byId("incidentTypes").options;
+		
+		// Add all selected elements to the incidentTypes array
+		for (var i=0; i < options.length; i++){
+			opt = options[i];
+			
+			if (opt.selected){
+				incidentTypes.push(opt.value);
+			}
+		}
+		
+		// Populate set of incidents with commas between them for the SQL statement
+		for (var i=0; i < incidentTypes.length; i++){
+			if (i < incidentTypes.length - 1){
+				incidentTypesString += "'" + incidentTypes[i] + "'" + ",";
+			}
+			else {
+				incidentTypesString += "'" + incidentTypes[i] + "'";
+			}
+		}
+		
+		//Close set of incidents
+		incidentTypesString += ")";
+		
+		console.log("String of incidents: " + incidentTypesString);
+		
+		
         
 		//Multiply the number of days by milliseconds to get time in milliseconds to subtract from current time
 		var timeoffset = days * millisecondsInDay;
@@ -289,21 +324,30 @@ require([
 
 		var queryDateString = queryDateYYYY + "-" + queryDateMM + "-" + queryDateDD;
 		
+		/*var searchURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
+		"?$where=traffic_report_status_date_time>"+"'"+queryDateString+"'"+
+		" AND issue_reported="+"'"+incidentTypes+"'"+
+		"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM";*/
+		
 		var searchURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
 		"?$where=traffic_report_status_date_time>"+"'"+queryDateString+"'"+
-		" AND issue_reported="+"'"+incidentType+"'"+
+		" AND issue_reported IN "+ incidentTypesString +
 		"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM";
 		
-		console.log("Query params: "+queryDateString+" "+incidentType);
+		console.log("Query params: "+queryDateString+" "+incidentTypes);
 		
+		//Remove the previous trafficFLayer before attempting to display the query results 
 		map.remove(trafficFLayer);
 		
 	    getData(searchURL)
         .then(createGraphics)
         .then(createLayer)
-        .then(createLegend);
+        .then(createLegend)
+		//Catch any of the errors that were created from the previous callback functions 
+		.catch(function(error){ 
+			console.log('One of the promises in the chain was rejected! Message: ', error);
+		});
 	}
-
     /**************************************************
      * Create graphics with returned json data
      **************************************************/
@@ -311,26 +355,37 @@ require([
     function createGraphics(response) {
       // raw JSON data
       var json = response.data;
+	  var recordsReturned = Object.keys(json).length
+	 
+	  dom.byId("numRecords").innerHTML = recordsReturned;
+
       // Create an array of Graphics from each JSON feature
-      return json.map(function(feature, i) {
-        return {
-          type: "point",
-          geometry: new Point({
-            x: json[i].longitude,
-            y: json[i].latitude
-          }),
-          // select only the attributes you care about
-          attributes: {
-            ObjectID: i,
-            address: json[i].address,
-            issueReported: json[i].issue_reported,
-            statusDateTime: json[i].traffic_report_status_date_time,
-            status: json[i].traffic_report_status,
-            latitude: json[i].latitude,
-            longitutde: json[i].longitude
-          }
-        };
-      });
+	  // Check to see that the query returned results before trying to create the graphics object JB
+	  if (recordsReturned > 0){
+		return json.map(function(feature, i) {
+			return {
+				type: "point",
+				geometry: new Point({
+				x: json[i].longitude,
+				y: json[i].latitude
+			}),
+			// select only the attributes you care about
+				attributes: {
+				ObjectID: i,
+				address: json[i].address,
+				issueReported: json[i].issue_reported,
+				statusDateTime: json[i].traffic_report_status_date_time,
+				status: json[i].traffic_report_status,
+				latitude: json[i].latitude,
+				longitutde: json[i].longitude
+				}
+			};
+		});
+	  } 
+	  // Reject the promise since no records were returned with the specified query JB
+	  else {
+		  return promiseUtils.reject(new Error("No records to display"));
+	  }
     };
 
     /**************************************************
@@ -346,7 +401,7 @@ require([
         popupTemplate: pTemplate
       });
 
-      map.add(trafficFLayer);
+      try {map.add(trafficFLayer)} catch(error){return };
       return trafficFLayer;
     }
 
@@ -370,6 +425,8 @@ require([
 
     /**********************************************************************
      * Dynamically populate Search tab with form elements for incident types
+	 *
+	 * Function author:  JB
      **********************************************************************/
     function populateSearch() {
 
@@ -394,7 +451,7 @@ require([
 
       });
     }
-
+	
      scaleBar = new ScaleBar({
      	view: view,
      	unit: "dual"
