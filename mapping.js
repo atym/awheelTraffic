@@ -39,7 +39,7 @@ require([
      **************************************************/
 
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar;
-    var jsonRecordsReturned;
+    var json, recordsReturned;
 	
     /**************************************************
      * Create variables for vector layers
@@ -251,10 +251,12 @@ require([
      **************************************************/
 
     function getData(jsonURL) {
-
+        
       return esriRequest(jsonURL, {
         responseType: "json"
       });
+	  
+	   
     };
 	
 	/*********************************************************
@@ -275,6 +277,7 @@ require([
 		//Parameter for amount of days to subtract from current date
 		var days = dom.byId("daysFromDate").value;
 		//var incidentTypes = dom.byId("incidentTypes").value;
+		
 		var incidentTypes = [];
 		var incidentTypesString = "(";
 		
@@ -303,10 +306,6 @@ require([
 		//Close set of incidents
 		incidentTypesString += ")";
 		
-		console.log("String of incidents: " + incidentTypesString);
-		
-		
-        
 		//Multiply the number of days by milliseconds to get time in milliseconds to subtract from current time
 		var timeoffset = days * millisecondsInDay;
 
@@ -347,6 +346,10 @@ require([
 		.catch(function(error){ 
 			console.log('One of the promises in the chain was rejected! Message: ', error);
 		});
+		
+		// Display the amount of results returned
+		//recordsReturned = Object.keys(json).length;
+		//dom.byId("numRecords").innerHTML = recordsReturned;
 	}
     /**************************************************
      * Create graphics with returned json data
@@ -354,8 +357,9 @@ require([
 
     function createGraphics(response) {
       // raw JSON data
-      var json = response.data;
-	  var recordsReturned = Object.keys(json).length
+      //var json = response.data;
+	  json = response.data;
+	  recordsReturned = Object.keys(json).length;
 	 
 	  dom.byId("numRecords").innerHTML = recordsReturned;
 
