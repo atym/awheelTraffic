@@ -24,21 +24,26 @@ require([
     "esri/widgets/Search",
     "esri/layers/BaseTileLayer",
     "esri/widgets/Locate",
-    "esri/request"
-  ],
+    "esri/request",
+    "dojo/dom",
+	  "dojo/on",
+	  "esri/core/promiseUtils"],
 
   /**************************************************
    * Create magic mapping function
    **************************************************/
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate, esriRequest) {
+
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
+		esriRequest, dom, on, promiseUtils) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic;
-
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic;;
+    var json, recordsReturned;
+	
     /**************************************************
      * Create variables for vector layers
      * Combine layers into new basemap
@@ -308,52 +313,162 @@ require([
 
     view.when(function() {
 
-      getData()
+      getData(trafficRequestURL)
         .then(createGraphics)
         .then(createLayer)
         .then(createLegend);
-
+      
+	  // Populate the select list with all of the possible incident types JB
       populateSearch();
+	  
+	  // Run the search once the submit button has been clicked JB
+	  on(dom.byId("submitButton"), "click", runSearch);
     });
 
     /**************************************************
      * Request traffic incident data
      **************************************************/
 
-    function getData() {
-
-      return esriRequest(trafficRequestURL, {
+    function getData(jsonURL) {
+        
+      return esriRequest(jsonURL, {
         responseType: "json"
       });
+	  
+	   
     };
+	
+	/*********************************************************
+	*  Add query parameters to JSON request and redisplay map 
+	*
+	*  Function author:  JB
+	*********************************************************/
+	function runSearch(){
+		
+		//Get current date
+		var now = new Date();
+        
+		//Use current date to get current time in milliseconds
+		var today = now.getTime();
+        
+		var millisecondsInDay = 86400000;
+        
+		//Parameter for amount of days to subtract from current date
+		var days = dom.byId("daysFromDate").value;
+		//var incidentTypes = dom.byId("incidentTypes").value;
+		
+		var incidentTypes = [];
+		var incidentTypesString = "(";
+		
+		// Get array of dom options properties for the select list 
+		var options = dom.byId("incidentTypes").options;
+		
+		// Add all selected elements to the incidentTypes array
+		for (var i=0; i < options.length; i++){
+			opt = options[i];
+			
+			if (opt.selected){
+				incidentTypes.push(opt.value);
+			}
+		}
+		
+		// Populate set of incidents with commas between them for the SQL statement
+		for (var i=0; i < incidentTypes.length; i++){
+			if (i < incidentTypes.length - 1){
+				incidentTypesString += "'" + incidentTypes[i] + "'" + ",";
+			}
+			else {
+				incidentTypesString += "'" + incidentTypes[i] + "'";
+			}
+		}
+		
+		//Close set of incidents
+		incidentTypesString += ")";
+		
+		//Multiply the number of days by milliseconds to get time in milliseconds to subtract from current time
+		var timeoffset = days * millisecondsInDay;
 
+		var queryTime = today - timeoffset;
+        
+		//Create new date object with adjusted date for query using time in milliseconds
+		var queryDate = new Date(queryTime);
+        
+		//Get different date parts to form query date string 
+		var queryDateYYYY = queryDate.getFullYear();
+
+		var queryDateMM = queryDate.getMonth() + 1;
+
+		var queryDateDD = queryDate.getDate();
+
+		var queryDateString = queryDateYYYY + "-" + queryDateMM + "-" + queryDateDD;
+		
+		/*var searchURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
+		"?$where=traffic_report_status_date_time>"+"'"+queryDateString+"'"+
+		" AND issue_reported="+"'"+incidentTypes+"'"+
+		"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM";*/
+		
+		var searchURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
+		"?$where=traffic_report_status_date_time>"+"'"+queryDateString+"'"+
+		" AND issue_reported IN "+ incidentTypesString +
+		"&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM";
+		
+		console.log("Query params: "+queryDateString+" "+incidentTypes);
+		
+		//Remove the previous trafficFLayer before attempting to display the query results 
+		map.remove(trafficFLayer);
+		
+	    getData(searchURL)
+        .then(createGraphics)
+        .then(createLayer)
+        .then(createLegend)
+		//Catch any of the errors that were created from the previous callback functions 
+		.catch(function(error){ 
+			console.log('One of the promises in the chain was rejected! Message: ', error);
+		});
+		
+		// Display the amount of results returned
+		//recordsReturned = Object.keys(json).length;
+		//dom.byId("numRecords").innerHTML = recordsReturned;
+	}
     /**************************************************
      * Create graphics with returned json data
      **************************************************/
 
     function createGraphics(response) {
       // raw JSON data
-      var json = response.data;
+      //var json = response.data;
+	  json = response.data;
+	  recordsReturned = Object.keys(json).length;
+	 
+	  dom.byId("numRecords").innerHTML = recordsReturned;
+
       // Create an array of Graphics from each JSON feature
-      return json.map(function(feature, i) {
-        return {
-          type: "point",
-          geometry: new Point({
-            x: json[i].longitude,
-            y: json[i].latitude
-          }),
-          // select only the attributes you care about
-          attributes: {
-            ObjectID: i,
-            address: json[i].address,
-            issueReported: json[i].issue_reported,
-            statusDateTime: json[i].traffic_report_status_date_time,
-            status: json[i].traffic_report_status,
-            latitude: json[i].latitude,
-            longitutde: json[i].longitude
-          }
-        };
-      });
+	  // Check to see that the query returned results before trying to create the graphics object JB
+	  if (recordsReturned > 0){
+		return json.map(function(feature, i) {
+			return {
+				type: "point",
+				geometry: new Point({
+				x: json[i].longitude,
+				y: json[i].latitude
+			}),
+			// select only the attributes you care about
+				attributes: {
+				ObjectID: i,
+				address: json[i].address,
+				issueReported: json[i].issue_reported,
+				statusDateTime: json[i].traffic_report_status_date_time,
+				status: json[i].traffic_report_status,
+				latitude: json[i].latitude,
+				longitutde: json[i].longitude
+				}
+			};
+		});
+	  } 
+	  // Reject the promise since no records were returned with the specified query JB
+	  else {
+		  return promiseUtils.reject(new Error("No records to display"));
+	  }
     };
 
     /**************************************************
@@ -369,7 +484,7 @@ require([
         popupTemplate: pTemplate
       });
 
-      map.add(trafficFLayer);
+      try {map.add(trafficFLayer)} catch(error){return };
       return trafficFLayer;
     }
 
@@ -393,6 +508,8 @@ require([
 
     /**********************************************************************
      * Dynamically populate Search tab with form elements for incident types
+	 *
+	 * Function author:  JB
      **********************************************************************/
     function populateSearch() {
 
@@ -407,9 +524,7 @@ require([
         var json = response.data;
 
         for (i in json) {
-          /*html += "<p>";
-          html += json[i].issue_reported;
-          html += "</p>";*/
+
           var option = document.createElement("option");
           option.text = json[i].issue_reported;
           option.value = json[i].issue_reported;
@@ -417,7 +532,6 @@ require([
 
         };
 
-        //document.getElementById("incidentList").innerHTML = html;
       });
     }
 
