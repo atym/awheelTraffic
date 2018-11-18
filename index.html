@@ -147,15 +147,17 @@
         
         <div id="searchOptions">
 
-			<label for="dateRange">Date Range:</label><br>
-			<input type="radio" id="daysFromDate" name="daysFromDate" value="7">Last 7 Days<br>
+			<label for="daysFromDate">Days from Current Date:</label><br>
+			<!--<input type="radio" id="daysFromDate" name="daysFromDate" value="7">Last 7 Days<br>
 			<input type="radio" id="daysFromDate" name="daysFromDate" value="30">Last 30 days <br>
-			<input type="radio" id="daysFromDate" name="daysFromDate" value="90">Last 90 days <br>
+			<input type="radio" id="daysFromDate" name="daysFromDate" value="90">Last 90 days <br>-->
+			<input type="text" id="daysFromDate"><br>
 			<label for="incidentTypes">Incident Types:</label><br>
-			<select id="incidentTypes"></select><br>
+			<select id="incidentTypes" multiple></select><br>
 			<input type="submit" id="submitButton" value="Submit">
 				
 		</div>
+		<p>Records returned: <span id="numRecords"></span></p>
       </div>
 	  
       <div id="Locate" class="w3-container title" style="display:none">
