@@ -358,6 +358,7 @@ require([
 		//Parameter for amount of days to subtract from current date
 		var days = dom.byId("daysFromDate").value;
 		
+		// Make sure a number has been entered for days to search by 
 		if (days > 0 == false){
 			alert ("You must enter a number for the days to search by.");
 			
@@ -370,6 +371,13 @@ require([
 		
 		// Get array of dom options properties for the select list 
 		var options = dom.byId("incidentTypes").options;
+		
+		// Make sure at least one incident type is selected
+		if (options.selectedIndex == -1){
+			alert ("You must select at least one incident type.");
+			
+			return;
+		}
 		
 		// Add all selected elements to the incidentTypes array
 		for (var i=0; i < options.length; i++){
