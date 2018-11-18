@@ -444,16 +444,17 @@ require([
      var roadTrafficStyle = "";
      var trafficVisible = false;
 
+     darkModeToggle = document.getElementById("darkMode");
+     cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
+     currentTrafficToggle = document.getElementById("currentTraffic");
+
 
     if (localStorage.getItem("mode") == "dark") {
       darkRoads.visible = true;
       lightRoads.visible = false;
       roadTrafficStyle = "dark";
+      currentTrafficToggle.checked = false;
     }
-
-    darkModeToggle = document.getElementById("darkMode");
-    cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
-    currentTrafficToggle = document.getElementById("currentTraffic");
 
     darkModeToggle.addEventListener("change", function() {
       if (darkModeToggle.checked && trafficVisible == false) {
