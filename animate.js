@@ -162,15 +162,16 @@ function spinTimer() {
 }
 
 function spinLegend() {
-  document.getElementById("legendSpinner").setAttribute("class", "fa fa-refresh fa-spin fa-lg");
-  spinTimer();
+  /*document.getElementById("legendSpinner").setAttribute("class", "fa fa-refresh fa-spin fa-lg");
+  spinTimer();*/
+  location.reload(false);
 }
 
 /**************************************************
  * CHECK DEVICE SCREEN SIZE
  **************************************************/
 
- /*function mobileTasks() {
+ function mobileTasks() {
      w = window,
      d = document,
      e = d.documentElement,
@@ -179,7 +180,16 @@ function spinLegend() {
      y = w.innerHeight || e.clientHeight || g.clientHeight;
 
       if (x<= 450) {
+      	function myFunction() {
+    var txt;
+    if (confirm("It looks like you're on a mobile device, would you prefer high definition of standard definition maps?")) {
+        txt = "Hello";
+    } else {
+        txt = "World";
+    }
+    
+}
         console.log("This looks like a mobile device!");
       }
 
-}*/
+}
