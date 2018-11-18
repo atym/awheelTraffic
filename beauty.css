@@ -71,9 +71,9 @@ body:not(.hide-overlay) {
   position: absolute;
   z-index: 99;
   left: 0;
-  margin-top: 1.2em;
-  margin-left: 1.7em;
-  width: 2em;
+  margin-top: 0.5em;
+  margin-left: 1.2em;
+  width: 3.5em;
 }
 
 #darkModeLogo {
@@ -395,9 +395,9 @@ body:not(.hide-overlay) {
     position: absolute;
     z-index: 99;
     left: 0;
-    margin-top: 0.75em;
+    margin-top: 0em;
     margin-left: 2.1em;
-    width: 2em;
+    width: 3.5em;
   }
 
   #toolBox {
@@ -509,6 +509,11 @@ body:not(.hide-overlay) {
     font-size: 1.5em;
     height: 1.1em;
     margin-top: -1px;
+  }
+
+  #lightModeLogo {
+    margin-top: -0.7em;
+    margin-left: 5em;
   }
 
   #boxMenu {

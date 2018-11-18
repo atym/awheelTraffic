@@ -157,12 +157,14 @@ require([
     // Create a new instance of the TintLayer and set its properties
     var lightTrafficTiles = new TileLayer({
       urlTemplate: "https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.day/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ",
-      visible: false
+      visible: false,
+      opacity: 0.6
     });
 
     var darkTrafficTiles = new TileLayer({
       urlTemplate: "https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.night/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ",
-      visible: false
+      visible: false,
+      opacity: 0.6
     });
 
     /**************************************************
