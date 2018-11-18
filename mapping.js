@@ -355,6 +355,12 @@ require([
         
 		//Parameter for amount of days to subtract from current date
 		var days = dom.byId("daysFromDate").value;
+		
+		if (days > 0 == false){
+			alert ("You must enter a number for the days to search by.");
+			
+			return;
+		}
 		//var incidentTypes = dom.byId("incidentTypes").value;
 		
 		var incidentTypes = [];

@@ -307,6 +307,10 @@ body:not(.hide-overlay) {
 	margin-left: 0;
 }
 
+#daysFromDate {
+	width: 50px;
+}
+
 /*ESRI dark theme CSS*/
 /*.dark-theme .esri-widget,
     .dark-theme .esri-widget-button,
