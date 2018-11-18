@@ -48,6 +48,7 @@
 #### other
 
 -   [ ] tooltips for toolbox
+-   [ ] add function in mapping that watches for vector tile layer failure and then reloads page if necessary
 - [ ] fix time in popup to be more legible, unscramble
 - [ ] fix home button to use default extent
 -   [ ] add refresh button to each toolbox window
