@@ -520,8 +520,16 @@ require([
         objectIdField: "ObjectID",
         popupTemplate: pTemplate
       });
-	  trafficFLayer.renderer = renderHeatStatus ? trafficHeatRenderer :
-			trafficRenderer;
+	  
+	  if(renderHeatStatus){
+		  trafficFLayer.renderer = trafficHeatRenderer;
+		  trafficFLayer.opacity = 0.75;
+	  }
+	  else{
+		  trafficFLayer.renderer = trafficRenderer;
+		  trafficFLayer.opacity = 1;
+	  };
+
       try {
         map.add(trafficFLayer)
       } catch (error) {
@@ -670,9 +678,15 @@ require([
     });
 	
 	heatRenderToggle.addEventListener("change", function(){
-		trafficFLayer.renderer = heatRenderToggle.checked ?  trafficHeatRenderer :
-			trafficRenderer;
-		renderHeatStatus = heatRenderToggle.checked;		
+	  renderHeatStatus = heatRenderToggle.checked;
+	  if(renderHeatStatus){
+		  trafficFLayer.renderer = trafficHeatRenderer;
+		  trafficFLayer.opacity = 0.75;
+	  }
+	  else{
+		  trafficFLayer.renderer = trafficRenderer;
+		  trafficFLayer.opacity = 1;
+	  };		
 	});
 
     /**************************************************
