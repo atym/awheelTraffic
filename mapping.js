@@ -25,7 +25,6 @@ require([
     "esri/layers/BaseTileLayer",
     "esri/widgets/Locate",
     "esri/request",
-	"esri/renderers/HeatmapRenderer",
     "dojo/dom",
     "dojo/on",
     "esri/core/promiseUtils"
@@ -37,8 +36,7 @@ require([
 
 
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
-    esriRequest, dom, on, promiseUtils, HeatmapRenderer) {
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate, esriRequest, dom, on, promiseUtils) {
 
 
     /**************************************************
