@@ -47,6 +47,7 @@ require([
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic;
     var json, recordsReturned;
 	var renderHeatStatus = false;
+	const renderHeatOpacity = 0.6;
 
     /**************************************************
      * Create variables for vector layers
@@ -523,7 +524,7 @@ require([
 	  
 	  if(renderHeatStatus){
 		  trafficFLayer.renderer = trafficHeatRenderer;
-		  trafficFLayer.opacity = 0.75;
+		  trafficFLayer.opacity = renderHeatOpacity;
 	  }
 	  else{
 		  trafficFLayer.renderer = trafficRenderer;
@@ -681,7 +682,7 @@ require([
 	  renderHeatStatus = heatRenderToggle.checked;
 	  if(renderHeatStatus){
 		  trafficFLayer.renderer = trafficHeatRenderer;
-		  trafficFLayer.opacity = 0.75;
+		  trafficFLayer.opacity = renderHeatOpacity;
 	  }
 	  else{
 		  trafficFLayer.renderer = trafficRenderer;
