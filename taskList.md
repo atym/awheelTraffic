@@ -17,14 +17,14 @@
 
 #### search
 
--   [ ] need html buttons for user input
--   [X] query js function @jb
--   [ ] heatmap toggle, based on query results
+-   [x] ~~need html buttons for user input~~ @jb
+-   [x] ~~query js function~~ @jb
+-   [x] ~~heatmap toggle, based on query results~~ @br
 -   [ ] search based on times of day, show me accidents from Mondays at 5pm
 
 #### locate
 
--   [ ] geocoder or search widget
+-   [x] ~~geocoder or search widget~~ @ipk
 -   [ ] research output from locate to buffer
 -   [ ] mobile location finder
 -   [ ] user adjustable buffer distance/ 1 or 5
@@ -42,9 +42,9 @@
 -   [ ] symbology scale with device size
 -   [ ] research ios landscape status fix
 -   [ ] retina display 192dpi
--   [ ] add ios splash screen for pwa
+-   [x] ~~add ios splash screen for pwa~~ @ipk
 -   [ ] add popup on mobile for detected screen size <450 with option for vector or raster (HD vs SD)(Wifi&LTE vs 3G&E)...option to remember user choice for next visit. only show message on mobile so not obtrusive to desktop experience, but provides better load times for those on a slower connection. dont use words vector and raster, too confusing. hd and sd are button with big text and the network connection is a subtitle.
--   [ ] fix size of search text box to accomodate default text value 
+-   [ ] fix size of search text box to accomodate default text value
 
 #### other
 
