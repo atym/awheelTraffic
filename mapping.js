@@ -44,8 +44,9 @@ require([
      **************************************************/
 
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic, renderHeatStatus;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic;
     var json, recordsReturned;
+	var renderHeatStatus = false;
 
     /**************************************************
      * Create variables for vector layers
@@ -313,14 +314,17 @@ require([
 	  type: "heatmap",
 	  colorStops: [
 		{ ratio: 0, color: "rgba(255, 255, 255, 0)" },
-		{ ratio: 0.2, color: "rgba(255, 255, 255, 0.25)" },
-		{ ratio: 0.5, color: "rgba(255, 140, 0, 0.5)" },
-		{ ratio: 0.8, color: "rgba(255, 140, 0, 0.75)" },
+		{ ratio: 0.2, color: "rgba(255, 255, 255, 1)" },
+		{ ratio: 0.5, color: "rgba(255, 140, 0, 1)" },
+		{ ratio: 0.8, color: "rgba(255, 140, 0, 1)" },
 		{ ratio: 1, color: "rgba(255, 0, 0, 1)" }
 	  ],
 	  maxPixelIntensity: 25,
 	  minPixelIntensity: 0
 	};
+	trafficHeatRenderer.visualVariables=([{
+		opacity: 0.5
+	}]);
 
     /**************************************************
      * Request the  data from data.austin when the
@@ -444,7 +448,7 @@ require([
       var searchURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
         "?$where=traffic_report_status_date_time>" + "'" + queryDateString + "'" +
         " AND issue_reported IN " + incidentTypesString +
-        "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM";
+        "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=3000";
 
       console.log("Query params: " + queryDateString + " " + incidentTypes);
 
@@ -513,11 +517,11 @@ require([
       trafficFLayer = new FeatureLayer({
         source: graphics, // autocast as an array of esri/Graphic
         fields: fields,
-        renderer: trafficRenderer,
         objectIdField: "ObjectID",
         popupTemplate: pTemplate
       });
-
+	  trafficFLayer.renderer = renderHeatStatus ? trafficHeatRenderer :
+			trafficRenderer;
       try {
         map.add(trafficFLayer)
       } catch (error) {
@@ -666,8 +670,9 @@ require([
     });
 	
 	heatRenderToggle.addEventListener("change", function(){
-		renderHeatStatus = trafficFLayer.renderer = heatRenderToggle.checked ?  trafficHeatRenderer :
+		trafficFLayer.renderer = heatRenderToggle.checked ?  trafficHeatRenderer :
 			trafficRenderer;
+		renderHeatStatus = heatRenderToggle.checked;		
 	});
 
     /**************************************************
