@@ -26,8 +26,9 @@ require([
     "esri/widgets/Locate",
     "esri/request",
     "dojo/dom",
-	  "dojo/on",
-	  "esri/core/promiseUtils"],
+	"dojo/on",
+	"esri/core/promiseUtils",
+	"esri/geometry/Circle"],
 
   /**************************************************
    * Create magic mapping function
@@ -35,7 +36,7 @@ require([
 
 
   function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
-		esriRequest, dom, on, promiseUtils) {
+		esriRequest, dom, on, promiseUtils, Circle) {
 
     /**************************************************
      * VARIABLES
@@ -216,10 +217,34 @@ require([
     locateWidget = new Search({
       view: view
     }, "esriLocate");
-
+    
     var locateBtn = new Locate({
       view: view
     });
+	
+	/******************************************************
+	* Create circle around search result once complete 
+	* Author:  JB
+	* Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
+	******************************************************/
+	locateWidget.on("search-complete", function(event){
+		
+		var geocodeCenter = new Point({
+			x: view.center.x,
+			y: view.center.y
+		})
+		
+		/*var bufferCircle = new Circle({
+			center: geocodeCenter,
+			radius: 3,
+			radiusUnit: "miles",
+			type: "Polygon"
+		})*/
+		
+		/*view.graphics.add(bufferCircle);*/
+		
+		console.log("Geometry: "+event.SearchResult.feature.geometry);
+	})
 
     /**************************************************
      * Load initial batch of traffic data from COA
@@ -303,27 +328,6 @@ require([
         }
       }]
     };
-
-    /**************************************************
-     * Request the  data from data.austin when the
-     * view resolves then send it to the
-     * createGraphics() method when graphics are created,
-     * create the layer
-     **************************************************/
-
-    view.when(function() {
-
-      getData(trafficRequestURL)
-        .then(createGraphics)
-        .then(createLayer)
-        .then(createLegend);
-      
-	  // Populate the select list with all of the possible incident types JB
-      populateSearch();
-	  
-	  // Run the search once the submit button has been clicked JB
-	  on(dom.byId("submitButton"), "click", runSearch);
-    });
 
     /**************************************************
      * Request traffic incident data
@@ -656,6 +660,28 @@ require([
     view.ui.add(scaleBar, "top-right");
     view.ui.add(locateBtn, {
       position: "bottom-left"
+    });
+	
+	    /**************************************************
+     * Request the  data from data.austin when the
+     * view resolves then send it to the
+     * createGraphics() method when graphics are created,
+     * create the layer
+     **************************************************/
+
+    view.when(function() {
+
+      getData(trafficRequestURL)
+        .then(createGraphics)
+        .then(createLayer)
+        .then(createLegend);
+      
+	  // Populate the select list with all of the possible incident types JB
+      populateSearch();
+	  
+	  // Run the search once the submit button has been clicked JB
+	  on(dom.byId("submitButton"), "click", runSearch);
+	  
     });
 
 
