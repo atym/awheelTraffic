@@ -448,7 +448,7 @@ require([
       var searchURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
         "?$where=traffic_report_status_date_time>" + "'" + queryDateString + "'" +
         " AND issue_reported IN " + incidentTypesString +
-        "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM";
+        "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=100000";
 
       console.log("Query params: " + queryDateString + " " + incidentTypes);
 
