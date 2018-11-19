@@ -72,6 +72,7 @@
   - [ ] cookie storage to remember dark/light mode toggle pwa
 -   [ ] double tap to zoom on mobile
     -   [ ] [Link](https://gis.stackexchange.com/questions/102380/double-tap-on-the-map-not-work-in-the-chrome-of-nexus-7)
+-   [ ] Historical Traffic Fatalities
 
 
 
