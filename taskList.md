@@ -28,14 +28,14 @@
 -   [ ] research output from locate to buffer
 -   [ ] mobile location finder
 -   [ ] user adjustable buffer distance/ 1 or 5
-  - [ ] use buffer to only display points that intersect
-  - [ ] display graph with distribution of incident types within radius
+-   [ ] use buffer to only display points that intersect
+-   [ ] display graph with distribution of incident types within radius
 
 #### style
 
 -   [ ] revisit color of title bar
 -   [ ] clean css and comment
-  - [ ] create custom css for dark mode, update text and toolbox background on click, including dark mode zoom buttons from esri
+-   [ ] create custom css for dark mode, update text and toolbox background on click, including dark mode zoom buttons from esri
 
 #### mobile
 
@@ -43,7 +43,8 @@
 -   [ ] research ios landscape status fix
 -   [ ] retina display 192dpi
 -   [ ] add ios splash screen for pwa
-- [ ] add popup on mobile for detected screen size <450 with option for vector or raster (HD vs SD)(Wifi&LTE vs 3G&E)...option to remember user choice for next visit. only show message on mobile so not obtrusive to desktop experience, but provides better load times for those on a slower connection. dont use words vector and raster, too confusing. hd and sd are button with big text and the network connection is a subtitle.
+-   [ ] add popup on mobile for detected screen size <450 with option for vector or raster (HD vs SD)(Wifi&LTE vs 3G&E)...option to remember user choice for next visit. only show message on mobile so not obtrusive to desktop experience, but provides better load times for those on a slower connection. dont use words vector and raster, too confusing. hd and sd are button with big text and the network connection is a subtitle.
+-   [ ] fix size of search text box to accomodate default text value 
 
 #### other
 
