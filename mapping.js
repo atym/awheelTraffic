@@ -36,12 +36,15 @@ require([
    **************************************************/
 
 
+
   function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
     esriRequest, dom, on, promiseUtils, HeatmapRenderer) {
+
 
     /**************************************************
      * VARIABLES
      **************************************************/
+
 
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic, renderHeatStatus;
     var json, recordsReturned;
