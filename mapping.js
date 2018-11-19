@@ -47,7 +47,6 @@ require([
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic;
     var json, recordsReturned;
 	var renderHeatStatus = false;
-	const renderHeatOpacity = 0.6;
 
     /**************************************************
      * Create variables for vector layers
@@ -168,13 +167,13 @@ require([
     var lightTrafficTiles = new TileLayer({
       urlTemplate: "https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.day/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ",
       visible: false,
-      opacity: 0.6
+      opacity: 0.5
     });
 
     var darkTrafficTiles = new TileLayer({
       urlTemplate: "https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.night/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ",
       visible: false,
-      opacity: 0.6
+      opacity: 0.5
     });
 
     /**************************************************
@@ -521,10 +520,10 @@ require([
         objectIdField: "ObjectID",
         popupTemplate: pTemplate
       });
-	  
+
 	  if(renderHeatStatus){
 		  trafficFLayer.renderer = trafficHeatRenderer;
-		  trafficFLayer.opacity = renderHeatOpacity;
+		  trafficFLayer.opacity = 0.75;
 	  }
 	  else{
 		  trafficFLayer.renderer = trafficRenderer;
@@ -684,12 +683,12 @@ require([
 	  renderHeatStatus = heatRenderToggle.checked;
 	  if(renderHeatStatus){
 		  trafficFLayer.renderer = trafficHeatRenderer;
-		  trafficFLayer.opacity = renderHeatOpacity;
+		  trafficFLayer.opacity = 0.75;
 	  }
 	  else{
 		  trafficFLayer.renderer = trafficRenderer;
 		  trafficFLayer.opacity = 1;
-	  };		
+	  };
 	});
 
     /**************************************************
