@@ -12,8 +12,6 @@
 /**************************************************
  * Open and Close full screen overlay on logo click
  **************************************************/
-var lolo = location.hostname;
-console.log(location);
 
 function openOverlay() {
   document.getElementById("fullOverlay").style.width = "100%";
@@ -115,7 +113,7 @@ function swapStyleSheet(sheet) {
   } else {
     document.getElementById("pagestyle").setAttribute("href", "beauty.css");
     document.getElementById("darkTheme").setAttribute("href", "");
-    
+
     document.getElementById("lightFooter").style.display = "block";
     document.getElementById("darkFooter").style.display = "none";
 
@@ -187,7 +185,7 @@ function spinLegend() {
     } else {
         txt = "World";
     }
-    
+
 }
         console.log("This looks like a mobile device!");
       }
