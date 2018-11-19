@@ -24,3 +24,6 @@ https://github.com/Esri/arcgis-js-api
 
 ### Tippy JS Tooltips ###
 https://atomiks.github.io/tippyjs/
+
+### Some Incident Definitions ###
+http://www.ci.austin.tx.us/qact/default.cfm
