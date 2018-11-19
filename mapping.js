@@ -25,6 +25,7 @@ require([
     "esri/layers/BaseTileLayer",
     "esri/widgets/Locate",
     "esri/request",
+	"esri/renderers/HeatmapRenderer",
     "dojo/dom",
     "dojo/on",
     "esri/core/promiseUtils"
@@ -35,21 +36,17 @@ require([
    **************************************************/
 
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer,
-    VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar,
-    Search, BaseTileLayer, Locate,
-    esriRequest, dom, on, promiseUtils) {
+
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
+    esriRequest, dom, on, promiseUtils, HeatmapRenderer) {
+
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate,
-        trafficRenderer, map, view, legend, roadLayerToggle,
-        cityLimitsLayerToggle, trafficRequestURL, baseToggle,
-        lightRoads, darkRoads, vectorRoads, satelliteBase,
-        satelliteReference, satellite, homeBtn, scaleBar,
-        locateWidget, currentTraffic;
+
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic, renderHeatStatus;
     var json, recordsReturned;
 
     /**************************************************
@@ -313,6 +310,19 @@ require([
         }
       }]
     };
+	
+	trafficHeatRenderer = {
+	  type: "heatmap",
+	  colorStops: [
+		{ ratio: 0, color: "rgba(255, 255, 255, 0)" },
+		{ ratio: 0.2, color: "rgba(255, 255, 255, 0.25)" },
+		{ ratio: 0.5, color: "rgba(255, 140, 0, 0.5)" },
+		{ ratio: 0.8, color: "rgba(255, 140, 0, 0.75)" },
+		{ ratio: 1, color: "rgba(255, 0, 0, 1)" }
+	  ],
+	  maxPixelIntensity: 25,
+	  minPixelIntensity: 0
+	};
 
     /**************************************************
      * Request the  data from data.austin when the
@@ -591,6 +601,7 @@ require([
     darkModeToggle = document.getElementById("darkMode");
     cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
     currentTrafficToggle = document.getElementById("currentTraffic");
+	heatRenderToggle = document.getElementById("toggleHeat");
 
 
     if (localStorage.getItem("mode") == "dark") {
@@ -655,6 +666,11 @@ require([
         roadTrafficStyle = "light";
       }
     });
+	
+	heatRenderToggle.addEventListener("change", function(){
+		renderHeatStatus = trafficFLayer.renderer = heatRenderToggle.checked ?  trafficHeatRenderer :
+			trafficRenderer;
+	});
 
     /**************************************************
      * ADD and MODIFY map widgets
