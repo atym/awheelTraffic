@@ -308,7 +308,7 @@ require([
         }
       }]
     };
-	
+
 	trafficHeatRenderer = {
 	  type: "heatmap",
 	  colorStops: [
@@ -601,6 +601,8 @@ require([
     currentTrafficToggle = document.getElementById("currentTraffic");
 	heatRenderToggle = document.getElementById("toggleHeat");
 
+  cityLimitsLayerToggle.checked = false;
+  heatRenderToggle.checked = false;
 
     if (localStorage.getItem("mode") == "dark") {
       darkRoads.visible = true;
@@ -664,7 +666,7 @@ require([
         roadTrafficStyle = "light";
       }
     });
-	
+
 	heatRenderToggle.addEventListener("change", function(){
 		renderHeatStatus = trafficFLayer.renderer = heatRenderToggle.checked ?  trafficHeatRenderer :
 			trafficRenderer;
