@@ -54,12 +54,14 @@ require([
 
     lightRoads = new VectorTileLayer({
       url: "http://www.arcgis.com/sharing/rest/content/items/63c47b7177f946b49902c24129b87252/resources/styles/root.json?f=pjson",
-      visible: true
+      visible: true,
+	  title: "lightRoads"
     });
 
     darkRoads = new VectorTileLayer({
       url: "https://www.arcgis.com/sharing/rest/content/items/86f556a2d1fd468181855a35e344567f/resources/styles/root.json?f=pjson",
-      visible: false
+      visible: false,
+	  title: "darkRoads"
     });
 
     vectorRoads = new Basemap({
@@ -77,7 +79,8 @@ require([
      **************************************************/
 
     satelliteBase = new TileLayer({
-      url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+      url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
+	  title: "satelliteBase"
     });
 
     satelliteReference = new VectorTileLayer({
@@ -163,12 +166,14 @@ require([
     // Create a new instance of the TintLayer and set its properties
     var lightTrafficTiles = new TileLayer({
       urlTemplate: "https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.day/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ",
-      visible: false
+      visible: false,
+	  title: "lightTraffic"
     });
 
     var darkTrafficTiles = new TileLayer({
       urlTemplate: "https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.night/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ",
-      visible: false
+      visible: false,
+	  title: "darkTraffic"
     });
 
     /**************************************************
@@ -243,7 +248,12 @@ require([
 		
 		/*view.graphics.add(bufferCircle);*/
 		
-		console.log("Geometry: "+event.SearchResult.feature.geometry);
+		//console.log("Geometry: "+event.SearchResult.feature.geometry);
+		map.layers.forEach(function(layer){
+			console.log("Layer: "+layer.title);
+		});
+		
+		//console.log("Layers: "+map.allLayers);
 	})
 
     /**************************************************
@@ -503,7 +513,8 @@ require([
         fields: fields,
         renderer: trafficRenderer,
         objectIdField: "ObjectID",
-        popupTemplate: pTemplate
+        popupTemplate: pTemplate,
+		title: "trafficIncidents"
       });
 
       try {map.add(trafficFLayer)} catch(error){return };
