@@ -203,7 +203,7 @@ body:not(.hide-overlay) {
   background-color: #C1C1C1;
 }
 
-.esri-icon-up {
+/*.esri-icon-up {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
@@ -215,18 +215,48 @@ body:not(.hide-overlay) {
 
 .esri-icon-up:hover {
   background-color: #C1C1C1;
+}*/
+
+#legendClose {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0.3em;
+  margin-left: 0.8em;
+  padding: 0.5em;
+  font-size: 1.7em;
+  cursor: pointer;
 }
 
-#closeLegend {
-  margin-left: -1.2em;
+#legendClose:hover {
+  background-color: #C1C1C1;
 }
 
 #searchClose {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0.3em;
   margin-left: -1.2em;
+  padding: 0.5em;
+  font-size: 1.7em;
+  cursor: pointer;
+}
+
+#searchClose:hover {
+  background-color: #C1C1C1;
 }
 
 #locateClose {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0.3em;
   margin-left: -1.2em;
+  padding: 0.5em;
+  font-size: 1.7em;
+  cursor: pointer;
+}
+
+#locateClose:hover {
+  background-color: #C1C1C1;
 }
 
 #legendInfo {
