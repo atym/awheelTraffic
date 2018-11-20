@@ -630,9 +630,13 @@ require([
     cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
     currentTrafficToggle = document.getElementById("currentTraffic");
 	heatRenderToggle = document.getElementById("toggleHeat");
+  searchTogglePoints = document.getElementById("buttonPoints");
+  searchToggleHeatmap = document.getElementById("buttonHeatmap");
 
   cityLimitsLayerToggle.checked = false;
   heatRenderToggle.checked = false;
+
+
 
     if (localStorage.getItem("mode") == "dark") {
       darkRoads.visible = true;
@@ -698,7 +702,7 @@ require([
     });
 
 	heatRenderToggle.addEventListener("change", function(){
-	  renderHeatStatus = heatRenderToggle.checked;
+	  renderHeatStatus = searchToggleHeatmap.checked;
 	  if(renderHeatStatus){
 		  trafficFLayer.renderer = trafficHeatRenderer;
 		  trafficFLayer.opacity = 0.75;
