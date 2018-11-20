@@ -188,6 +188,11 @@ body:not(.hide-overlay) {
   background-color: #C1C1C1;
 }
 
+#submitButton {
+  margin-top: 1em;
+  cursor: pointer;
+}
+
 #daysFromDate {
   width: 13em !important;
 }
@@ -225,7 +230,7 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: 0.8em;
+  margin-left: 1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
@@ -239,7 +244,7 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: -1.2em;
+  margin-left: -1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
@@ -249,11 +254,15 @@ body:not(.hide-overlay) {
   background-color: #C1C1C1;
 }
 
+#searchOptions {
+
+}
+
 #locateClose {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: -1.2em;
+  margin-left: -1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
@@ -493,7 +502,7 @@ body:not(.hide-overlay) {
   }
 
   #legendClose {
-    margin-left: 0.8em !important;
+    margin-left: 1.0em !important;
   }
 
   #aboutNav button {
@@ -504,6 +513,10 @@ body:not(.hide-overlay) {
 
   #byLine {
     font-size: 1.1em;
+  }
+
+  #submitButton {
+    margin-top: 0.5em;
   }
 
   .overlay .closebtn {
@@ -600,6 +613,10 @@ body:not(.hide-overlay) {
     margin-top: 60px;
   }
 
+  .esri-ui .esri-popup {
+    margin-top: 6em;
+  }
+
   #aboutNav button {
     margin-top: 0.5em;
     font-weight: normal;
@@ -651,7 +668,7 @@ body:not(.hide-overlay) {
   }
 
   #lightModeLogo {
-    margin-top: -0.7em;
+    margin-top: -0.9em;
     margin-left: 5em;
   }
 
@@ -665,6 +682,8 @@ body:not(.hide-overlay) {
     margin-top: -0.3em;
   }
 
+
+
   .w3-display-bottom {
     margin-top: 15em;
     margin-left: -0.80em;
@@ -675,6 +694,16 @@ body:not(.hide-overlay) {
     width: 100%;
     z-index: 99 !important;
     height: 20em !important;
+  }
+
+  #leftSearch {
+    margin-left: -19em !important;
+    margin-top: 1em;
+  }
+
+  #rightSearch {
+    margin-right: -20em;
+    margin-top: -12em;
   }
 
   #esriLegend {

@@ -95,6 +95,11 @@ body:not(.hide-overlay) {
   background-color: #151E1C;
 }
 
+#submitButton {
+  margin-top: 1em;
+  cursor: pointer;
+}
+
 #locateSpinner {
   position: absolute;
   bottom: 0;
@@ -128,7 +133,7 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: 0.8em;
+  margin-left: 1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
@@ -142,7 +147,7 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: -1.2em;
+  margin-left: -1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
@@ -156,7 +161,7 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: -1.2em;
+  margin-left: -1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
@@ -484,8 +489,12 @@ body:not(.hide-overlay) {
     margin-top: 60px;
   }
 
+  #submitButton {
+    margin-top: 0.5em;
+  }
+
   #legendClose {
-    margin-left: 0.8em !important;
+    margin-left: 1.0em !important;
   }
 
   #aboutNav button {
@@ -645,7 +654,7 @@ body:not(.hide-overlay) {
   }
 
   #darkModeLogo {
-    margin-top: -0.7em;
+    margin-top: -0.9em;
     margin-left: 5em;
   }
 
@@ -669,6 +678,16 @@ body:not(.hide-overlay) {
     width: 100%;
     z-index: 99 !important;
     height: 20em !important;
+  }
+
+  #leftSearch {
+    margin-left: -19em !important;
+    margin-top: 1em;
+  }
+
+  #rightSearch {
+    margin-right: -20em;
+    margin-top: -12em;
   }
 
   #esriLegend {
