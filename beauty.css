@@ -14,7 +14,7 @@ html, body, #viewDiv {
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  /*font-family: 'Roboto', sans-serif;*/
   float: none;
   overflow: hidden;
 }
@@ -153,7 +153,7 @@ body:not(.hide-overlay) {
 }
 
 #boxContent {
-  color: grey;
+  color: rgba(53, 55, 53, 1);
   height: 30em;
   width: 28em;
 }
@@ -186,6 +186,10 @@ body:not(.hide-overlay) {
 
 #searchSpinner:hover {
   background-color: #C1C1C1;
+}
+
+#daysFromDate {
+  width: 13em !important;
 }
 
 #locateSpinner {
@@ -438,8 +442,8 @@ body:not(.hide-overlay) {
 }
 
 #searchOptions {
-	border: 1px solid black;
-	text-align: left;
+
+	text-align: center;
 	margin-left: 0;
 }
 
