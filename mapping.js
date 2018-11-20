@@ -27,8 +27,8 @@ require([
     "esri/request",
     "dojo/dom",
     "dojo/on",
-	  "esri/core/promiseUtils",
-	  "esri/geometry/Circle"],
+	"esri/core/promiseUtils",
+	"esri/geometry/Circle"],
 
 
   /**************************************************
