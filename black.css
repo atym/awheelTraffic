@@ -484,6 +484,10 @@ body:not(.hide-overlay) {
     margin-top: 60px;
   }
 
+  #legendClose {
+    margin-left: 0.8em !important;
+  }
+
   #aboutNav button {
     margin-top: 0.5em;
     font-weight: normal;
