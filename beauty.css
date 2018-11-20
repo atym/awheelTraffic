@@ -217,6 +217,10 @@ body:not(.hide-overlay) {
   background-color: #C1C1C1;
 }
 
+#closeLegend {
+  margin-left: -1.2em;
+}
+
 #searchClose {
   margin-left: -1.2em;
 }

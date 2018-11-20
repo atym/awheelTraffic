@@ -62,6 +62,10 @@ body:not(.hide-overlay) {
   margin-right: 0.4em;
 }
 
+#closeLegend {
+  margin-left: -1.2em;
+}
+
 #legendSpinner {
   position: absolute;
   bottom: 0;
