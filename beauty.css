@@ -221,7 +221,7 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-
+  margin-left: -1.2em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
