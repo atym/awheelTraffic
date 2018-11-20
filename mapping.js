@@ -247,6 +247,7 @@ require([
 			y: view.center.y
 		})*/
 		
+		console.log("Searcg term: "+event.searchTerm);
 		event.results.forEach(function(result){
 			console.log("Search result: "+result.feature)
 		});
