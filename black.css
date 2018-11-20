@@ -343,6 +343,11 @@ body:not(.hide-overlay) {
   display: none;
 }
 
+#closeOverlay {
+  float: right;
+}
+
+
 #aboutNav button {
   margin-bottom: 50px;
   margin-top: 5px;
