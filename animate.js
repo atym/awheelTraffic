@@ -191,3 +191,7 @@ function spinLegend() {
       }
 
 }
+
+function refreshPage() {
+  location.reload(false);
+}

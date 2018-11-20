@@ -93,6 +93,7 @@
       <img id="lightModeLogo" src="./img/logoBlack.png" alt="awheel logo">
       <img id="darkModeLogo" src="./img/logoGrey.png" alt="awheel logo">
       <h2>Austin Traffic Incidents</h2>
+      <span id="headerInfo" class="esri-icon-description" aria-label="info icon"></span>
     </div>
 
     <script>
@@ -122,9 +123,11 @@
     <div id="boxContent" style="display:none">
 
       <div id="Legend" class="w3-container title">
-        <span onclick="closeMenu(event, 'Legend')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
-        <h2>Legend</h2>
-        <p>Display dynamic legend that can be hidden (most helpful on mobile).</p>
+        <span onclick="closeMenu(event, 'Legend')" class="esri-icon-up" aria-label="close icon"></span>
+
+      <!--  <h2>Legend</h2>
+        <p>Display dynamic legend that can be hidden (most helpful on mobile).</p> -->
+
         <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
         <br>
 
@@ -138,17 +141,21 @@
 
         <br>
         <div id="esriLegend"></div>
-        <img id="legendInfo" data-tippy="Use the legend tool for viewing the symbol definitions used on the map and to toggle visual customizations" class="tooltip" src="./img/infoLight.svg" alt="Legend Info">
+        <span id="legendInfo" data-tippy="Use the legend tool for descriptions of the symbols visible on the map."  class="esri-icon-description" aria-label="info icon"></span>
 
-        <i id="legendSpinner" data-tippy="<label><input type='checkbox' id='beginner'> Beginner Mode</label><br><label><input type='checkbox' id='beginner'> Other Option</label><br><label><input type='checkbox' id='beginner'> Another Option</label><br>"
-          data-tippy-interactive="true" data-tippy-placement="bottom" class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>
+
+        <span id="legendSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
+
+        <!--<i id="legendSpinner" data-tippy="<label><input type='checkbox' id='beginner'> Beginner Mode</label><br><label><input type='checkbox' id='beginner'> Other Option</label><br><label><input type='checkbox' id='beginner'> Another Option</label><br>"
+          data-tippy-interactive="true" data-tippy-placement="bottom" class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>-->
 
       </div>
 
       <!--<p>Query the dataset and then display heatmap.</p>-->
       <div id="Search" class="w3-container title" style="display:none">
-        <span onclick="closeMenu(event, 'Search')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
-        <h2>Search</h2>
+        <span onclick="closeMenu(event, 'Search')" class="esri-icon-up" aria-label="close icon" id="searchClose"></span>
+
+      <!--  <h2>Search</h2>-->
 
 
         <div id="searchOptions">
@@ -163,18 +170,23 @@
           <select id="incidentTypes" multiple></select><br>
           <input type="submit" id="submitButton" value="Submit"><br>
 		  <label><input type="checkbox" id="toggleHeat"> Display Heatmap</label>
+      <span id="searchInfo" data-tippy="Use search to display locations for individual incident types, group incidents by user preference, and to generate a heat map based on the found data."  class="esri-icon-description" aria-label="info icon"></span>
 
 
         </div>
         <p>Records returned: <span id="numRecords"></span></p>
+        <span id="searchSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
       </div>
 
       <div id="Locate" class="w3-container title" style="display:none">
-        <span onclick="closeMenu(event, 'Locate')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
-        <h2>Locate</h2>
+        <span onclick="closeMenu(event, 'Locate')" class="esri-icon-up" aria-label="close icon" id="locateClose"></span>
 
-        <p>Input address to see incidents within a buffered distance.</p>
+      <!--  <h2>Locate</h2>
+        <p>Input address to see incidents within a buffered distance.</p>-->
+
         <div id="esriLocate"></div>
+        <span id="locateSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
+        <span id="locateInfo" data-tippy="Use the locate tool to search by your current location or enter an address manually to see all incidents within a 1-mile radius."  class="esri-icon-description" aria-label="info icon"></span>
       </div>
     </div>
   </div>
