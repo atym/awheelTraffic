@@ -234,10 +234,17 @@ require([
 	******************************************************/
 	locateWidget.on("search-complete", function(event){
 		
-		var geocodeCenter = new Point({
+		/*var geocodeCenter = new Point({
 			x: view.center.x,
 			y: view.center.y
-		})
+		})*/
+		
+		event.results.forEach(function(result){
+			console.log("Search result: "+result.feature)
+		});
+		
+		//console.log("Search result: "+event.results);
+
 		
 		/*var bufferCircle = new Circle({
 			center: geocodeCenter,
@@ -248,12 +255,6 @@ require([
 		
 		/*view.graphics.add(bufferCircle);*/
 		
-		//console.log("Geometry: "+event.SearchResult.feature.geometry);
-		map.layers.forEach(function(layer){
-			console.log("Layer: "+layer.title);
-		});
-		
-		//console.log("Layers: "+map.allLayers);
 	})
 
     /**************************************************
@@ -679,6 +680,27 @@ require([
      * createGraphics() method when graphics are created,
      * create the layer
      **************************************************/
+	 
+	/********************************************************
+	* Limit incident type selection to only 5 options using jquery (After 5th option is chosen the next option is unselected)
+	*
+	* Author:  JB
+	********************************************************/
+	function limitSelection(){
+          
+		var last_valid_selection = null;
+        
+        $('#incidentTypes').change(function(event) {
+
+			if ($(this).val().length > 5) {
+
+				$(this).val(last_valid_selection);
+            } 
+			else {
+				last_valid_selection = $(this).val();
+            }
+        });
+	}
 
     view.when(function() {
 
@@ -692,6 +714,10 @@ require([
 	  
 	  // Run the search once the submit button has been clicked JB
 	  on(dom.byId("submitButton"), "click", runSearch);
+	  
+	  on(dom.byId("incidentTypes"), "click", limitSelection);
+	  
+
 	  
     });
 
