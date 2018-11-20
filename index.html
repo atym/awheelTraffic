@@ -29,8 +29,18 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Austin Traffic">
   <link rel="apple-touch-icon" href="./img/touch-icon-iphone.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
+
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-startup-image" href="./img/iosSplash.png">
+  <link rel="apple-touch-startup-image" href="./img/splash/launch-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./img/splash/launch-750x1294.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./img/splash/launch-1242x2148.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./img/splash/launch-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./img/splash/launch-1536x2048.png" media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./img/splash/launch-1668x2224.png" media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./img/splash/launch-2048x2732.png" media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
   <title>Austin Traffic Incidents</title>
 
   <script>
@@ -88,6 +98,7 @@
       <img id="lightModeLogo" src="./img/logoBlack.png" alt="awheel logo">
       <img id="darkModeLogo" src="./img/logoGrey.png" alt="awheel logo">
       <h2>Austin Traffic Incidents</h2>
+      <span id="headerInfo" class="esri-icon-description" aria-label="info icon"></span>
     </div>
 
     <script>
@@ -117,9 +128,11 @@
     <div id="boxContent" style="display:none">
 
       <div id="Legend" class="w3-container title">
-        <span onclick="closeMenu(event, 'Legend')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
-        <h2>Legend</h2>
-        <p>Display dynamic legend that can be hidden (most helpful on mobile).</p>
+        <span onclick="closeMenu(event, 'Legend')" class="esri-icon-up" aria-label="close icon" id="legendClose"></span>
+
+      <!--  <h2>Legend</h2>
+        <p>Display dynamic legend that can be hidden (most helpful on mobile).</p> -->
+
         <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
         <br>
 
@@ -133,45 +146,61 @@
 
         <br>
         <div id="esriLegend"></div>
-        <img id="legendInfo" data-tippy="Use the legend tool for viewing the symbol definitions used on the map and to toggle visual customizations" class="tooltip" src="./img/infoLight.svg" alt="Legend Info">
+        <span id="legendInfo" data-tippy="Use the legend tool for descriptions of the symbols visible on the map."  class="esri-icon-description" aria-label="info icon"></span>
 
-        <i id="legendSpinner"
-        data-tippy="<label><input type='checkbox' id='beginner'> Beginner Mode</label><br><label><input type='checkbox' id='beginner'> Other Option</label><br><label><input type='checkbox' id='beginner'> Another Option</label><br>"
-         data-tippy-interactive="true"
-           data-tippy-placement="bottom"
-         class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>
+
+        <span id="legendSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
+
+        <!--<i id="legendSpinner" data-tippy="<label><input type='checkbox' id='beginner'> Beginner Mode</label><br><label><input type='checkbox' id='beginner'> Other Option</label><br><label><input type='checkbox' id='beginner'> Another Option</label><br>"
+          data-tippy-interactive="true" data-tippy-placement="bottom" class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>-->
 
       </div>
 
-	  <!--<p>Query the dataset and then display heatmap.</p>-->
+      <!--<p>Query the dataset and then display heatmap.</p>-->
       <div id="Search" class="w3-container title" style="display:none">
-        <span onclick="closeMenu(event, 'Search')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
-        <h2>Search</h2>
+        <span onclick="closeMenu(event, 'Search')" class="esri-icon-up" aria-label="close icon" id="searchClose"></span>
+
+      <!--  <h2>Search</h2>-->
 
 
         <div id="searchOptions">
 
-
-			    <label for="daysFromDate">Days from Current Date:</label><br>
-			    <!--<input type="radio" id="daysFromDate" name="daysFromDate" value="7">Last 7 Days<br>
+          <br>
+          <label for="daysFromDate">Days from Current Date:</label><br>
+          <!--<input type="radio" id="daysFromDate" name="daysFromDate" value="7">Last 7 Days<br>
 			    <input type="radio" id="daysFromDate" name="daysFromDate" value="30">Last 30 days <br>
 			    <input type="radio" id="daysFromDate" name="daysFromDate" value="90">Last 90 days <br>-->
-			    <input type="text" id="daysFromDate" maxlength="3"><br>
-			    <label for="incidentTypes">Incident Types:</label><br>
-			    <select id="incidentTypes" multiple></select><br>
-			    <input type="submit" id="submitButton" value="Submit">
-				
+          <input type="text" id="daysFromDate" maxlength="3" placeholder="Between 1 and 365">
+          <br>
+          <br>
+          <br>
+          <label for="incidentTypes">Incident Types:</label>
+          <br>
+          <select id="incidentTypes" multiple></select>
+          <br>
+          <label><input type="checkbox" id="toggleHeat"> Display Heatmap</label>
+          <br>
+          <br>
+          <br>
+          <input type="submit" id="submitButton" value="Submit"><br>
 
-		    </div>
-		    <p>Records returned: <span id="numRecords"></span></p>
+      <span id="searchInfo" data-tippy="Use search to display locations for individual incident types, group incidents by user preference, and to generate a heat map based on the found data."  class="esri-icon-description" aria-label="info icon"></span>
+
+
+        </div>
+        <p>Matched Incidents: <span id="numRecords"></span></p>
+        <span id="searchSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
       </div>
 
       <div id="Locate" class="w3-container title" style="display:none">
-        <span onclick="closeMenu(event, 'Locate')" class="w3-button w3-xlarge w3-display-bottom">&#94;</span>
-        <h2>Locate</h2>
+        <span onclick="closeMenu(event, 'Locate')" class="esri-icon-up" aria-label="close icon" id="locateClose"></span>
 
-        <p>Input address to see incidents within a buffered distance.</p>
+      <!--  <h2>Locate</h2>
+        <p>Input address to see incidents within a buffered distance.</p>-->
+
         <div id="esriLocate"></div>
+        <span id="locateSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
+        <span id="locateInfo" data-tippy="Use the locate tool to search by your current location or enter an address manually to see all incidents within a 1-mile radius."  class="esri-icon-description" aria-label="info icon"></span>
       </div>
     </div>
   </div>
@@ -182,7 +211,7 @@
      **************************************************/
   </script>
   <div id="fullOverlay" class="overlay">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeOverlay()">&times;</a>
+    <a href="javascript:void(0)" onclick="closeOverlay()" class="esri-icon-close" aria-label="close icon" id="closeOverlay"></a>
 
     <div class="overlay-content">
 

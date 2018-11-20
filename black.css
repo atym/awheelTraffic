@@ -18,7 +18,7 @@ html, body, #viewDiv {
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  /*font-family: 'Roboto', sans-serif !important;*/
   float: none;
   overflow: hidden;
 }
@@ -54,6 +54,160 @@ body:not(.hide-overlay) {
   z-index: 99;
 }
 
+#headerInfo {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 0.4em;
+  margin-right: 0.4em;
+}
+
+
+
+
+#legendSpinner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 0.3em;
+  margin-left: 0.5em;
+  padding: 0.7em;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+#legendSpinner:hover {
+  background-color: #151E1C;
+}
+
+#searchSpinner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 0.3em;
+  margin-left: 0.5em;
+  padding: 0.7em;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+#searchSpinner:hover {
+  background-color: #151E1C;
+}
+
+#locateSpinner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 0.3em;
+  margin-left: 0.5em;
+  padding: 0.7em;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+#locateSpinner:hover {
+  background-color: #151E1C;
+}
+
+/*.esri-icon-up {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0.3em;
+  margin-left: 0.8em;
+  padding: 0.5em;
+  font-size: 1.7em !important;
+  cursor: pointer;
+}
+
+.esri-icon-up:hover {
+  background-color: #151E1C;
+}*/
+
+#legendClose {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0.3em;
+  margin-left: 0.8em;
+  padding: 0.5em;
+  font-size: 1.7em;
+  cursor: pointer;
+}
+
+#legendClose:hover {
+  background-color: #C1C1C1;
+}
+
+#searchClose {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0.3em;
+  margin-left: -1.2em;
+  padding: 0.5em;
+  font-size: 1.7em;
+  cursor: pointer;
+}
+
+#searchClose:hover {
+  background-color: #C1C1C1;
+}
+
+#locateClose {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0.3em;
+  margin-left: -1.2em;
+  padding: 0.5em;
+  font-size: 1.7em;
+  cursor: pointer;
+}
+
+#locateClose:hover {
+  background-color: #C1C1C1;
+}
+
+#legendInfo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 0.5em;
+  margin-bottom: 0.3em;
+  font-size: 1.5em;
+  padding: 0.7em;
+}
+
+#legendInfo:hover {
+  background-color: #151E1C;
+}
+
+#searchInfo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 0.5em;
+  margin-bottom: 0.3em;
+  font-size: 1.5em;
+  padding: 0.7em;
+}
+
+#searchInfo:hover {
+  background-color: #151E1C;
+}
+
+#locateInfo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 0.5em;
+  margin-bottom: 0.3em;
+  font-size: 1.5em;
+  padding: 0.7em;
+}
+
+#locateInfo:hover {
+  background-color: #151E1C;
+}
+
 #boxHeader {
   background-color: #2E2E30;
   color: #BBC2C6;
@@ -77,9 +231,9 @@ body:not(.hide-overlay) {
   position: absolute;
   z-index: 99;
   left: 0;
-  margin-top: 1.2em;
-  margin-left: 1.7em;
-  width: 2em;
+  margin-top: 0.5em;
+  margin-left: 1.2em;
+  width: 3.5em;
 }
 
 #lightModeLogo {
@@ -121,16 +275,16 @@ body:not(.hide-overlay) {
   background-color: #242424;
 }
 
-#legendInfo {
+/*#legendInfo {
   width: 1.6em;
   position: absolute;
   bottom: 0;
   right: 0;
   margin-right: 1.5em;
   margin-bottom: 1.5em;
-}
+}*/
 
-#legendSpinner {
+/*#legendSpinner {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -138,7 +292,7 @@ body:not(.hide-overlay) {
   margin-left: 0.5em;
   padding: 1em;
   cursor: pointer;
-}
+}*/
 
 .w3-display-bottom {
   margin-top: 16.4em;
@@ -188,6 +342,11 @@ body:not(.hide-overlay) {
 .overlay-content::-webkit-scrollbar {
   display: none;
 }
+
+#closeOverlay {
+  float: right;
+}
+
 
 #aboutNav button {
   margin-bottom: 50px;
@@ -325,6 +484,10 @@ body:not(.hide-overlay) {
     margin-top: 60px;
   }
 
+  #legendClose {
+    margin-left: 0.8em !important;
+  }
+
   #aboutNav button {
     margin-top: 0.5em;
     font-weight: normal;
@@ -363,9 +526,9 @@ body:not(.hide-overlay) {
     position: absolute;
     z-index: 99;
     left: 0;
-    margin-top: 0.75em;
+    margin-top: 0em;
     margin-left: 2.1em;
-    width: 2em;
+    width: 3.5em;
   }
 
   #toolBox {
@@ -399,6 +562,8 @@ body:not(.hide-overlay) {
     z-index: 99 !important;
     height: 28em !important;
   }
+
+
 
   .w3-third {
     width: 33.3333% !important;
@@ -477,6 +642,11 @@ body:not(.hide-overlay) {
     font-size: 1.5em;
     height: 1.1em;
     margin-top: -1px;
+  }
+
+  #darkModeLogo {
+    margin-top: -0.7em;
+    margin-left: 5em;
   }
 
   #boxMenu {
