@@ -27,8 +27,9 @@ require([
     "esri/request",
     "dojo/dom",
     "dojo/on",
-    "esri/core/promiseUtils"
-  ],
+	  "esri/core/promiseUtils",
+	  "esri/geometry/Circle"],
+
 
   /**************************************************
    * Create magic mapping function
@@ -36,7 +37,8 @@ require([
 
 
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate, esriRequest, dom, on, promiseUtils) {
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
+		esriRequest, dom, on, promiseUtils, Circle) {
 
 
     /**************************************************
@@ -57,12 +59,14 @@ require([
 
     lightRoads = new VectorTileLayer({
       url: "http://www.arcgis.com/sharing/rest/content/items/63c47b7177f946b49902c24129b87252/resources/styles/root.json?f=pjson",
-      visible: true
+      visible: true,
+	  title: "lightRoads"
     });
 
     darkRoads = new VectorTileLayer({
       url: "https://www.arcgis.com/sharing/rest/content/items/86f556a2d1fd468181855a35e344567f/resources/styles/root.json?f=pjson",
-      visible: false
+      visible: false,
+	  title: "darkRoads"
     });
 
     vectorRoads = new Basemap({
@@ -80,7 +84,8 @@ require([
      **************************************************/
 
     satelliteBase = new TileLayer({
-      url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+      url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
+	  title: "satelliteBase"
     });
 
     satelliteReference = new VectorTileLayer({
@@ -167,13 +172,16 @@ require([
     var lightTrafficTiles = new TileLayer({
       urlTemplate: "https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.day/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ",
       visible: false,
+      title: "lightTraffic",
       opacity: 0.5
     });
 
     var darkTrafficTiles = new TileLayer({
       urlTemplate: "https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.night/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ",
       visible: false,
+      title: "darkTraffic",
       opacity: 0.5
+
     });
 
     /**************************************************
@@ -222,10 +230,40 @@ require([
     locateWidget = new Search({
       view: view
     }, "esriLocate");
-
+    
     var locateBtn = new Locate({
       view: view
     });
+	
+	/******************************************************
+	* Create circle around search result once complete 
+	* Author:  JB
+	* Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
+	******************************************************/
+	locateWidget.on("search-complete", function(event){
+		
+		/*var geocodeCenter = new Point({
+			x: view.center.x,
+			y: view.center.y
+		})*/
+		
+		event.results.forEach(function(result){
+			console.log("Search result: "+result.feature)
+		});
+		
+		//console.log("Search result: "+event.results);
+
+		
+		/*var bufferCircle = new Circle({
+			center: geocodeCenter,
+			radius: 3,
+			radiusUnit: "miles",
+			type: "Polygon"
+		})*/
+		
+		/*view.graphics.add(bufferCircle);*/
+		
+	})
 
     /**************************************************
      * Load initial batch of traffic data from COA
@@ -325,27 +363,6 @@ require([
 	trafficHeatRenderer.visualVariables=([{
 		opacity: 0.5
 	}]);
-
-    /**************************************************
-     * Request the  data from data.austin when the
-     * view resolves then send it to the
-     * createGraphics() method when graphics are created,
-     * create the layer
-     **************************************************/
-
-    view.when(function() {
-
-      getData(trafficRequestURL)
-        .then(createGraphics)
-        .then(createLayer)
-        .then(createLegend);
-
-      // Populate the select list with all of the possible incident types JB
-      populateSearch();
-
-      // Run the search once the submit button has been clicked JB
-      on(dom.byId("submitButton"), "click", runSearch);
-    });
 
     /**************************************************
      * Request traffic incident data
@@ -518,7 +535,8 @@ require([
         source: graphics, // autocast as an array of esri/Graphic
         fields: fields,
         objectIdField: "ObjectID",
-        popupTemplate: pTemplate
+        popupTemplate: pTemplate,
+		title: "trafficIncidents"
       });
 
 	  if(renderHeatStatus){
@@ -701,6 +719,58 @@ require([
     view.ui.add(scaleBar, "top-right");
     view.ui.add(locateBtn, {
       position: "bottom-left"
+    });
+	
+	    /**************************************************
+     * Request the  data from data.austin when the
+     * view resolves then send it to the
+     * createGraphics() method when graphics are created,
+     * create the layer
+     **************************************************/
+	 
+	/********************************************************
+	* Limit incident type selection to only 5 options using jquery (After 5th option is chosen the next option is unselected)
+	*
+	* Author:  JB
+	********************************************************/
+	function limitSelection(){
+          
+		var last_valid_selection = null;
+        
+        $('#incidentTypes').change(function(event) {
+
+			if ($(this).val().length > 5) {
+
+				$(this).val(last_valid_selection);
+            } 
+			else {
+				last_valid_selection = $(this).val();
+            }
+        });
+	}
+     /**************************************************
+     * Request the  data from data.austin when the
+     * view resolves then send it to the
+     * createGraphics() method when graphics are created,
+     * create the layer
+     **************************************************/
+    view.when(function() {
+
+      getData(trafficRequestURL)
+        .then(createGraphics)
+        .then(createLayer)
+        .then(createLegend);
+      
+	  // Populate the select list with all of the possible incident types JB
+      populateSearch();
+	  
+	  // Run the search once the submit button has been clicked JB
+	  on(dom.byId("submitButton"), "click", runSearch);
+	  
+	  on(dom.byId("incidentTypes"), "click", limitSelection);
+	  
+
+	  
     });
 
 
