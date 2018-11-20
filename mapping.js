@@ -720,13 +720,6 @@ require([
     view.ui.add(locateBtn, {
       position: "bottom-left"
     });
-	
-	    /**************************************************
-     * Request the  data from data.austin when the
-     * view resolves then send it to the
-     * createGraphics() method when graphics are created,
-     * create the layer
-     **************************************************/
 	 
 	/********************************************************
 	* Limit incident type selection to only 5 options using jquery (After 5th option is chosen the next option is unselected)
@@ -770,6 +763,7 @@ require([
 	  // Run the search once the submit button has been clicked JB
 	  on(dom.byId("submitButton"), "click", runSearch);
 	  
+	  // Limit selected incidents to 5 or fewer when options are clicked and selected 
 	  on(dom.byId("incidentTypes"), "click", limitSelection);
 	  
 
