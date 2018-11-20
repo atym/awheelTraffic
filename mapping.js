@@ -740,7 +740,10 @@ require([
         $('#incidentTypes').change(function(event) {
 
 			if ($(this).val().length > 5) {
-
+				
+				alert("You may only select 5 incident types at a time.");
+				
+				//Set current selectino to last valid selection 
 				$(this).val(last_valid_selection);
             } 
 			else {
