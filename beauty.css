@@ -585,7 +585,7 @@ body:not(.hide-overlay) {
   }
 
   #legendClose {
-    margin-left: 1.0em !important;
+    margin-left: -1em !important;
   }
 
   #aboutNav button {

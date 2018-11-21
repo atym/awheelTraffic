@@ -574,8 +574,8 @@ body:not(.hide-overlay) {
 
   .esri-expand__container--expanded {
     height: 10em !important;
-    margin-top: 38em !important;
-    width: 6.3em !important;
+    margin-top: 29em !important;
+    width: 10.3em !important;
   }
 
 
@@ -605,7 +605,7 @@ body:not(.hide-overlay) {
   }
 
   #legendClose {
-    margin-left: 1.0em !important;
+    margin-left: -1.0em !important;
   }
 
   #aboutNav button {
