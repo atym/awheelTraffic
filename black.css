@@ -574,7 +574,7 @@ body:not(.hide-overlay) {
 
   .esri-expand__container--expanded {
     height: 10em !important;
-    margin-top: 30% !important;
+    margin-top: -10em !important;
     width: 10.3em !important;
   }
 
