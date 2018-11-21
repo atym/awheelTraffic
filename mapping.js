@@ -484,6 +484,10 @@ require([
 
       //Remove the previous trafficFLayer before attempting to display the query results
       map.remove(trafficFLayer);
+	  
+	  // Remove any locate results that still exist
+	  view.graphics.removeAll();
+	  locateWidget.destroy();
 
       getData(searchURL)
         .then(createGraphics)
@@ -559,10 +563,12 @@ require([
 	  };
 
       try {
-        map.add(trafficFLayer)
+        map.add(trafficFLayer);
       } catch (error) {
         return
       };
+	  
+	  view.extent = trafficFLayer.fullExtent; // **** Not working for some reason JB *****
       return trafficFLayer;
     }
 
