@@ -133,14 +133,14 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: 1.0em;
+  margin-left: -1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
 }
 
 #legendClose:hover {
-  background-color: #C1C1C1;
+  background-color: #151E1C;
 }
 
 #searchClose {
@@ -154,7 +154,7 @@ body:not(.hide-overlay) {
 }
 
 #searchClose:hover {
-  background-color: #C1C1C1;
+  background-color: #151E1C;
 }
 
 #locateClose {
@@ -168,7 +168,7 @@ body:not(.hide-overlay) {
 }
 
 #locateClose:hover {
-  background-color: #C1C1C1;
+  background-color: #151E1C;
 }
 
 #legendInfo {
@@ -254,7 +254,7 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-left: 0.85em;
-  margin-bottom: 3.9em;
+  margin-bottom: 4.1em;
   box-shadow: 0px 0px 5px #149FEC;
   cursor: pointer;
 }
@@ -262,6 +262,67 @@ body:not(.hide-overlay) {
 #infoButton:hover {
   background-color: #262626;
 }
+
+#settingsButton {
+  z-index: 1;
+  color: #9D9D9D;
+  background-color: #1B1B1B;
+  padding: 0.4em;
+  font-size: 1.2em;
+  position: absolute;
+  bottom: 0;
+  margin-left: 0.85em;
+  margin-bottom: 1.7em;
+  box-shadow: 0px 0px 1px #149FEC;
+  cursor: pointer;
+}
+
+#settingsButton:hover {
+  background-color: #262626;
+}
+
+/*#settingsDiv {
+  position: absolute;
+  bottom: 0;
+  margin-left: 6em;
+  z-index: 99;
+  background-color: #242424;
+  padding: 2em;
+}*/
+
+
+
+#settingsDiv {
+  display: none;
+	position: absolute;
+  bottom: 0;
+  margin-left: 5em;
+  z-index: 99;
+	background: #2e2e30;
+	border-radius: .4em;
+  padding: 1em;
+  margin-bottom: 2.3em;
+  box-shadow: 0 0 15px #149FEC;
+  color: #BBC2C6;
+}
+
+#settingsDiv input {
+  margin-bottom: 1em !important;
+  margin-top: 1em;
+  cursor: pointer;
+}
+
+#settingsDiv label {
+  cursor: pointer;
+}
+
+#applicationDiv {
+  z-index: -99999 !important;
+}
+
+
+
+
 
 #boxMenu {
   width: 100%;
@@ -471,8 +532,58 @@ body:not(.hide-overlay) {
   background-color:black;
 }
 
+.esri-home {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 10em !important;
+  margin-right: 0em !important;
+}
+
+.esri-locate {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 13em !important;
+  margin-right: 0em !important;
+}
+
+.esri-scale-bar {
+  position: absolute;
+
+  bottom: 0;
+  right: 0;
+  margin-right: 8em;
+  margin-bottom: 3.5em;
+}
+
+.esri-expand {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 5.3em !important;
+  margin-right: 0em !important;
+}
+
+
+
+
+
 /* Smartphones (portrait) ----------- */
 @media only screen and (max-width: 450px) {
+
+  .esri-expand__container--expanded {
+    height: 10em !important;
+    margin-top: 38em !important;
+    width: 6.3em !important;
+  }
+
+
+
+.esri-scale-bar {
+  margin-left: 7.5em;
+}
+
   .overlay-content img {
     height: 90px;
     width: 90px;

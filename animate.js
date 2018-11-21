@@ -9,6 +9,29 @@
  * Brandon Rose
  **************************************************/
 
+ /**************************************************
+  * SETTINGS WINDOW
+  **************************************************/
+  var settingsView = document.getElementById("settingsDiv");
+  var settingsButton = document.getElementById("settingsButton");
+  settingsView.style.display = "none";
+
+  function toggleSettings() {
+      settingsView.style.display = "block";
+    /*if (settingsView.style.display == "block") {
+      settingsView.style.display = "none";
+    } else if (settingsView.style.display == "block"){
+      settingsView.style.display = "block";
+    }*/
+  }
+
+  window.addEventListener("mouseup", function(event) {
+    if (event.target != settingsView && event.target.parentNode != settingsView) {
+      settingsView.style.display = "none";
+    } 
+});
+
+
 /**************************************************
  * Open and Close full screen overlay on logo click
  **************************************************/

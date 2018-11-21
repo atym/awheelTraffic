@@ -22,6 +22,8 @@ require([
     "esri/widgets/Home",
     "esri/widgets/ScaleBar",
     "esri/widgets/Search",
+    "esri/widgets/Fullscreen",
+    "esri/widgets/Expand",
     "esri/layers/BaseTileLayer",
     "esri/widgets/Locate",
     "esri/request",
@@ -37,7 +39,7 @@ require([
 
 
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, Fullscreen, Expand, BaseTileLayer, Locate,
 		esriRequest, dom, on, promiseUtils, Circle) {
 
 
@@ -220,8 +222,16 @@ require([
     baseToggle = new BasemapToggle({
       titleVisible: true,
       view: view,
-      nextBasemap: satellite
+      nextBasemap: satellite,
+      container: document.createElement("expandWidget")
     });
+
+    var btExpand = new Expand({
+            expandIconClass: "esri-icon-collection",
+            view: view,
+            autoCollapse: true,
+            content: baseToggle
+          });
 
     homeBtn = new Home({
       view: view
@@ -230,39 +240,40 @@ require([
     locateWidget = new Search({
       view: view
     }, "esriLocate");
-    
+
     var locateBtn = new Locate({
       view: view
     });
-	
+
+
 	/******************************************************
-	* Create circle around search result once complete 
+	* Create circle around search result once complete
 	* Author:  JB
 	* Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
 	******************************************************/
 	locateWidget.on("search-complete", function(event){
-		
+
 		/*var geocodeCenter = new Point({
 			x: view.center.x,
 			y: view.center.y
 		})*/
-		
+
 		event.results.forEach(function(result){
 			console.log("Search result: "+result.feature)
 		});
-		
+
 		//console.log("Search result: "+event.results);
 
-		
+
 		/*var bufferCircle = new Circle({
 			center: geocodeCenter,
 			radius: 3,
 			radiusUnit: "miles",
 			type: "Polygon"
 		})*/
-		
+
 		/*view.graphics.add(bufferCircle);*/
-		
+
 	})
 
     /**************************************************
@@ -632,9 +643,11 @@ require([
 	heatRenderToggle = document.getElementById("toggleHeat");
   searchTogglePoints = document.getElementById("buttonPoints");
   searchToggleHeatmap = document.getElementById("buttonHeatmap");
+  scaleBarToggle = document.getElementById("scaleBar");
 
   cityLimitsLayerToggle.checked = false;
   heatRenderToggle.checked = false;
+  scaleBarToggle.checked = false;
 
 
 
@@ -718,38 +731,51 @@ require([
      **************************************************/
 
     view.ui.move("zoom", "bottom-right"); //Move Zoom
-    view.ui.add(baseToggle, "bottom-right"); //Add Basemap toggle
-    view.ui.add(homeBtn, "bottom-left"); // Add the home button
-    view.ui.add(scaleBar, "top-right");
+    /*view.ui.add(baseToggle, "bottom-right"); //Add Basemap toggle*/
+    view.ui.add(homeBtn, "bottom-right"); // Add the home button
+
+    view.ui.add(new Fullscreen({
+        view: view,
+        element: entireApp
+      }), "top-right");
+    view.ui.add(btExpand, "bottom-right");
     view.ui.add(locateBtn, {
-      position: "bottom-left"
+      position: "bottom-right"
     });
-	
+
+scaleBarToggle.addEventListener("change", function(){
+    if (scaleBarToggle.checked == true) {
+      view.ui.add(scaleBar, "manual");
+    } else if (scaleBarToggle.checked == false) {
+      view.ui.remove(scaleBar, "manual")
+    }
+});
+
 	    /**************************************************
      * Request the  data from data.austin when the
      * view resolves then send it to the
      * createGraphics() method when graphics are created,
      * create the layer
      **************************************************/
-	 
+
 	/********************************************************
 	* Limit incident type selection to only 5 options using jquery (After 5th option is chosen the next option is unselected)
 	*
 	* Author:  JB
 	********************************************************/
 	function limitSelection(){
-          
+
 		var last_valid_selection = null;
-        
+
         $('#incidentTypes').change(function(event) {
 
 			if ($(this).val().length > 5) {
-				
+
 				alert("You may only select 5 incident types at a time.");
-				
-				//Set current selectino to last valid selection 
+
+				//Set current selectino to last valid selection
 				$(this).val(last_valid_selection);
-            } 
+            }
 			else {
 				last_valid_selection = $(this).val();
             }
@@ -767,17 +793,17 @@ require([
         .then(createGraphics)
         .then(createLayer)
         .then(createLegend);
-      
+
 	  // Populate the select list with all of the possible incident types JB
       populateSearch();
-	  
+
 	  // Run the search once the submit button has been clicked JB
 	  on(dom.byId("submitButton"), "click", runSearch);
-	  
-	  on(dom.byId("incidentTypes"), "click", limitSelection);
-	  
 
-	  
+	  on(dom.byId("incidentTypes"), "click", limitSelection);
+
+
+
     });
 
 

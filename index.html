@@ -68,13 +68,14 @@
   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
   crossorigin="anonymous"></script>
   <script src="mapping.js"></script>
-  <script src="animate.js"></script>
+
   <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
- 
+
 
 </head>
 
-<body onload="checkCookie()">
+<body onload="checkCookie()" id="entireApp">
+
 
 
   <script>
@@ -84,7 +85,14 @@
    **************************************************/
   </script>
 
-  <div id="infoButton" class="esri-icon-description" aria-label="close icon" onclick="openOverlay()"></div>
+  <div id="infoButton" class="esri-icon-description" aria-label="close icon" onclick="openOverlay()" data-tippy="About"></div>
+
+  <div id="settingsButton" class="esri-icon-settings" aria-label="settings icon" data-tippy="Settings" onclick="toggleSettings()" href="javascript:void(0)"></div>
+
+
+
+
+
 
 
   <!--   <div id="mainLogo">
@@ -133,14 +141,14 @@
       <!--  <h2>Legend</h2>
         <p>Display dynamic legend that can be hidden (most helpful on mobile).</p> -->
 
-        <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
+      <!--  <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
         <br>
 
         <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('black.css')"> Dark Mode</label>
 
         <br>
 
-        <label><input type="checkbox" id="currentTraffic"> Traffic</label>
+        <label><input type="checkbox" id="currentTraffic"> Traffic</label> -->
 
         <!-- <label data-tippy="Inactive"><input type="checkbox" id="beginner"> Beginner Mode</label> -->
 
@@ -188,8 +196,8 @@
             <br>
 
             <form id="toggleHeat">
-            <input id="buttonPoints" type="radio" name="searchT" value="points" checked> Points &nbsp;&nbsp;
-            <input id="buttonHeatmap" type="radio" name="searchT" value="heatmap"> Heatmap<br>
+            <label><input id="buttonPoints" type="radio" name="searchT" value="points" checked> Points &nbsp;&nbsp;</label>
+            <label><input id="buttonHeatmap" type="radio" name="searchT" value="heatmap"> Heatmap<br></label>
           </form>
             <br>
           <input type="submit" id="submitButton" value="Submit"><br>
@@ -348,6 +356,26 @@
     </div>
   </div>
 
+  <div id="settingsDiv" class="box">
+
+      <label><input type="checkbox" id="currentTraffic"> Traffic</label>
+      <br>
+      <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('black.css')">  Dark Mode</label>
+        <br>
+      <label><input type="checkbox" id="cityLimitsLayer">  City Limits</label>
+      <br>
+      <label><input type="checkbox" id="scaleBar">  Scalebar</label>
+
+
+
+
+
+
+
+
+  </div>
+
+    <div id="expandWidget"></div>
 
   <div id="lightFooter">Footer information will appear here.</div>
   <div id="darkFooter">Footer information will appear here.</div>
@@ -358,6 +386,7 @@
      **************************************************/
   </script>
   <div id="viewDiv"></div>
+  <script src="animate.js"></script>
 </body>
 
 </html>
