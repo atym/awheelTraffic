@@ -25,10 +25,14 @@
     }*/
   }
 
+  function closeSettings() {
+    settingsView.style.display = "none";
+  }
+
   window.addEventListener("mouseup", function(event) {
     if (event.target != settingsView && event.target.parentNode != settingsView) {
       settingsView.style.display = "none";
-    } 
+    }
 });
 
 

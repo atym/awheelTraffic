@@ -565,6 +565,18 @@ body:not(.hide-overlay) {
   margin-right: 0em !important;
 }
 
+#closeSettings {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.6em;
+  cursor: pointer;
+}
+
+#closeSettings:hover {
+  background-color: #151E1C;
+}
+
 
 
 
@@ -572,10 +584,20 @@ body:not(.hide-overlay) {
 /* Smartphones (portrait) ----------- */
 @media only screen and (max-width: 450px) {
 
-  .esri-expand__container--expanded {
+  /*.esri-expand__container--expanded {
     height: 10em !important;
     margin-top: -10em !important;
     width: 10.3em !important;
+  }*/
+
+  .esri-expand__container {
+    margin-top: 30em;
+    height: 30%;
+  }
+  .esri-expand__container--expanded {
+    margin-top: 30em !important;
+    height: 19% !important;
+    width: 22% !important;
   }
 
 

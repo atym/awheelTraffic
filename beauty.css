@@ -534,6 +534,18 @@ body:not(.hide-overlay) {
   margin-right: 0em !important;
 }
 
+#closeSettings {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.6em;
+  cursor: pointer;
+}
+
+#closeSettings:hover {
+  background-color: #151E1C;
+}
+
 
 
 /*ESRI dark theme CSS*/
