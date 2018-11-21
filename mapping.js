@@ -28,7 +28,8 @@ require([
     "dojo/dom",
     "dojo/on",
 	"esri/core/promiseUtils",
-	"esri/geometry/Circle"],
+	"esri/geometry/geometryEngine",
+	"esri/Graphic"],
 
 
   /**************************************************
@@ -38,7 +39,7 @@ require([
 
 
   function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
-		esriRequest, dom, on, promiseUtils, Circle) {
+		esriRequest, dom, on, promiseUtils, geometryEngine, Graphic) {
 
 
     /**************************************************
@@ -47,7 +48,7 @@ require([
 
 
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic;
-    var json, recordsReturned;
+	var resultGeometry;
 	var renderHeatStatus = false;
 
     /**************************************************
@@ -240,30 +241,42 @@ require([
 	* Author:  JB
 	* Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
 	******************************************************/
-	locateWidget.on("search-complete", function(event){
+	locateWidget.on("select-result", function(event){
 		
-		/*var geocodeCenter = new Point({
-			x: view.center.x,
-			y: view.center.y
-		})*/
+		var resultGeometry = event.result.feature.geometry;
 		
-		console.log("Searcg term: "+event.searchTerm);
-		event.results.forEach(function(result){
-			console.log("Search result: "+result.feature)
+		// Create geometry around the result point with a predefined radius 
+		var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, 3, "miles");
+		
+		// Create graphic and symbol for the buffer 
+		bufferGraphic = new Graphic({
+			geometry: pointBuffer,
+			symbol: {
+				type: "simple-fill",
+				outline:{
+					width: 1.5,
+					color: [255, 128, 0, 0.5]
+				},
+				style: "none"
+			}
 		});
 		
-		//console.log("Search result: "+event.results);
-
+        // Remove the previous trafficFLayer		
+        map.remove(trafficFLayer);
 		
-		/*var bufferCircle = new Circle({
-			center: geocodeCenter,
-			radius: 3,
-			radiusUnit: "miles",
-			type: "Polygon"
-		})*/
+		// Reset the matched incidents count to blank since we  are removing the layer
+		dom.byId("numRecords").innerHTML = "";
 		
-		/*view.graphics.add(bufferCircle);*/
+		// Add the buffer to the view 
+		view.graphics.add(bufferGraphic);
 		
+		console.log("Buffer successfully added.");
+		
+	});
+	
+	// Remove the buffer if the search is cleared 
+	locateWidget.on("search-clear", function(event){
+		view.graphics.remove(bufferGraphic);
 	})
 
     /**************************************************
@@ -482,9 +495,6 @@ require([
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
 
-      // Display the amount of results returned
-      //recordsReturned = Object.keys(json).length;
-      //dom.byId("numRecords").innerHTML = recordsReturned;
     }
     /**************************************************
      * Create graphics with returned json data
@@ -492,10 +502,10 @@ require([
 
     function createGraphics(response) {
       // raw JSON data
-      //var json = response.data;
-      json = response.data;
+      var json = response.data;
       recordsReturned = Object.keys(json).length;
-
+      
+	  // Display the amount of results returned
       dom.byId("numRecords").innerHTML = recordsReturned;
 
       // Create an array of Graphics from each JSON feature
@@ -766,9 +776,7 @@ require([
 	  
 	  // Limit selected incidents to 5 or fewer when options are clicked and selected 
 	  on(dom.byId("incidentTypes"), "click", limitSelection);
-	  
-
-	  
+	  	  
     });
 
 
