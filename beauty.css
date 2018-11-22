@@ -574,11 +574,11 @@ body:not(.hide-overlay) {
 /* Smartphones (portrait) ----------- */
 @media only screen and (max-width: 450px) {
 
-  /*.esri-expand__container--expanded {
+  .esri-expand__container--expanded {
     height: 10em !important;
-    margin-top: 38em !important;
-    width: 6.3em !important;
-  }*/
+    margin-top: 30em !important;
+    width: 6.5em !important;
+  }
 
   .overlay-content img {
     height: 90px;
