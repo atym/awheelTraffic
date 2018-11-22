@@ -600,6 +600,12 @@ body:not(.hide-overlay) {
     width: 22% !important;
   }*/
 
+  .esri-expand__container--expanded {
+    height: 10em !important;
+    margin-top: 27em !important;
+    width: 6.5em !important;
+  }
+
 
 
 .esri-scale-bar {
