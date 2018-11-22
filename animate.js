@@ -175,7 +175,21 @@ function checkCookie() {
     document.getElementById("darkMode").checked = true;
     swapStyleSheet("black.css");
   }
-}
+
+
+      w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.getElementsByTagName('body')[0],
+      x = w.innerWidth || e.clientWidth || g.clientWidth,
+      y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+       if (x <= 450) {
+         console.log("This looks like a mobile device!");
+       }
+     }
+
+
 
 /**************************************************
  * Animate map refresh icon
@@ -196,28 +210,7 @@ function spinLegend() {
  * CHECK DEVICE SCREEN SIZE
  **************************************************/
 
- function mobileTasks() {
-     w = window,
-     d = document,
-     e = d.documentElement,
-     g = d.getElementsByTagName('body')[0],
-     x = w.innerWidth || e.clientWidth || g.clientWidth,
-     y = w.innerHeight || e.clientHeight || g.clientHeight;
 
-      if (x<= 450) {
-      	function myFunction() {
-    var txt;
-    if (confirm("It looks like you're on a mobile device, would you prefer high definition of standard definition maps?")) {
-        txt = "Hello";
-    } else {
-        txt = "World";
-    }
-
-}
-        console.log("This looks like a mobile device!");
-      }
-
-}
 
 function refreshPage() {
   location.reload(false);
