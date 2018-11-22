@@ -29,8 +29,9 @@ require([
     "esri/request",
     "dojo/dom",
     "dojo/on",
-	  "esri/core/promiseUtils",
-	  "esri/geometry/Circle"],
+    "esri/core/promiseUtils",
+    "esri/geometry/Circle"
+  ],
 
 
   /**************************************************
@@ -40,7 +41,7 @@ require([
 
 
   function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, Fullscreen, Expand, BaseTileLayer, Locate,
-		esriRequest, dom, on, promiseUtils, Circle) {
+    esriRequest, dom, on, promiseUtils, Circle) {
 
 
     /**************************************************
@@ -50,7 +51,7 @@ require([
 
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic;
     var json, recordsReturned;
-	var renderHeatStatus = false;
+    var renderHeatStatus = false;
 
     /**************************************************
      * Create variables for vector layers
@@ -62,13 +63,13 @@ require([
     lightRoads = new VectorTileLayer({
       url: "http://www.arcgis.com/sharing/rest/content/items/63c47b7177f946b49902c24129b87252/resources/styles/root.json?f=pjson",
       visible: true,
-	  title: "lightRoads"
+      title: "lightRoads"
     });
 
     darkRoads = new VectorTileLayer({
       url: "https://www.arcgis.com/sharing/rest/content/items/86f556a2d1fd468181855a35e344567f/resources/styles/root.json?f=pjson",
       visible: false,
-	  title: "darkRoads"
+      title: "darkRoads"
     });
 
     vectorRoads = new Basemap({
@@ -87,7 +88,7 @@ require([
 
     satelliteBase = new TileLayer({
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
-	  title: "satelliteBase"
+      title: "satelliteBase"
     });
 
     satelliteReference = new VectorTileLayer({
@@ -227,11 +228,11 @@ require([
     });
 
     var btExpand = new Expand({
-            expandIconClass: "esri-icon-collection",
-            view: view,
-            autoCollapse: true,
-            content: baseToggle
-          });
+      expandIconClass: "esri-icon-collection",
+      view: view,
+      autoCollapse: true,
+      content: baseToggle
+    });
 
     homeBtn = new Home({
       view: view
@@ -246,35 +247,35 @@ require([
     });
 
 
-	/******************************************************
-	* Create circle around search result once complete
-	* Author:  JB
-	* Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
-	******************************************************/
-	locateWidget.on("search-complete", function(event){
+    /******************************************************
+     * Create circle around search result once complete
+     * Author:  JB
+     * Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
+     ******************************************************/
+    locateWidget.on("search-complete", function(event) {
 
-		/*var geocodeCenter = new Point({
-			x: view.center.x,
-			y: view.center.y
-		})*/
+      /*var geocodeCenter = new Point({
+      	x: view.center.x,
+      	y: view.center.y
+      })*/
 
-		event.results.forEach(function(result){
-			console.log("Search result: "+result.feature)
-		});
+      event.results.forEach(function(result) {
+        console.log("Search result: " + result.feature)
+      });
 
-		//console.log("Search result: "+event.results);
+      //console.log("Search result: "+event.results);
 
 
-		/*var bufferCircle = new Circle({
-			center: geocodeCenter,
-			radius: 3,
-			radiusUnit: "miles",
-			type: "Polygon"
-		})*/
+      /*var bufferCircle = new Circle({
+      	center: geocodeCenter,
+      	radius: 3,
+      	radiusUnit: "miles",
+      	type: "Polygon"
+      })*/
 
-		/*view.graphics.add(bufferCircle);*/
+      /*view.graphics.add(bufferCircle);*/
 
-	})
+    })
 
     /**************************************************
      * Load initial batch of traffic data from COA
@@ -327,8 +328,84 @@ require([
 
     pTemplate = {
       title: "<strong>{issueReported}</strong>",
-      content: "Location: {address}<br> Time: {statusDateTime}"
+      content: "Location: {address}<br> Date: {statusDateTime:calculateDate}<br> Time: {statusDateTime:calculateTime}"
     };
+
+    /**************************************************
+     * Custom functions to split field that contains
+     *  combined date and time to display in popup
+     * Date is converted to Month Day, Year
+     * Time is converted to 12 hour format
+     **************************************************/
+
+    calculateDate = function(value, key, data) {
+      var whole = data.statusDateTime;
+      var res = whole.split("T");
+      var pieces = res[0].split("-");
+      var year = pieces[0];
+
+      if (pieces[1] == 01) {
+        var month = "January";
+      } else if (pieces[1] == 02) {
+        var month = "February";
+      } else if (pieces[1] == 03) {
+        var month = "March";
+      } else if (pieces[1] == 04) {
+        var month = "April";
+      } else if (pieces[1] == 05) {
+        var month = "May";
+      } else if (pieces[1] == 06) {
+        var month = "June";
+      } else if (pieces[1] == 07) {
+        var month = "July";
+      } else if (pieces[1] == 08) {
+        var month = "August";
+      } else if (pieces[1] == 09) {
+        var month = "September";
+      } else if (pieces[1] == 10) {
+        var month = "October";
+      } else if (pieces[1] == 11) {
+        var month = "November";
+      } else if (pieces[1] == 12) {
+        var month = "December";
+      }
+
+      if (pieces[2] < 10) {
+        var single = pieces[2].split("0");
+        var day = single[1];
+      } else if (pieces[2] > 9) {
+        var day = pieces[2];
+      }
+      var date = month + " " + day + ", " + year;
+      return date;
+    }
+
+    calculateTime = function(value, key, data) {
+      var whole = data.statusDateTime;
+      var res = whole.split("T");
+      var pieces = res[1].split(":");
+      var minutes = pieces[1];
+
+      if (pieces[0] > 12) {
+        var hour = pieces[0] - 12;
+        var mod = " P.M."
+      } else if (pieces[0] == 12) {
+        var hour = 12;
+        var mod = " P.M."
+      } else if (pieces[0] == 0) {
+        var hour = 12;
+        var mod = " A.M."
+      } else if (pieces[0] == 11 || pieces[0] == 10) {
+        var hour = pieces[0];
+        var mod = " A.M."
+      } else {
+        var remove = pieces[0].split("0");
+        var hour = remove[1];
+        var mod = " A.M."
+      }
+      var time = hour + ":" + minutes + mod;
+      return time;
+    }
 
     /**************************************************
      * Define the renderer for symbolizing incidents
@@ -359,21 +436,35 @@ require([
       }]
     };
 
-	trafficHeatRenderer = {
-	  type: "heatmap",
-	  colorStops: [
-		{ ratio: 0, color: "rgba(255, 255, 255, 0)" },
-		{ ratio: 0.2, color: "rgba(255, 255, 255, 1)" },
-		{ ratio: 0.5, color: "rgba(255, 140, 0, 1)" },
-		{ ratio: 0.8, color: "rgba(255, 140, 0, 1)" },
-		{ ratio: 1, color: "rgba(255, 0, 0, 1)" }
-	  ],
-	  maxPixelIntensity: 25,
-	  minPixelIntensity: 0
-	};
-	trafficHeatRenderer.visualVariables=([{
-		opacity: 0.5
-	}]);
+    trafficHeatRenderer = {
+      type: "heatmap",
+      colorStops: [{
+          ratio: 0,
+          color: "rgba(255, 255, 255, 0)"
+        },
+        {
+          ratio: 0.2,
+          color: "rgba(255, 255, 255, 1)"
+        },
+        {
+          ratio: 0.5,
+          color: "rgba(255, 140, 0, 1)"
+        },
+        {
+          ratio: 0.8,
+          color: "rgba(255, 140, 0, 1)"
+        },
+        {
+          ratio: 1,
+          color: "rgba(255, 0, 0, 1)"
+        }
+      ],
+      maxPixelIntensity: 25,
+      minPixelIntensity: 0
+    };
+    trafficHeatRenderer.visualVariables = ([{
+      opacity: 0.5
+    }]);
 
     /**************************************************
      * Request traffic incident data
@@ -547,17 +638,16 @@ require([
         fields: fields,
         objectIdField: "ObjectID",
         popupTemplate: pTemplate,
-		title: "trafficIncidents"
+        title: "trafficIncidents"
       });
 
-	  if(renderHeatStatus){
-		  trafficFLayer.renderer = trafficHeatRenderer;
-		  trafficFLayer.opacity = 0.75;
-	  }
-	  else{
-		  trafficFLayer.renderer = trafficRenderer;
-		  trafficFLayer.opacity = 1;
-	  };
+      if (renderHeatStatus) {
+        trafficFLayer.renderer = trafficHeatRenderer;
+        trafficFLayer.opacity = 0.75;
+      } else {
+        trafficFLayer.renderer = trafficRenderer;
+        trafficFLayer.opacity = 1;
+      };
 
       try {
         map.add(trafficFLayer)
@@ -640,14 +730,14 @@ require([
     darkModeToggle = document.getElementById("darkMode");
     cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
     currentTrafficToggle = document.getElementById("currentTraffic");
-	heatRenderToggle = document.getElementById("toggleHeat");
-  searchTogglePoints = document.getElementById("buttonPoints");
-  searchToggleHeatmap = document.getElementById("buttonHeatmap");
-  scaleBarToggle = document.getElementById("scaleBar");
+    heatRenderToggle = document.getElementById("toggleHeat");
+    searchTogglePoints = document.getElementById("buttonPoints");
+    searchToggleHeatmap = document.getElementById("buttonHeatmap");
+    scaleBarToggle = document.getElementById("scaleBar");
 
-  cityLimitsLayerToggle.checked = false;
-  heatRenderToggle.checked = false;
-  scaleBarToggle.checked = false;
+    cityLimitsLayerToggle.checked = false;
+    heatRenderToggle.checked = false;
+    scaleBarToggle.checked = false;
 
 
 
@@ -714,17 +804,16 @@ require([
       }
     });
 
-	heatRenderToggle.addEventListener("change", function(){
-	  renderHeatStatus = searchToggleHeatmap.checked;
-	  if(renderHeatStatus){
-		  trafficFLayer.renderer = trafficHeatRenderer;
-		  trafficFLayer.opacity = 0.75;
-	  }
-	  else{
-		  trafficFLayer.renderer = trafficRenderer;
-		  trafficFLayer.opacity = 1;
-	  };
-	});
+    heatRenderToggle.addEventListener("change", function() {
+      renderHeatStatus = searchToggleHeatmap.checked;
+      if (renderHeatStatus) {
+        trafficFLayer.renderer = trafficHeatRenderer;
+        trafficFLayer.opacity = 0.75;
+      } else {
+        trafficFLayer.renderer = trafficRenderer;
+        trafficFLayer.opacity = 1;
+      };
+    });
 
     /**************************************************
      * ADD and MODIFY map widgets
@@ -735,53 +824,52 @@ require([
     view.ui.add(homeBtn, "bottom-right"); // Add the home button
 
     view.ui.add(new Fullscreen({
-        view: view,
-        element: entireApp
-      }), "top-right");
+      view: view,
+      element: entireApp
+    }), "top-right");
     view.ui.add(btExpand, "bottom-right");
     view.ui.add(locateBtn, {
       position: "bottom-right"
     });
 
-scaleBarToggle.addEventListener("change", function(){
-    if (scaleBarToggle.checked == true) {
-      view.ui.add(scaleBar, "manual");
-    } else if (scaleBarToggle.checked == false) {
-      view.ui.remove(scaleBar, "manual")
-    }
-});
+    scaleBarToggle.addEventListener("change", function() {
+      if (scaleBarToggle.checked == true) {
+        view.ui.add(scaleBar, "manual");
+      } else if (scaleBarToggle.checked == false) {
+        view.ui.remove(scaleBar, "manual")
+      }
+    });
 
-	    /**************************************************
+    /**************************************************
      * Request the  data from data.austin when the
      * view resolves then send it to the
      * createGraphics() method when graphics are created,
      * create the layer
      **************************************************/
 
-	/********************************************************
-	* Limit incident type selection to only 5 options using jquery (After 5th option is chosen the next option is unselected)
-	*
-	* Author:  JB
-	********************************************************/
-	function limitSelection(){
+    /********************************************************
+     * Limit incident type selection to only 5 options using jquery (After 5th option is chosen the next option is unselected)
+     *
+     * Author:  JB
+     ********************************************************/
+    function limitSelection() {
 
-		var last_valid_selection = null;
+      var last_valid_selection = null;
 
-        $('#incidentTypes').change(function(event) {
+      $('#incidentTypes').change(function(event) {
 
-			if ($(this).val().length > 5) {
+        if ($(this).val().length > 5) {
 
-				alert("You may only select 5 incident types at a time.");
+          alert("You may only select 5 incident types at a time.");
 
-				//Set current selectino to last valid selection
-				$(this).val(last_valid_selection);
-            }
-			else {
-				last_valid_selection = $(this).val();
-            }
-        });
-	}
-     /**************************************************
+          //Set current selectino to last valid selection
+          $(this).val(last_valid_selection);
+        } else {
+          last_valid_selection = $(this).val();
+        }
+      });
+    }
+    /**************************************************
      * Request the  data from data.austin when the
      * view resolves then send it to the
      * createGraphics() method when graphics are created,
@@ -794,13 +882,13 @@ scaleBarToggle.addEventListener("change", function(){
         .then(createLayer)
         .then(createLegend);
 
-	  // Populate the select list with all of the possible incident types JB
+      // Populate the select list with all of the possible incident types JB
       populateSearch();
 
-	  // Run the search once the submit button has been clicked JB
-	  on(dom.byId("submitButton"), "click", runSearch);
+      // Run the search once the submit button has been clicked JB
+      on(dom.byId("submitButton"), "click", runSearch);
 
-	  on(dom.byId("incidentTypes"), "click", limitSelection);
+      on(dom.byId("incidentTypes"), "click", limitSelection);
 
 
 
