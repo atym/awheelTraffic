@@ -52,7 +52,7 @@ require([
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic, uniqueValueRenderer;
     var json, recordsReturned;
     var renderHeatStatus, fromSearch = false;
-    var uniqueValuesColor=['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99'];
+    var uniqueValuesColor=['#66c2a5','#fc8d62','#8da0cb','#e78ac3','#a6d854'];
 
     /**************************************************
      * Create variables for vector layers
@@ -711,11 +711,6 @@ require([
       uniqueValueRenderer = {
         type: "unique-value",
         field: "issueReported", // autocasts as new SimpleRenderer()
-        defaultSymbol: {
-          type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-          size: 10,
-          color: "#FF4000"
-        },
         uniqueValueInfos: []
       };
 
@@ -845,7 +840,7 @@ require([
         trafficFLayer.renderer = trafficHeatRenderer;
         trafficFLayer.opacity = 0.75;
       } else if (fromSearch) {
-         trafficFLayer.renderer = uniqueValueRenderer();
+         trafficFLayer.renderer = uniqueValueRenderer;
        }else {
         trafficFLayer.renderer = trafficRenderer;
         trafficFLayer.opacity = 1;
