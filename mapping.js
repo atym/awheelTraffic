@@ -49,9 +49,10 @@ require([
      **************************************************/
 
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic, uniqueValueRenderer;
     var json, recordsReturned;
-    var renderHeatStatus = false;
+    var renderHeatStatus, fromSearch = false;
+    var uniqueValuesColor=['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99'];
 
     /**************************************************
      * Create variables for vector layers
@@ -414,11 +415,6 @@ require([
     trafficRenderer = {
       type: "unique-value",
       field: "status", // autocasts as new SimpleRenderer()
-      defaultSymbol: {
-        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-        size: 10,
-        color: "#FF4000"
-      },
       uniqueValueInfos: [{
         value: "ACTIVE",
         symbol: {
@@ -573,7 +569,7 @@ require([
 
       //Remove the previous trafficFLayer before attempting to display the query results
       map.remove(trafficFLayer);
-
+      fromSearch = true;
       getData(searchURL)
         .then(createGraphics)
         .then(createLayer)
@@ -644,7 +640,10 @@ require([
       if (renderHeatStatus) {
         trafficFLayer.renderer = trafficHeatRenderer;
         trafficFLayer.opacity = 0.75;
-      } else {
+      }else if (fromSearch) {
+         trafficFLayer.renderer = generateUniqueRenderer();
+       }
+       else {
         trafficFLayer.renderer = trafficRenderer;
         trafficFLayer.opacity = 1;
       };
@@ -703,6 +702,42 @@ require([
 
       });
     }
+
+    /**************************************************
+    * Generate unique values renderer based on user
+    * selected incident types
+    ***************************************************/
+    function generateUniqueRenderer() {
+      uniqueValueRenderer = {
+        type: "unique-value",
+        field: "issueReported", // autocasts as new SimpleRenderer()
+        defaultSymbol: {
+          type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+          size: 10,
+          color: "#FF4000"
+        },
+        uniqueValueInfos: []
+      };
+
+      var dataClasses = document.getElementById("incidentTypes").options;
+      var usrSelected= [];
+      for (var i = 0; i < dataClasses.length; i++) {
+        if (dataClasses[i].selected) {
+          usrSelected.push(dataClasses[i].value);
+        }
+      }
+      for (var i = 0; i < usrSelected.length; i++) {
+        uniqueValueRenderer.uniqueValueInfos.push({
+          value: usrSelected[i],
+          symbol: {
+            type: "simple-marker",
+            size: 10,
+            color: uniqueValuesColor[i]
+          }
+        })
+      };
+      return(uniqueValueRenderer);
+    };
 
     /**************************************************
      * Create custom tile layer for live traffic conditions
@@ -809,7 +844,9 @@ require([
       if (renderHeatStatus) {
         trafficFLayer.renderer = trafficHeatRenderer;
         trafficFLayer.opacity = 0.75;
-      } else {
+      } else if (fromSearch) {
+         trafficFLayer.renderer = uniqueValueRenderer();
+       }else {
         trafficFLayer.renderer = trafficRenderer;
         trafficFLayer.opacity = 1;
       };
