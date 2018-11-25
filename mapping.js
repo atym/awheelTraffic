@@ -576,7 +576,7 @@ require([
         " AND issue_reported IN " + incidentTypesString +
         "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=100000";
 
-      console.log("Query params: " + queryDateString + " " + incidentTypes);
+      //console.log("Query params: " + queryDateString + " " + incidentTypes);
 
       //Remove the previous trafficFLayer before attempting to display the query results
       map.remove(trafficFLayer);
