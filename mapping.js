@@ -30,7 +30,9 @@ require([
     "dojo/dom",
     "dojo/on",
     "esri/core/promiseUtils",
-    "esri/geometry/Circle"
+    "esri/layers/GraphicsLayer",
+    "esri/Graphic",
+    "esri/geometry/geometryEngine"
   ],
 
 
@@ -41,7 +43,7 @@ require([
 
 
   function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, Fullscreen, Expand, BaseTileLayer, Locate,
-    esriRequest, dom, on, promiseUtils, Circle) {
+    esriRequest, dom, on, promiseUtils, GraphicsLayer, Graphic, geometryEngine) {
 
 
     /**************************************************
@@ -52,7 +54,17 @@ require([
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic, uniqueValueRenderer;
     var json, recordsReturned;
     var renderHeatStatus, fromSearch = false;
-    var uniqueValuesColor=['#66c2a5','#fc8d62','#8da0cb','#e78ac3','#a6d854'];
+    var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
+    var bufferLayer = new GraphicsLayer();
+
+    var bufferSym = {
+      type: "simple-fill", // autocasts as new SimpleFillSymbol()
+      color: [140, 140, 222, 0.5],
+      outline: {
+        color: [0, 0, 0, 0.5],
+        width: 2
+      }
+    };
 
     /**************************************************
      * Create variables for vector layers
@@ -253,30 +265,20 @@ require([
      * Author:  JB
      * Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
      ******************************************************/
-    locateWidget.on("search-complete", function(event) {
+    locateWidget.on("select-result", function(event) {
 
-      /*var geocodeCenter = new Point({
-      	x: view.center.x,
-      	y: view.center.y
-      })*/
+      var point = new Point()
+      point.x=event.result.feature.geometry.longitude;
+      point.y= event.result.feature.geometry.latitude;
 
-      event.results.forEach(function(result) {
-        console.log("Search result: " + result.feature)
-      });
+      var buffer = geometryEngine.geodesicBuffer(point, 3, "miles");
 
-      //console.log("Search result: "+event.results);
-
-
-      /*var bufferCircle = new Circle({
-      	center: geocodeCenter,
-      	radius: 3,
-      	radiusUnit: "miles",
-      	type: "Polygon"
-      })*/
-
-      /*view.graphics.add(bufferCircle);*/
-
-    })
+      bufferLayer.add(new Graphic({
+        geometry: buffer,
+        symbol: bufferSym
+      }));
+      map.add(bufferLayer);
+    });
 
     /**************************************************
      * Load initial batch of traffic data from COA
@@ -640,10 +642,9 @@ require([
       if (renderHeatStatus) {
         trafficFLayer.renderer = trafficHeatRenderer;
         trafficFLayer.opacity = 0.75;
-      }else if (fromSearch) {
-         trafficFLayer.renderer = generateUniqueRenderer();
-       }
-       else {
+      } else if (fromSearch) {
+        trafficFLayer.renderer = generateUniqueRenderer();
+      } else {
         trafficFLayer.renderer = trafficRenderer;
         trafficFLayer.opacity = 1;
       };
@@ -704,9 +705,9 @@ require([
     }
 
     /**************************************************
-    * Generate unique values renderer based on user
-    * selected incident types
-    ***************************************************/
+     * Generate unique values renderer based on user
+     * selected incident types
+     ***************************************************/
     function generateUniqueRenderer() {
       uniqueValueRenderer = {
         type: "unique-value",
@@ -715,7 +716,7 @@ require([
       };
 
       var dataClasses = document.getElementById("incidentTypes").options;
-      var usrSelected= [];
+      var usrSelected = [];
       for (var i = 0; i < dataClasses.length; i++) {
         if (dataClasses[i].selected) {
           usrSelected.push(dataClasses[i].value);
@@ -731,7 +732,7 @@ require([
           }
         })
       };
-      return(uniqueValueRenderer);
+      return (uniqueValueRenderer);
     };
 
     /**************************************************
@@ -840,8 +841,8 @@ require([
         trafficFLayer.renderer = trafficHeatRenderer;
         trafficFLayer.opacity = 0.75;
       } else if (fromSearch) {
-         trafficFLayer.renderer = uniqueValueRenderer;
-       }else {
+        trafficFLayer.renderer = uniqueValueRenderer;
+      } else {
         trafficFLayer.renderer = trafficRenderer;
         trafficFLayer.opacity = 1;
       };
