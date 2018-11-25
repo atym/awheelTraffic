@@ -270,9 +270,8 @@ require([
       var point = new Point()
       point.x=event.result.feature.geometry.longitude;
       point.y= event.result.feature.geometry.latitude;
-
+      bufferLayer.removeAll();
       var buffer = geometryEngine.geodesicBuffer(point, 3, "miles");
-
       bufferLayer.add(new Graphic({
         geometry: buffer,
         symbol: bufferSym
