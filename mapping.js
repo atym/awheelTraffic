@@ -277,6 +277,16 @@ require([
         symbol: bufferSym
       }));
       map.add(bufferLayer);
+      var query = trafficFLayer.createQuery();
+      query.geometry = buffer;  // the point location of the pointer
+      query.spatialRelationship = "intersects";  // this is the default
+      query.returnGeometry = true;
+      trafficFLayer.queryFeatures(query)
+        .then(function(response){
+          for(i = 0; i<response.features.length; i++){
+            console.log(response.features[i].attributes["issueReported"]);
+          };
+        });
     });
 
     /**************************************************
