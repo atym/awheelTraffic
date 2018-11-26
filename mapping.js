@@ -29,16 +29,16 @@ require([
     "esri/request",
     "dojo/dom",
     "dojo/on",
-	"esri/core/promiseUtils",
-	"esri/geometry/geometryEngine",
-	"esri/Graphic",
-	"esri/layers/GraphicsLayer"],
+    "esri/core/promiseUtils",
+    "esri/geometry/geometryEngine",
+    "esri/Graphic",
+    "esri/layers/GraphicsLayer"],
 
   /**************************************************
    * Create magic mapping function
    **************************************************/
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, Fullscreen, Expand, BaseTileLayer, Locate,
 		esriRequest, dom, on, promiseUtils, geometryEngine, Graphic, GraphicsLayer) {
 
     /**************************************************
