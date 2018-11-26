@@ -29,42 +29,26 @@ require([
     "esri/request",
     "dojo/dom",
     "dojo/on",
-    "esri/core/promiseUtils",
-    "esri/layers/GraphicsLayer",
-    "esri/Graphic",
-    "esri/geometry/geometryEngine"
-  ],
-
+	"esri/core/promiseUtils",
+	"esri/geometry/geometryEngine",
+	"esri/Graphic",
+	"esri/layers/GraphicsLayer"],
 
   /**************************************************
    * Create magic mapping function
    **************************************************/
 
-
-
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, Fullscreen, Expand, BaseTileLayer, Locate,
-    esriRequest, dom, on, promiseUtils, GraphicsLayer, Graphic, geometryEngine) {
-
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
+		esriRequest, dom, on, promiseUtils, geometryEngine, Graphic, GraphicsLayer) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic, uniqueValueRenderer;
-    var json, recordsReturned;
-    var renderHeatStatus, fromSearch = false;
+	  var renderHeatStatus = false, fromSearch = false;
     var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
-    var bufferLayer = new GraphicsLayer();
 
-    var bufferSym = {
-      type: "simple-fill", // autocasts as new SimpleFillSymbol()
-      color: [140, 140, 222, 0.5],
-      outline: {
-        color: [0, 0, 0, 0.5],
-        width: 2
-      }
-    };
 
     /**************************************************
      * Create variables for vector layers
@@ -259,35 +243,106 @@ require([
       view: view
     });
 
-
-    /******************************************************
-     * Create circle around search result once complete
-     * Author:  JB
-     * Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
-     ******************************************************/
-    locateWidget.on("select-result", function(event) {
-
-      var point = new Point()
-      point.x=event.result.feature.geometry.longitude;
-      point.y= event.result.feature.geometry.latitude;
-      bufferLayer.removeAll();
-      var buffer = geometryEngine.geodesicBuffer(point, 3, "miles");
-      bufferLayer.add(new Graphic({
-        geometry: buffer,
-        symbol: bufferSym
-      }));
-      map.add(bufferLayer);
-      var query = trafficFLayer.createQuery();
-      query.geometry = buffer;  // the point location of the pointer
-      query.spatialRelationship = "intersects";  // this is the default
-      query.returnGeometry = true;
-      trafficFLayer.queryFeatures(query)
-        .then(function(response){
-          for(i = 0; i<response.features.length; i++){
-            console.log(response.features[i].attributes["issueReported"]);
-          };
+	/******************************************************
+	* Create circle around search result once complete 
+	* Author:  JB
+	* Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
+	******************************************************/
+	locateWidget.on("select-result", function(event){
+		
+		var resultGeometry = event.result.feature.geometry;
+		var resultsLayer = new GraphicsLayer();
+		
+		// Create geometry around the result point with a predefined radius 
+		var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, 2, "miles");
+		
+		bufferGraphic = new Graphic ({
+			geometry: pointBuffer,
+			symbol: {
+				type: "simple-fill",
+				color: [140, 140, 222, 0.3],
+				outline: {
+					color: [0, 0, 0, 0.5],
+					width: 2
+				}
+			}
+		});
+		
+        // Remove the previous trafficFLayer		
+        map.remove(trafficFLayer);
+		
+		// Reset the matched incidents count to blank since we  are removing the layer
+		dom.byId("numRecords").innerHTML = "";
+		
+		// Add the buffer to the view 
+		view.graphics.add(bufferGraphic);
+		
+		console.log("Buffer successfully added.");
+		
+		// Limiting results since encountering some memory source errors with large result set 
+		searchURL="https://data.austintexas.gov/resource/r3af-2r8x.json" +
+        "?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=40000"
+		
+		getData(searchURL)
+        .then(createGraphics)
+		// Create layer from graphics without adding to map
+        .then(function(graphics){
+			trafficFLayer = new FeatureLayer({
+			source: graphics, // autocast as an array of esri/Graphic
+			fields: fields,
+			objectIdField: "ObjectID",
+			popupTemplate: pTemplate,
+			title: "trafficIncidents"
+			});
+			
+			return trafficFLayer;
+		})
+		// Query feature traffic feature layer for incidents within the buffer
+		.then(function(){
+			var query = trafficFLayer.createQuery();
+			query.geometry = pointBuffer;
+			query.spatialRelationship = "intersects";
+			
+			return trafficFLayer.queryFeatures(query);
+			
+		})
+		// Create graphics from spatial query result
+		.then(function(results){
+			//Remove any preexisting results
+			resultsLayer.removeAll();
+			
+			//console.log("Features: "+results.features);
+			
+			var features = results.features.map(function (graphic){
+				graphic.symbol = {
+					type: "simple-marker",
+					style: "diamond",
+					size: 6.5,
+					color: "darkorange"
+				};
+				
+				return graphic;
+			});
+			
+			resultsLayer.addMany(features);
+			
+			map.add(resultsLayer);
+			
+			return resultsLayer;
+		})
+        .then(createLegend)
+        //Catch any of the errors that were created from the previous callback functions
+        .catch(function(error) {
+          console.log('One of the promises in the chain was rejected! Message: ', error);
         });
-    });
+		
+	});
+	
+	// Remove the buffer if the search is cleared 
+	locateWidget.on("search-clear", function(event){
+		view.graphics.remove(bufferGraphic);
+	})
+
 
     /**************************************************
      * Load initial batch of traffic data from COA
@@ -580,7 +635,13 @@ require([
 
       //Remove the previous trafficFLayer before attempting to display the query results
       map.remove(trafficFLayer);
+	  
+	    // Remove any locate results that still exist
+	    view.graphics.removeAll();
+	    locateWidget.destroy();
+
       fromSearch = true;
+      
       getData(searchURL)
         .then(createGraphics)
         .then(createLayer)
@@ -590,9 +651,6 @@ require([
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
 
-      // Display the amount of results returned
-      //recordsReturned = Object.keys(json).length;
-      //dom.byId("numRecords").innerHTML = recordsReturned;
     }
     /**************************************************
      * Create graphics with returned json data
@@ -600,10 +658,10 @@ require([
 
     function createGraphics(response) {
       // raw JSON data
-      //var json = response.data;
-      json = response.data;
+      var json = response.data;
       recordsReturned = Object.keys(json).length;
-
+      
+	  // Display the amount of results returned
       dom.byId("numRecords").innerHTML = recordsReturned;
 
       // Create an array of Graphics from each JSON feature
@@ -659,10 +717,12 @@ require([
       };
 
       try {
-        map.add(trafficFLayer)
+        map.add(trafficFLayer);
       } catch (error) {
         return
       };
+	  
+	  view.extent = trafficFLayer.fullExtent; // **** Not working for some reason JB *****
       return trafficFLayer;
     }
 
@@ -882,13 +942,6 @@ require([
       }
     });
 
-    /**************************************************
-     * Request the  data from data.austin when the
-     * view resolves then send it to the
-     * createGraphics() method when graphics are created,
-     * create the layer
-     **************************************************/
-
     /********************************************************
      * Limit incident type selection to only 5 options using jquery (After 5th option is chosen the next option is unselected)
      *
@@ -924,16 +977,15 @@ require([
         .then(createLayer)
         .then(createLegend);
 
-      // Populate the select list with all of the possible incident types JB
-      populateSearch();
-
-      // Run the search once the submit button has been clicked JB
-      on(dom.byId("submitButton"), "click", runSearch);
-
-      on(dom.byId("incidentTypes"), "click", limitSelection);
-
-
-
+     // Populate the select list with all of the possible incident types JB
+     populateSearch();
+	  
+	  // Run the search once the submit button has been clicked JB
+	  on(dom.byId("submitButton"), "click", runSearch);
+	  
+	  // Limit selected incidents to 5 or fewer when options are clicked and selected 
+	  on(dom.byId("incidentTypes"), "click", limitSelection);
+	  	  
     });
 
 
