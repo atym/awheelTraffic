@@ -217,6 +217,16 @@
         <p>Input address to see incidents within a buffered distance.</p>-->
 
         <div id="esriLocate"></div>
+		<p id = "radiusOptions">
+			<label for = "bufferRadius">Buffer Radius: </label>
+			<select id="bufferRadius">
+				<option value = 1>1 mile</option>
+				<option value = 2>2 miles</option>
+				<option value = 3>3 miles</option>
+				<option value = 4>4 miles</option>
+			</select>
+		</p>
+		<p>Results returned: <span id="bufferResults"></span></p>
         <span id="locateSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
         <span id="locateInfo" data-tippy="Use the locate tool to search by your current location or enter an address manually to see all incidents within a 1-mile radius."  class="esri-icon-description" aria-label="info icon"></span>
       </div>
