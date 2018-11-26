@@ -177,7 +177,7 @@ function checkCookie() {
   }
 
 
-      w = window,
+/*      w = window,
       d = document,
       e = d.documentElement,
       g = d.getElementsByTagName('body')[0],
@@ -186,7 +186,7 @@ function checkCookie() {
 
        if (x <= 450) {
          console.log("This looks like a mobile device!");
-       }
+       }*/
      }
 
 
