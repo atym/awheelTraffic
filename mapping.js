@@ -48,6 +48,7 @@ require([
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic, uniqueValueRenderer;
 	  var renderHeatStatus = false, fromSearch = false;
     var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
+	var resultsLayer;
 
 
 function setDevice() {
@@ -268,10 +269,13 @@ function setDevice() {
 	locateWidget.on("select-result", function(event){
 		
 		var resultGeometry = event.result.feature.geometry;
-		var resultsLayer = new GraphicsLayer();
+		
+		resultsLayer = new GraphicsLayer();
+		
+		var bufferRadius = dom.byId("bufferRadius").value;
 		
 		// Create geometry around the result point with a predefined radius 
-		var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, 2, "miles");
+		var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, bufferRadius, "miles");
 		
 		bufferGraphic = new Graphic ({
 			geometry: pointBuffer,
@@ -285,16 +289,8 @@ function setDevice() {
 			}
 		});
 		
-        // Remove the previous trafficFLayer		
-        map.remove(trafficFLayer);
-		
-		// Reset the matched incidents count to blank since we  are removing the layer
-		dom.byId("numRecords").innerHTML = "";
-		
 		// Add the buffer to the view 
 		view.graphics.add(bufferGraphic);
-		
-		console.log("Buffer successfully added.");
 		
 		// Limiting results since encountering some memory source errors with large result set 
 		searchURL="https://data.austintexas.gov/resource/r3af-2r8x.json" +
@@ -325,17 +321,18 @@ function setDevice() {
 		})
 		// Create graphics from spatial query result
 		.then(function(results){
-			//Remove any preexisting results
-			resultsLayer.removeAll();
 			
 			//console.log("Features: "+results.features);
+			var resultsReturned = Object.keys(results.features).length;
+			
+			dom.byId("bufferResults").innerHTML = resultsReturned;
 			
 			var features = results.features.map(function (graphic){
 				graphic.symbol = {
 					type: "simple-marker",
-					style: "diamond",
-					size: 6.5,
-					color: "darkorange"
+					//style: "diamond",
+					size: 10,
+					color: "yellow"
 				};
 				
 				return graphic;
@@ -344,6 +341,28 @@ function setDevice() {
 			resultsLayer.addMany(features);
 			
 			map.add(resultsLayer);
+			
+			// After the results layer has finished loading adjust the zoom according to the bufferRadius
+			resultsLayer.when(function() {
+				
+				switch(bufferRadius){
+					case "1":
+						console.log("CASE 1");
+						view.zoom = 13;
+						break;
+					case "2":
+						view.zoom = 12;
+						break;
+					case "3":
+						view.zoom = 12;
+						break;
+					case "4":
+						view.zoom = 11;
+						break;
+					default:
+						view.zoom = 12;
+				}
+			});
 			
 			return resultsLayer;
 		})
@@ -355,12 +374,20 @@ function setDevice() {
 		
 	});
 	
+	// Reset map when a new search starts
+	locateWidget.on("search-start", function(event){
+		view.graphics.removeAll();
+		map.removeAll();
+		dom.byId("bufferResults").innerHTML = "";
+	});
+	
 	// Remove the buffer if the search is cleared 
 	locateWidget.on("search-clear", function(event){
-		view.graphics.remove(bufferGraphic);
-	})
-
-
+		view.graphics.removeAll();
+		map.removeAll();
+		dom.byId("bufferResults").innerHTML = "";
+	});
+	
     /**************************************************
      * Load initial batch of traffic data from COA
      * JSON data over Socrata API
