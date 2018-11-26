@@ -247,18 +247,17 @@ require([
 		var resultsLayer = new GraphicsLayer();
 		
 		// Create geometry around the result point with a predefined radius 
-		var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, 3, "miles");
+		var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, 2, "miles");
 		
-		// Create graphic and symbol for the buffer 
-		bufferGraphic = new Graphic({
+		bufferGraphic = new Graphic ({
 			geometry: pointBuffer,
 			symbol: {
 				type: "simple-fill",
-				outline:{
-					width: 1.5,
-					color: [255, 128, 0, 0.5]
-				},
-				style: "none"
+				color: [140, 140, 222, 0.3],
+				outline: {
+					color: [0, 0, 0, 0.5],
+					width: 2
+				}
 			}
 		});
 		
@@ -275,7 +274,7 @@ require([
 		
 		// Limiting results since encountering some memory source errors with large result set 
 		searchURL="https://data.austintexas.gov/resource/r3af-2r8x.json" +
-        "?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=10000"
+        "?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=40000"
 		
 		getData(searchURL)
         .then(createGraphics)
