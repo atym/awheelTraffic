@@ -29,7 +29,8 @@ require([
     "dojo/on",
 	"esri/core/promiseUtils",
 	"esri/geometry/geometryEngine",
-	"esri/Graphic"],
+	"esri/Graphic",
+	"esri/layers/GraphicsLayer"],
 
 
   /**************************************************
@@ -39,7 +40,7 @@ require([
 
 
   function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, BaseTileLayer, Locate,
-		esriRequest, dom, on, promiseUtils, geometryEngine, Graphic) {
+		esriRequest, dom, on, promiseUtils, geometryEngine, Graphic, GraphicsLayer) {
 
 
     /**************************************************
@@ -243,6 +244,7 @@ require([
 	locateWidget.on("select-result", function(event){
 		
 		var resultGeometry = event.result.feature.geometry;
+		var resultsLayer = new GraphicsLayer();
 		
 		// Create geometry around the result point with a predefined radius 
 		var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, 3, "miles");
@@ -270,6 +272,63 @@ require([
 		view.graphics.add(bufferGraphic);
 		
 		console.log("Buffer successfully added.");
+		
+		// Limiting results since encountering some memory source errors with large result set 
+		searchURL="https://data.austintexas.gov/resource/r3af-2r8x.json" +
+        "?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=10000"
+		
+		getData(searchURL)
+        .then(createGraphics)
+		// Create layer from graphics without adding to map
+        .then(function(graphics){
+			trafficFLayer = new FeatureLayer({
+			source: graphics, // autocast as an array of esri/Graphic
+			fields: fields,
+			objectIdField: "ObjectID",
+			popupTemplate: pTemplate,
+			title: "trafficIncidents"
+			});
+			
+			return trafficFLayer;
+		})
+		// Query feature traffic feature layer for incidents within the buffer
+		.then(function(){
+			var query = trafficFLayer.createQuery();
+			query.geometry = pointBuffer;
+			query.spatialRelationship = "intersects";
+			
+			return trafficFLayer.queryFeatures(query);
+			
+		})
+		// Create graphics from spatial query result
+		.then(function(results){
+			//Remove any preexisting results
+			resultsLayer.removeAll();
+			
+			//console.log("Features: "+results.features);
+			
+			var features = results.features.map(function (graphic){
+				graphic.symbol = {
+					type: "simple-marker",
+					style: "diamond",
+					size: 6.5,
+					color: "darkorange"
+				};
+				
+				return graphic;
+			});
+			
+			resultsLayer.addMany(features);
+			
+			map.add(resultsLayer);
+			
+			return resultsLayer;
+		})
+        .then(createLegend)
+        //Catch any of the errors that were created from the previous callback functions
+        .catch(function(error) {
+          console.log('One of the promises in the chain was rejected! Message: ', error);
+        });
 		
 	});
 	
