@@ -97,13 +97,55 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-left: 0.85em;
-  margin-bottom: 3.9em;
+  margin-bottom: 4.9em;
   box-shadow: 0px 0px 1px #272A28;
   cursor: pointer;
 }
 
 #infoButton:hover {
   background-color: #ECECEC;
+}
+
+#settingsButton {
+  z-index: 1;
+  color: #5B5B5B;
+  background-color: #FFFFFF;
+  padding: 0.4em;
+  font-size: 1.2em;
+  position: absolute;
+  bottom: 0;
+  margin-left: 0.85em;
+  margin-bottom: 2.3em;
+  box-shadow: 0px 0px 1px #272A28;
+  cursor: pointer;
+}
+
+#settingsButton:hover {
+  background-color: #ECECEC;
+}
+
+#settingsDiv {
+  display: none;
+	position: absolute;
+  bottom: 0;
+  margin-left: 5em;
+  z-index: 99;
+	background: white;
+	border-radius: .4em;
+  padding: 1em;
+  margin-bottom: 2.3em;
+  box-shadow: 0 0 15px #272A28;
+  color: rgba(53, 55, 53, 1);
+}
+
+#settingsDiv input {
+  margin-bottom: 1em !important;
+  margin-top: 1em;
+  cursor: pointer;
+}
+
+#settingsDiv label {
+  cursor: pointer;
 }
 
 /*#infoLightButton {
@@ -188,6 +230,11 @@ body:not(.hide-overlay) {
   background-color: #C1C1C1;
 }
 
+#submitButton {
+  margin-top: 1em;
+  cursor: pointer;
+}
+
 #daysFromDate {
   width: 13em !important;
 }
@@ -225,7 +272,7 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: 0.8em;
+  margin-left: -1em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
@@ -239,7 +286,7 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: -1.2em;
+  margin-left: -1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
@@ -249,11 +296,15 @@ body:not(.hide-overlay) {
   background-color: #C1C1C1;
 }
 
+#searchOptions {
+
+}
+
 #locateClose {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: -1.2em;
+  margin-left: -1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
@@ -451,6 +502,52 @@ body:not(.hide-overlay) {
 	width: 50px;
 }
 
+.esri-home {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 10em !important;
+  margin-right: 0em !important;
+}
+
+.esri-locate {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 13em !important;
+  margin-right: 0em !important;
+}
+
+.esri-scale-bar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 8em;
+  margin-bottom: 3.5em;
+}
+
+.esri-expand {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 5.3em !important;
+  margin-right: 0em !important;
+}
+
+#closeSettings {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.6em;
+  cursor: pointer;
+}
+
+#closeSettings:hover {
+  background-color: #C1C1C1;
+}
+
+
+
 /*ESRI dark theme CSS*/
 /*.dark-theme .esri-widget,
     .dark-theme .esri-widget-button,
@@ -476,6 +573,13 @@ body:not(.hide-overlay) {
     }*/
 /* Smartphones (portrait) ----------- */
 @media only screen and (max-width: 450px) {
+
+  .esri-expand__container--expanded {
+    height: 10em !important;
+    margin-top: 27em !important;
+    width: 6.5em !important;
+  }
+
   .overlay-content img {
     height: 90px;
     width: 90px;
@@ -493,7 +597,7 @@ body:not(.hide-overlay) {
   }
 
   #legendClose {
-    margin-left: 0.8em !important;
+    margin-left: -1em !important;
   }
 
   #aboutNav button {
@@ -504,6 +608,10 @@ body:not(.hide-overlay) {
 
   #byLine {
     font-size: 1.1em;
+  }
+
+  #submitButton {
+    margin-top: 0.5em;
   }
 
   .overlay .closebtn {
@@ -600,6 +708,10 @@ body:not(.hide-overlay) {
     margin-top: 60px;
   }
 
+  .esri-ui .esri-popup {
+    margin-top: 6em;
+  }
+
   #aboutNav button {
     margin-top: 0.5em;
     font-weight: normal;
@@ -651,7 +763,7 @@ body:not(.hide-overlay) {
   }
 
   #lightModeLogo {
-    margin-top: -0.7em;
+    margin-top: -0.9em;
     margin-left: 5em;
   }
 
@@ -665,6 +777,8 @@ body:not(.hide-overlay) {
     margin-top: -0.3em;
   }
 
+
+
   .w3-display-bottom {
     margin-top: 15em;
     margin-left: -0.80em;
@@ -675,6 +789,16 @@ body:not(.hide-overlay) {
     width: 100%;
     z-index: 99 !important;
     height: 20em !important;
+  }
+
+  #leftSearch {
+    margin-left: -19em !important;
+    margin-top: 1em;
+  }
+
+  #rightSearch {
+    margin-right: -20em;
+    margin-top: -12em;
   }
 
   #esriLegend {

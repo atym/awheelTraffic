@@ -67,13 +67,14 @@
   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
   crossorigin="anonymous"></script>
   <script src="mapping.js"></script>
-  <script src="animate.js"></script>
+
   <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
- 
+
 
 </head>
 
-<body onload="checkCookie()">
+<body onload="checkCookie()" id="entireApp">
+
 
 
   <script>
@@ -83,7 +84,14 @@
    **************************************************/
   </script>
 
-  <div id="infoButton" class="esri-icon-description" aria-label="close icon" onclick="openOverlay()"></div>
+  <div id="infoButton" class="esri-icon-description" aria-label="close icon" onclick="openOverlay()" data-tippy="About"></div>
+
+  <div id="settingsButton" class="esri-icon-settings" aria-label="settings icon" data-tippy="Settings" onclick="toggleSettings()" href="javascript:void(0)"></div>
+
+
+
+
+
 
 
   <!--   <div id="mainLogo">
@@ -132,14 +140,14 @@
       <!--  <h2>Legend</h2>
         <p>Display dynamic legend that can be hidden (most helpful on mobile).</p> -->
 
-        <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
+      <!--  <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
         <br>
 
         <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('black.css')"> Dark Mode</label>
 
         <br>
 
-        <label><input type="checkbox" id="currentTraffic"> Traffic</label>
+        <label><input type="checkbox" id="currentTraffic"> Traffic</label> -->
 
         <!-- <label data-tippy="Inactive"><input type="checkbox" id="beginner"> Beginner Mode</label> -->
 
@@ -163,31 +171,42 @@
 
 
         <div id="searchOptions">
-
+        <div id="leftSearch">
           <br>
-          <label for="daysFromDate">Days from Current Date:</label><br>
+          <label for="daysFromDate">Enter Days from Current Date:</label><br>
           <!--<input type="radio" id="daysFromDate" name="daysFromDate" value="7">Last 7 Days<br>
 			    <input type="radio" id="daysFromDate" name="daysFromDate" value="30">Last 30 days <br>
 			    <input type="radio" id="daysFromDate" name="daysFromDate" value="90">Last 90 days <br>-->
           <input type="text" id="daysFromDate" maxlength="3" placeholder="Between 1 and 365">
           <br>
           <br>
-          <br>
-          <label for="incidentTypes">Incident Types:</label>
+          <label for="incidentTypes">Select up to 5 Incident Types:</label>
           <br>
           <select id="incidentTypes" multiple></select>
-          <br>
-          <label><input type="checkbox" id="toggleHeat"> Display Heatmap</label>
-          <br>
-          <br>
-          <br>
-          <input type="submit" id="submitButton" value="Submit"><br>
-
-      <span id="searchInfo" data-tippy="Use search to display locations for individual incident types, group incidents by user preference, and to generate a heat map based on the found data."  class="esri-icon-description" aria-label="info icon"></span>
 
 
         </div>
+
+
+          <br>
+          <div id="rightSearch">
+          <!--  <label><input type="checkbox" id="toggleHeat"> Display Heatmap</label><br>-->
+            <span>&nbsp;&nbsp;Display:</span>
+            <br>
+
+            <form id="toggleHeat">
+            <label><input id="buttonPoints" type="radio" name="searchT" value="points" checked> Points &nbsp;&nbsp;</label>
+            <label><input id="buttonHeatmap" type="radio" name="searchT" value="heatmap"> Heatmap<br></label>
+          </form>
+            <br>
+          <input type="submit" id="submitButton" value="Submit"><br>
+
+
         <p>Matched Incidents: <span id="numRecords"></span></p>
+        </div>
+      </div>
+
+        <span id="searchInfo" data-tippy="Use search to display locations for individual incident types, group incidents by user preference, and to generate a heat map based on the found data."  class="esri-icon-description" aria-label="info icon"></span>
         <span id="searchSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
       </div>
 
@@ -336,6 +355,28 @@
     </div>
   </div>
 
+  <div id="settingsDiv" class="box">
+
+      <span class="esri-icon-close" id="closeSettings" onclick="closeSettings()"></span>
+
+      <label><input type="checkbox" id="currentTraffic"> Traffic</label>
+      <br>
+      <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('black.css')">  Dark Mode</label>
+        <br>
+      <label><input type="checkbox" id="cityLimitsLayer">  City Limits</label>
+      <br>
+      <label><input type="checkbox" id="scaleBar">  Scalebar</label>
+
+
+
+
+
+
+
+
+  </div>
+
+    <div id="expandWidget"></div>
 
   <div id="lightFooter">Footer information will appear here.</div>
   <div id="darkFooter">Footer information will appear here.</div>
@@ -346,6 +387,7 @@
      **************************************************/
   </script>
   <div id="viewDiv"></div>
+  <script src="animate.js"></script>
 </body>
 
 </html>

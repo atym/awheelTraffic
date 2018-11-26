@@ -95,6 +95,11 @@ body:not(.hide-overlay) {
   background-color: #151E1C;
 }
 
+#submitButton {
+  margin-top: 1em;
+  cursor: pointer;
+}
+
 #locateSpinner {
   position: absolute;
   bottom: 0;
@@ -128,42 +133,42 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: 0.8em;
+  margin-left: -1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
 }
 
 #legendClose:hover {
-  background-color: #C1C1C1;
+  background-color: #151E1C;
 }
 
 #searchClose {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: -1.2em;
+  margin-left: -1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
 }
 
 #searchClose:hover {
-  background-color: #C1C1C1;
+  background-color: #151E1C;
 }
 
 #locateClose {
   position: absolute;
   bottom: 0;
   margin-bottom: 0.3em;
-  margin-left: -1.2em;
+  margin-left: -1.0em;
   padding: 0.5em;
   font-size: 1.7em;
   cursor: pointer;
 }
 
 #locateClose:hover {
-  background-color: #C1C1C1;
+  background-color: #151E1C;
 }
 
 #legendInfo {
@@ -249,7 +254,7 @@ body:not(.hide-overlay) {
   position: absolute;
   bottom: 0;
   margin-left: 0.85em;
-  margin-bottom: 3.9em;
+  margin-bottom: 4.1em;
   box-shadow: 0px 0px 5px #149FEC;
   cursor: pointer;
 }
@@ -257,6 +262,67 @@ body:not(.hide-overlay) {
 #infoButton:hover {
   background-color: #262626;
 }
+
+#settingsButton {
+  z-index: 1;
+  color: #9D9D9D;
+  background-color: #1B1B1B;
+  padding: 0.4em;
+  font-size: 1.2em;
+  position: absolute;
+  bottom: 0;
+  margin-left: 0.85em;
+  margin-bottom: 1.7em;
+  box-shadow: 0px 0px 1px #149FEC;
+  cursor: pointer;
+}
+
+#settingsButton:hover {
+  background-color: #262626;
+}
+
+/*#settingsDiv {
+  position: absolute;
+  bottom: 0;
+  margin-left: 6em;
+  z-index: 99;
+  background-color: #242424;
+  padding: 2em;
+}*/
+
+
+
+#settingsDiv {
+  display: none;
+	position: absolute;
+  bottom: 0;
+  margin-left: 5em;
+  z-index: 99;
+	background: #2e2e30;
+	border-radius: .4em;
+  padding: 1em;
+  margin-bottom: 2.3em;
+  box-shadow: 0 0 15px #149FEC;
+  color: #BBC2C6;
+}
+
+#settingsDiv input {
+  margin-bottom: 1em !important;
+  margin-top: 1em;
+  cursor: pointer;
+}
+
+#settingsDiv label {
+  cursor: pointer;
+}
+
+#applicationDiv {
+  z-index: -99999 !important;
+}
+
+
+
+
 
 #boxMenu {
   width: 100%;
@@ -466,8 +532,86 @@ body:not(.hide-overlay) {
   background-color:black;
 }
 
+.esri-home {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 10em !important;
+  margin-right: 0em !important;
+}
+
+.esri-locate {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 13em !important;
+  margin-right: 0em !important;
+}
+
+.esri-scale-bar {
+  position: absolute;
+
+  bottom: 0;
+  right: 0;
+  margin-right: 8em;
+  margin-bottom: 3.5em;
+}
+
+.esri-expand {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 5.3em !important;
+  margin-right: 0em !important;
+}
+
+#closeSettings {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.6em;
+  cursor: pointer;
+}
+
+#closeSettings:hover {
+  background-color: #151E1C;
+}
+
+
+
+
+
 /* Smartphones (portrait) ----------- */
 @media only screen and (max-width: 450px) {
+
+  /*.esri-expand__container--expanded {
+    height: 10em !important;
+    margin-top: -10em !important;
+    width: 10.3em !important;
+  }*/
+
+  /*.esri-expand__container {
+    margin-top: 30em;
+    height: 30%;
+  }
+  .esri-expand__container--expanded {
+    margin-top: 30em !important;
+    height: 19% !important;
+    width: 22% !important;
+  }*/
+
+  .esri-expand__container--expanded {
+    height: 10em !important;
+    margin-top: 27em !important;
+    width: 6.5em !important;
+  }
+
+
+
+.esri-scale-bar {
+  margin-left: 7.5em;
+}
+
   .overlay-content img {
     height: 90px;
     width: 90px;
@@ -484,8 +628,12 @@ body:not(.hide-overlay) {
     margin-top: 60px;
   }
 
+  #submitButton {
+    margin-top: 0.5em;
+  }
+
   #legendClose {
-    margin-left: 0.8em !important;
+    margin-left: -1.0em !important;
   }
 
   #aboutNav button {
@@ -645,7 +793,7 @@ body:not(.hide-overlay) {
   }
 
   #darkModeLogo {
-    margin-top: -0.7em;
+    margin-top: -0.9em;
     margin-left: 5em;
   }
 
@@ -669,6 +817,16 @@ body:not(.hide-overlay) {
     width: 100%;
     z-index: 99 !important;
     height: 20em !important;
+  }
+
+  #leftSearch {
+    margin-left: -19em !important;
+    margin-top: 1em;
+  }
+
+  #rightSearch {
+    margin-right: -20em;
+    margin-top: -12em;
   }
 
   #esriLegend {
