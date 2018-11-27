@@ -740,7 +740,7 @@ require([
 
       // Remove any locate results that still exist
       view.graphics.removeAll();
-      locateWidget.destroy();
+      locateWidget.clear();
 
       fromSearch = true;
 
