@@ -330,6 +330,36 @@ require([
       resultsLayer = new GraphicsLayer();
 
       var bufferRadius = dom.byId("bufferRadius").value;
+	  var zoomLevel;
+	  
+	  switch (bufferRadius) {
+		case "1":
+			zoomLevel = 13;
+            break;
+        /*case "2":
+			zoomLevel = 12;
+            break;
+        case "3":
+			zoomLevel = 12;
+            break;*/
+        case "4":
+			zoomLevel = 11;
+            break;
+        default:
+			zoomLevel = 12;
+      }
+	  
+	  // Trying to override goto with new zoom level but it doesn't appear to be working
+	  locateWidget.goToOverride = function(view){
+		  var newTarget = {
+			  geometry: resultGeometry,
+			  zoom: zoomLevel
+		  };
+		  
+		  //goToParams.target = newTarget;
+		  
+		  return view.goTo(newTarget);
+	  };
 
       // Create geometry around the result point with a predefined radius
       var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, bufferRadius, "miles");
@@ -400,7 +430,7 @@ require([
           map.add(resultsLayer);
 
           // After the results layer has finished loading adjust the zoom according to the bufferRadius
-          resultsLayer.when(function() {
+          /*resultsLayer.when(function() {
 
             switch (bufferRadius) {
               case "1":
@@ -419,7 +449,7 @@ require([
               default:
                 view.zoom = 12;
             }
-          });
+          });*/
 
           return resultsLayer;
         })
@@ -446,6 +476,10 @@ require([
       map.remove(resultsLayer);
       dom.byId("bufferResults").innerHTML = "";
     });
+	
+	locateWidget.on("search-complete", function(event){
+		console.log("Zoom level: "+view.zoom);
+	});
 
     /**************************************************
      * Load initial batch of traffic data from COA
