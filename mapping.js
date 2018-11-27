@@ -823,11 +823,21 @@ require([
 
       try {
         map.add(trafficFLayer);
+	
       } catch (error) {
         return
       };
-
-      view.extent = trafficFLayer.fullExtent; // **** Not working for some reason JB *****
+	  
+	  // Reset the mapview and extent according to trafficFLayer data JB
+	  trafficFLayer.when(function(){
+		  
+		view.goTo({
+			target: view.center,
+			extent: trafficFLayer.extent,
+			zoom: 10
+		});
+	  });
+	  
       return trafficFLayer;
     }
 
