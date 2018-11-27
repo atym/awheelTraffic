@@ -1,5 +1,4 @@
 <!doctype html>
-<!--<html manifest="cache.manifest">-->
 <html>
 
 <script>
@@ -25,6 +24,7 @@
    * Apply MOBILE optimization metadata
    **************************************************/
   </script>
+
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Austin Traffic">
@@ -49,6 +49,7 @@
    * Beauty, W3, ESRI, Google Fonts, Font Awesome
    **************************************************/
   </script>
+
   <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
   <link id="pagestyle" rel="stylesheet" type="text/css" href="beauty.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -59,28 +60,25 @@
   <script>
     /**************************************************
    * LOAD JAVASCRIPT
-   * Mapping, Animate, ESRI, Tippy JS
+   * Mapping, ESRI, Tippy JS
+   * Animate loads at end of body
    **************************************************/
   </script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
   <script src="https://js.arcgis.com/4.9/"></script>
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js"
-  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
   <script src="mapping.js"></script>
   <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
-
 
 </head>
 
 <body onload="checkCookie()" id="entireApp">
 
-
-
   <script>
     /**************************************************
-   * Create LOGO div
-   * mouseover and click functions
+   * Create custom widget buttons on map for
+   *   settings and info
    **************************************************/
   </script>
 
@@ -88,16 +86,11 @@
 
   <div id="settingsButton" class="esri-icon-settings" aria-label="settings icon" onclick="toggleSettings()" href="javascript:void(0)"></div>
 
-
-
-
-
-
-
-  <!--   <div id="mainLogo">
-          <img src='./img/logo.png' height="100" width="100">
-        </div> -->
-
+  <script>
+    /**************************************************
+   * Create main toolbox div
+   **************************************************/
+  </script>
 
   <div id="toolBox">
 
@@ -113,6 +106,7 @@
      * Create tabbed MENU, assign function to click
      **************************************************/
     </script>
+
     <div id="boxMenu">
       <div class="w3-row">
         <a href="javascript:void(0)" onclick="openMenu(event, 'Legend')">
@@ -132,103 +126,88 @@
      * Create BOXCONTENT div, assign functions to close on click
      **************************************************/
     </script>
+
     <div id="boxContent" style="display:none">
+
+      <script>
+        /**************************************************
+       * Create LEGEND div
+       **************************************************/
+      </script>
 
       <div id="Legend" class="w3-container title">
         <span onclick="closeMenu(event, 'Legend')" class="esri-icon-up" aria-label="close icon" id="legendClose"></span>
 
-      <!--  <h2>Legend</h2>
-        <p>Display dynamic legend that can be hidden (most helpful on mobile).</p> -->
-
-      <!--  <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
-        <br>
-
-        <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('black.css')"> Dark Mode</label>
-
-        <br>
-
-        <label><input type="checkbox" id="currentTraffic"> Traffic</label> -->
-
-        <!-- <label data-tippy="Inactive"><input type="checkbox" id="beginner"> Beginner Mode</label> -->
-
         <br>
         <div id="esriLegend"></div>
-        <span id="legendInfo" data-tippy="Use the legend tool for descriptions of the symbols visible on the map."  class="esri-icon-description" aria-label="info icon"></span>
+        <span id="legendInfo" data-tippy="Use the legend tool for descriptions of the symbols visible on the map." class="esri-icon-description" aria-label="info icon"></span>
 
 
         <span id="legendSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
 
-        <!--<i id="legendSpinner" data-tippy="<label><input type='checkbox' id='beginner'> Beginner Mode</label><br><label><input type='checkbox' id='beginner'> Other Option</label><br><label><input type='checkbox' id='beginner'> Another Option</label><br>"
-          data-tippy-interactive="true" data-tippy-placement="bottom" class="fa fa-refresh fa-lg" onclick="spinLegend()"></i>-->
-
       </div>
 
-      <!--<p>Query the dataset and then display heatmap.</p>-->
+      <script>
+        /**************************************************
+       * Create SEARCH div
+       **************************************************/
+      </script>
+
       <div id="Search" class="w3-container title" style="display:none">
         <span onclick="closeMenu(event, 'Search')" class="esri-icon-up" aria-label="close icon" id="searchClose"></span>
-
-      <!--  <h2>Search</h2>-->
-
-
         <div id="searchOptions">
-        <div id="leftSearch">
-          <br>
-          <label for="daysFromDate">Enter Days from Current Date:</label><br>
-          <!--<input type="radio" id="daysFromDate" name="daysFromDate" value="7">Last 7 Days<br>
-			    <input type="radio" id="daysFromDate" name="daysFromDate" value="30">Last 30 days <br>
-			    <input type="radio" id="daysFromDate" name="daysFromDate" value="90">Last 90 days <br>-->
-          <input type="text" id="daysFromDate" maxlength="3" placeholder="Between 1 and 365">
-          <br>
-          <br>
-          <label for="incidentTypes">Select up to 5 Incident Types:</label>
-          <br>
-          <select id="incidentTypes" multiple></select>
-
-
-        </div>
-
-
+          <div id="leftSearch">
+            <br>
+            <label for="daysFromDate">Enter Days from Current Date:</label><br>
+            <input type="text" id="daysFromDate" maxlength="3" placeholder="Between 1 and 365">
+            <br>
+            <br>
+            <label for="incidentTypes">Select up to 5 Incident Types:</label>
+            <br>
+            <select id="incidentTypes" multiple></select>
+          </div>
           <br>
           <div id="rightSearch">
-          <!--  <label><input type="checkbox" id="toggleHeat"> Display Heatmap</label><br>-->
             <span>&nbsp;&nbsp;Display:</span>
             <br>
-
             <form id="toggleHeat">
-            <label><input id="buttonPoints" type="radio" name="searchT" value="points" checked> Points &nbsp;&nbsp;</label>
-            <label><input id="buttonHeatmap" type="radio" name="searchT" value="heatmap"> Heatmap<br></label>
-          </form>
+              <label><input id="buttonPoints" type="radio" name="searchT" value="points" checked> Points &nbsp;&nbsp;</label>
+              <label><input id="buttonHeatmap" type="radio" name="searchT" value="heatmap"> Heatmap<br></label>
+            </form>
             <br>
-          <input type="submit" id="submitButton" value="Submit"><br>
+            <input type="submit" id="submitButton" value="Submit"><br>
 
 
-        <p>Matched Incidents: <span id="numRecords"></span></p>
+            <p>Matched Incidents: <span id="numRecords"></span></p>
+          </div>
         </div>
-      </div>
 
-        <span id="searchInfo" data-tippy="Use search to display locations for individual incident types, group incidents by user preference, and to generate a heat map based on the found data."  class="esri-icon-description" aria-label="info icon"></span>
+        <span id="searchInfo" data-tippy="Use search to display locations for individual incident types, group incidents by user preference, and to generate a heat map based on the found data." class="esri-icon-description" aria-label="info icon"></span>
         <span id="searchSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
       </div>
+
+      <script>
+        /**************************************************
+       * Create LOCATE div
+       **************************************************/
+      </script>
 
       <div id="Locate" class="w3-container title" style="display:none">
         <span onclick="closeMenu(event, 'Locate')" class="esri-icon-up" aria-label="close icon" id="locateClose"></span>
 
-      <!--  <h2>Locate</h2>
-        <p>Input address to see incidents within a buffered distance.</p>-->
-
         <div id="esriLocate"></div>
-		<p id = "radiusOptions">
-			<label for = "bufferRadius">Buffer Radius: </label>
-			<select id="bufferRadius">
-				<option value = 1>1 mile</option>
-				<option value = 2>2 miles</option>
-				<option value = 3>3 miles</option>
-				<option value = 4>4 miles</option>
-			</select>
-		</p>
-		<p>Results returned: <span id="bufferResults"></span></p>
+        <p id="radiusOptions">
+          <label for="bufferRadius">Buffer Radius: </label>
+          <select id="bufferRadius">
+            <option value=1>1 mile</option>
+            <option value=2>2 miles</option>
+            <option value=3>3 miles</option>
+            <option value=4>4 miles</option>
+          </select>
+        </p>
+        <p>Results returned: <span id="bufferResults"></span></p>
         <span id="locateSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
-        <span id="locateInfo" data-tippy="Use the locate tool to search by your current location or enter an address manually to see all incidents within a 1-mile radius."  class="esri-icon-description" aria-label="info icon"></span>
+        <span id="locateInfo" data-tippy="Use the locate tool to search by your current location or enter an address manually to see all incidents within a 1-mile radius." class="esri-icon-description" aria-label="info icon"></span>
         <canvas id="myChart" width="400" height="400"></canvas>
       </div>
     </div>
@@ -236,9 +215,10 @@
 
   <script>
     /**************************************************
-     * Create overlay, assign function to logo icon
+     * Create full overlay, assign function to icon
      **************************************************/
   </script>
+
   <div id="fullOverlay" class="overlay">
     <a href="javascript:void(0)" onclick="closeOverlay()" class="esri-icon-close" aria-label="close icon" id="closeOverlay"></a>
 
@@ -250,6 +230,7 @@
          * Switch between team info and project info
          **************************************************/
       </script>
+
       <div id="aboutNav">
         <button id="aboutButtons" class="buttons" onclick="teamOverlay()">About Team</button>
         <button id="aboutButtons" class="buttons" onclick="projectOverlay()">About Project</button>
@@ -261,6 +242,7 @@
          * Name, picture, about
          **************************************************/
       </script>
+
       <div id="overlayTeam">
         <div class="about">
           <h3>Jason Bartling</h3>
@@ -297,6 +279,7 @@
          * Information about project
          **************************************************/
       </script>
+
       <div id="overlayProject">
         <h2>Austin Traffic Incidents</h2>
         <br>
@@ -366,28 +349,33 @@
     </div>
   </div>
 
+  <script>
+    /**************************************************
+   * Create popup box to store settings
+   **************************************************/
+  </script>
+
   <div id="settingsDiv" class="box">
 
-      <span class="esri-icon-close" id="closeSettings" onclick="closeSettings()"></span>
+    <span class="esri-icon-close" id="closeSettings" onclick="closeSettings()"></span>
 
-      <label><input type="checkbox" id="currentTraffic"> Traffic</label>
-      <br>
-      <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('black.css')">  Dark Mode</label>
-        <br>
-      <label><input type="checkbox" id="cityLimitsLayer">  City Limits</label>
-      <br>
-      <label><input type="checkbox" id="scaleBar">  Scalebar</label>
-
-
-
-
-
-
-
+    <label><input type="checkbox" id="currentTraffic"> Traffic</label>
+    <br>
+    <label><input type="checkbox" id="darkMode" onclick="swapStyleSheet('black.css')"> Dark Mode</label>
+    <br>
+    <label><input type="checkbox" id="cityLimitsLayer"> City Limits</label>
+    <br>
+    <label><input type="checkbox" id="scaleBar"> Scalebar</label>
 
   </div>
 
-    <div id="expandWidget"></div>
+  <div id="expandWidget"></div>
+
+  <script>
+    /**************************************************
+     * Footer info div
+     **************************************************/
+  </script>
 
   <div id="lightFooter">Footer information will appear here.</div>
   <div id="darkFooter">Footer information will appear here.</div>
@@ -397,8 +385,17 @@
      * Create view for map to load into
      **************************************************/
   </script>
+
   <div id="viewDiv"></div>
+
+  <script>
+    /**************************************************
+     * Load animate file after HTML body built
+     **************************************************/
+  </script>
+
   <script src="animate.js"></script>
+
 </body>
 
 </html>
