@@ -424,14 +424,16 @@ function setDevice() {
 	// Reset map when a new search starts
 	locateWidget.on("search-start", function(event){
 		view.graphics.removeAll();
-		map.removeAll();
+		map.remove(trafficFLayer);
+		map.remove(resultsLayer);
 		dom.byId("bufferResults").innerHTML = "";
 	});
 
 	// Remove the buffer if the search is cleared
 	locateWidget.on("search-clear", function(event){
 		view.graphics.removeAll();
-		map.removeAll();
+		map.remove(trafficFLayer);
+		map.remove(resultsLayer);
 		dom.byId("bufferResults").innerHTML = "";
 	});
 
