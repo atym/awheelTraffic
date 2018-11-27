@@ -55,6 +55,11 @@ require([
 	  var renderHeatStatus = false, fromSearch = false;
     var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
 	  var resultsLayer;
+
+    /***************************************
+    * Object with predefined incident classes
+    * will need to update if data changes
+    ****************************************/
     var incidentClasses = [{
         class: "Crash",
         types: [
