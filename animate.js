@@ -9,35 +9,30 @@
  * Brandon Rose
  **************************************************/
 
- /**************************************************
-  * SETTINGS WINDOW
-  **************************************************/
-  var settingsView = document.getElementById("settingsDiv");
-  var settingsButton = document.getElementById("settingsButton");
+/**************************************************
+ * SETTINGS WINDOW ANIMATION
+ **************************************************/
+
+var settingsView = document.getElementById("settingsDiv");
+var settingsButton = document.getElementById("settingsButton");
+settingsView.style.display = "none";
+
+function toggleSettings() {
+  settingsView.style.display = "block";
+}
+
+function closeSettings() {
   settingsView.style.display = "none";
+}
 
-  function toggleSettings() {
-      settingsView.style.display = "block";
-    /*if (settingsView.style.display == "block") {
-      settingsView.style.display = "none";
-    } else if (settingsView.style.display == "block"){
-      settingsView.style.display = "block";
-    }*/
-  }
-
-  function closeSettings() {
+window.addEventListener("mouseup", function(event) {
+  if (event.target != settingsView && event.target.parentNode != settingsView) {
     settingsView.style.display = "none";
   }
-
-  window.addEventListener("mouseup", function(event) {
-    if (event.target != settingsView && event.target.parentNode != settingsView) {
-      settingsView.style.display = "none";
-    }
 });
 
-
 /**************************************************
- * Open and Close full screen overlay on logo click
+ * Open and Close full screen overlay on button click
  **************************************************/
 
 function openOverlay() {
@@ -119,8 +114,10 @@ function openMenu(evt, titleMenu) {
 }
 
 /**************************************************
- * Activate dark mode
+ * Activate dark mode CSS
+ * store item on device to remember dark mode preference
  **************************************************/
+
 darkModeToggle = document.getElementById("darkMode");
 
 function swapStyleSheet(sheet) {
@@ -149,22 +146,6 @@ function swapStyleSheet(sheet) {
 }
 
 /**************************************************
- * Cookie to remember dark mode setting
- **************************************************/
-/*function checkCookie() {
-  var darkCookie = document.cookie;
-  if (darkCookie == "dark") {
-    document.getElementById("darkMode").checked = true;
-    swapStyleSheet("black.css");
-  }
-}*/
-
-/*document.cookie = "dark; expires=Tue, 31 Dec 2030 12:00:00 UTC; path=/;";*/
-
-/*
-document.cookie = "dark; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";*/
-
-/**************************************************
  * HTML5 Web Storage for dark mode setting
  * This function checks the storage object created by
  * swapStyleSheet()
@@ -175,42 +156,12 @@ function checkCookie() {
     document.getElementById("darkMode").checked = true;
     swapStyleSheet("black.css");
   }
-
-
-/*      w = window,
-      d = document,
-      e = d.documentElement,
-      g = d.getElementsByTagName('body')[0],
-      x = w.innerWidth || e.clientWidth || g.clientWidth,
-      y = w.innerHeight || e.clientHeight || g.clientHeight;
-
-       if (x <= 450) {
-         console.log("This looks like a mobile device!");
-       }*/
-     }
-
-
-
-/**************************************************
- * Animate map refresh icon
- **************************************************/
-function spinTimer() {
-  setTimeout(function() {
-    document.getElementById("legendSpinner").setAttribute("class", "fa fa-refresh fa-lg");
-  }, 5000)
-}
-
-function spinLegend() {
-  /*document.getElementById("legendSpinner").setAttribute("class", "fa fa-refresh fa-spin fa-lg");
-  spinTimer();*/
-  location.reload(false);
 }
 
 /**************************************************
- * CHECK DEVICE SCREEN SIZE
+ * Refresh page on click
+ * Do not use cache
  **************************************************/
-
-
 
 function refreshPage() {
   location.reload(false);
