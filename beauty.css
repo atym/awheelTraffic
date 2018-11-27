@@ -31,6 +31,14 @@ body:not(.hide-overlay) {
   cursor: pointer;
 }
 
+/*#myChart {
+  width: 300px !important;
+  height: 300px !important;
+  position: absolute;
+  margin-left: 2.7em;
+  margin-top: 3em;
+}*/
+
 .esri-basemap-toggle {
   z-index: 0;
 }

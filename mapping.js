@@ -261,18 +261,18 @@ function setDevice() {
     });
 
 	/******************************************************
-	* Create circle around search result once complete 
+	* Create circle around search result once complete
 	* Author:  JB
 	* Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
 	******************************************************/
 	locateWidget.on("select-result", function(event){
-		
+
 		var resultGeometry = event.result.feature.geometry;
 		var resultsLayer = new GraphicsLayer();
-		
-		// Create geometry around the result point with a predefined radius 
+
+		// Create geometry around the result point with a predefined radius
 		var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, 2, "miles");
-		
+
 		bufferGraphic = new Graphic ({
 			geometry: pointBuffer,
 			symbol: {
@@ -284,22 +284,22 @@ function setDevice() {
 				}
 			}
 		});
-		
-        // Remove the previous trafficFLayer		
+
+        // Remove the previous trafficFLayer
         map.remove(trafficFLayer);
-		
+
 		// Reset the matched incidents count to blank since we  are removing the layer
 		dom.byId("numRecords").innerHTML = "";
-		
-		// Add the buffer to the view 
+
+		// Add the buffer to the view
 		view.graphics.add(bufferGraphic);
-		
+
 		console.log("Buffer successfully added.");
-		
-		// Limiting results since encountering some memory source errors with large result set 
+
+		// Limiting results since encountering some memory source errors with large result set
 		searchURL="https://data.austintexas.gov/resource/r3af-2r8x.json" +
         "?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=40000"
-		
+
 		getData(searchURL)
         .then(createGraphics)
 		// Create layer from graphics without adding to map
@@ -311,7 +311,7 @@ function setDevice() {
 			popupTemplate: pTemplate,
 			title: "trafficIncidents"
 			});
-			
+
 			return trafficFLayer;
 		})
 		// Query feature traffic feature layer for incidents within the buffer
@@ -319,17 +319,17 @@ function setDevice() {
 			var query = trafficFLayer.createQuery();
 			query.geometry = pointBuffer;
 			query.spatialRelationship = "intersects";
-			
+
 			return trafficFLayer.queryFeatures(query);
-			
+
 		})
 		// Create graphics from spatial query result
 		.then(function(results){
 			//Remove any preexisting results
 			resultsLayer.removeAll();
-			
+
 			//console.log("Features: "+results.features);
-			
+
 			var features = results.features.map(function (graphic){
 				graphic.symbol = {
 					type: "simple-marker",
@@ -337,14 +337,14 @@ function setDevice() {
 					size: 6.5,
 					color: "darkorange"
 				};
-				
+
 				return graphic;
 			});
-			
+
 			resultsLayer.addMany(features);
-			
+
 			map.add(resultsLayer);
-			
+
 			return resultsLayer;
 		})
         .then(createLegend)
@@ -352,10 +352,10 @@ function setDevice() {
         .catch(function(error) {
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
-		
+
 	});
-	
-	// Remove the buffer if the search is cleared 
+
+	// Remove the buffer if the search is cleared
 	locateWidget.on("search-clear", function(event){
 		view.graphics.remove(bufferGraphic);
 	})
@@ -652,13 +652,13 @@ function setDevice() {
 
       //Remove the previous trafficFLayer before attempting to display the query results
       map.remove(trafficFLayer);
-	  
+
 	    // Remove any locate results that still exist
 	    view.graphics.removeAll();
 	    locateWidget.destroy();
 
       fromSearch = true;
-      
+
       getData(searchURL)
         .then(createGraphics)
         .then(createLayer)
@@ -677,7 +677,7 @@ function setDevice() {
       // raw JSON data
       var json = response.data;
       recordsReturned = Object.keys(json).length;
-      
+
 	  // Display the amount of results returned
       dom.byId("numRecords").innerHTML = recordsReturned;
 
@@ -738,7 +738,7 @@ function setDevice() {
       } catch (error) {
         return
       };
-	  
+
 	  view.extent = trafficFLayer.fullExtent; // **** Not working for some reason JB *****
       return trafficFLayer;
     }
@@ -996,14 +996,44 @@ function setDevice() {
 
      // Populate the select list with all of the possible incident types JB
      populateSearch();
-	  
+
 	  // Run the search once the submit button has been clicked JB
 	  on(dom.byId("submitButton"), "click", runSearch);
-	  
-	  // Limit selected incidents to 5 or fewer when options are clicked and selected 
+
+	  // Limit selected incidents to 5 or fewer when options are clicked and selected
 	  on(dom.byId("incidentTypes"), "click", limitSelection);
-	  	  
+
     });
+
+    var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+
+});
 
 
   });
