@@ -1008,6 +1008,7 @@ function setDevice() {
         }
       });
     }
+	
     /**************************************************
      * Request the  data from data.austin when the
      * view resolves then send it to the
