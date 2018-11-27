@@ -51,7 +51,7 @@ require([
     trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle,
     cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads,
     vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn,
-    scaleBar, locateWidget, currentTraffic, uniqueValueRenderer;
+    scaleBar, locateWidget, currentTraffic, uniqueValueRenderer, classRenderer;
 	  var renderHeatStatus = false, fromSearch = false;
     var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
 	  var resultsLayer;
@@ -62,7 +62,7 @@ require([
     ****************************************/
     var incidentClasses = [{
         class: "Crash",
-        types: [
+        issueReported: [
           "AUTO/ PED",
           "BOAT ACCIDENT",
           "COLLISION",
@@ -74,27 +74,30 @@ require([
           "Crash Urgent",
           "FLEET ACC/ INJURY",
           "TRAFFIC FATALITY"
-        ]
+        ],
+        color: "red"
       },
       {
         class: "Hazard",
-        types: [
+        issueReported: [
           "Traffic Hazard",
           "Traffic Impediment",
           "TRFC HAZD/ DEBRIS",
           "HIGH WATER",
           "ICY ROADWAY"
-        ]
+        ],
+        color: "yellow"
       },
       {
         class: "Advisory",
-        types: [
+        issueReported: [
           "BLOCKED DRIV/ HWY",
           "LOOSE LIVESTOCK",
           "N / HZRD TRFC VIOL",
           "VEHICLE FIRE",
           "zSTALLED VEHICLE"
-        ]
+        ],
+        color: "blue"
       }
     ];
 
@@ -568,7 +571,18 @@ function setDevice() {
     /**************************************************
      * Define the renderer for symbolizing incidents
      **************************************************/
-
+    function generateClassRenderer(){
+        classRenderer= {
+          type: "unique-value",
+          field: "issueReported"
+        };
+        for(i = 0; i < incidentClasses.length; i++){
+          for(j = 0; j < incidentClasses[i].class.length; j++){
+            console.log(incidentClasses[i].class);
+          }
+        }
+    };
+ generateClassRenderer();
     trafficRenderer = {
       type: "unique-value",
       field: "status", // autocasts as new SimpleRenderer()
@@ -1055,7 +1069,7 @@ function setDevice() {
         }
       });
     }
-	
+
     /**************************************************
      * Request the  data from data.austin when the
      * view resolves then send it to the
