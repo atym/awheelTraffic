@@ -38,18 +38,60 @@ require([
    * Create magic mapping function
    **************************************************/
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer, TileLayer, Point, Legend, Home, ScaleBar, Search, Fullscreen, Expand, BaseTileLayer, Locate,
-		esriRequest, dom, on, promiseUtils, geometryEngine, Graphic, GraphicsLayer) {
+  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer,
+    TileLayer, Point, Legend, Home, ScaleBar, Search, Fullscreen, Expand,
+    BaseTileLayer, Locate, esriRequest, dom, on, promiseUtils, geometryEngine,
+    Graphic, GraphicsLayer) {
 
     /**************************************************
      * VARIABLES
      **************************************************/
 
-    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer, trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle, cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn, scaleBar, locateWidget, currentTraffic, uniqueValueRenderer;
+    var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer,
+    trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle,
+    cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads,
+    vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn,
+    scaleBar, locateWidget, currentTraffic, uniqueValueRenderer;
 	  var renderHeatStatus = false, fromSearch = false;
     var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
-	var resultsLayer;
-
+	  var resultsLayer;
+    var incidentClasses = [{
+        class: "Crash",
+        types: [
+          "AUTO/ PED",
+          "BOAT ACCIDENT",
+          "COLLISION",
+          "COLLISION/PRIVATE PROPERTY",
+          "COLLISION WITH INJURY",
+          "COLLISN / FTSRA",
+          "COLLISN/ LVNG SCN",
+          "Crash Service",
+          "Crash Urgent",
+          "FLEET ACC/ INJURY",
+          "TRAFFIC FATALITY"
+        ]
+      },
+      {
+        class: "Hazard",
+        types: [
+          "Traffic Hazard",
+          "Traffic Impediment",
+          "TRFC HAZD/ DEBRIS",
+          "HIGH WATER",
+          "ICY ROADWAY"
+        ]
+      },
+      {
+        class: "Advisory",
+        types: [
+          "BLOCKED DRIV/ HWY",
+          "LOOSE LIVESTOCK",
+          "N / HZRD TRFC VIOL",
+          "VEHICLE FIRE",
+          "zSTALLED VEHICLE"
+        ]
+      }
+    ];
 
 function setDevice() {
 
@@ -262,21 +304,21 @@ function setDevice() {
     });
 
 	/******************************************************
-	* Create circle around search result once complete 
+	* Create circle around search result once complete
 	* Author:  JB
 	* Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
 	******************************************************/
 	locateWidget.on("select-result", function(event){
-		
+
 		var resultGeometry = event.result.feature.geometry;
-		
+
 		resultsLayer = new GraphicsLayer();
-		
+
 		var bufferRadius = dom.byId("bufferRadius").value;
-		
-		// Create geometry around the result point with a predefined radius 
+
+		// Create geometry around the result point with a predefined radius
 		var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, bufferRadius, "miles");
-		
+
 		bufferGraphic = new Graphic ({
 			geometry: pointBuffer,
 			symbol: {
@@ -288,14 +330,14 @@ function setDevice() {
 				}
 			}
 		});
-		
-		// Add the buffer to the view 
+
+		// Add the buffer to the view
 		view.graphics.add(bufferGraphic);
-		
-		// Limiting results since encountering some memory source errors with large result set 
+
+		// Limiting results since encountering some memory source errors with large result set
 		searchURL="https://data.austintexas.gov/resource/r3af-2r8x.json" +
         "?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=40000"
-		
+
 		getData(searchURL)
         .then(createGraphics)
 		// Create layer from graphics without adding to map
@@ -307,7 +349,7 @@ function setDevice() {
 			popupTemplate: pTemplate,
 			title: "trafficIncidents"
 			});
-			
+
 			return trafficFLayer;
 		})
 		// Query feature traffic feature layer for incidents within the buffer
@@ -315,18 +357,18 @@ function setDevice() {
 			var query = trafficFLayer.createQuery();
 			query.geometry = pointBuffer;
 			query.spatialRelationship = "intersects";
-			
+
 			return trafficFLayer.queryFeatures(query);
-			
+
 		})
 		// Create graphics from spatial query result
 		.then(function(results){
-			
+
 			//console.log("Features: "+results.features);
 			var resultsReturned = Object.keys(results.features).length;
-			
+
 			dom.byId("bufferResults").innerHTML = resultsReturned;
-			
+
 			var features = results.features.map(function (graphic){
 				graphic.symbol = {
 					type: "simple-marker",
@@ -334,17 +376,17 @@ function setDevice() {
 					size: 10,
 					color: "yellow"
 				};
-				
+
 				return graphic;
 			});
-			
+
 			resultsLayer.addMany(features);
-			
+
 			map.add(resultsLayer);
-			
+
 			// After the results layer has finished loading adjust the zoom according to the bufferRadius
 			resultsLayer.when(function() {
-				
+
 				switch(bufferRadius){
 					case "1":
 						console.log("CASE 1");
@@ -363,7 +405,7 @@ function setDevice() {
 						view.zoom = 12;
 				}
 			});
-			
+
 			return resultsLayer;
 		})
         .then(createLegend)
@@ -371,23 +413,23 @@ function setDevice() {
         .catch(function(error) {
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
-		
+
 	});
-	
+
 	// Reset map when a new search starts
 	locateWidget.on("search-start", function(event){
 		view.graphics.removeAll();
 		map.removeAll();
 		dom.byId("bufferResults").innerHTML = "";
 	});
-	
-	// Remove the buffer if the search is cleared 
+
+	// Remove the buffer if the search is cleared
 	locateWidget.on("search-clear", function(event){
 		view.graphics.removeAll();
 		map.removeAll();
 		dom.byId("bufferResults").innerHTML = "";
 	});
-	
+
     /**************************************************
      * Load initial batch of traffic data from COA
      * JSON data over Socrata API
@@ -679,13 +721,13 @@ function setDevice() {
 
       //Remove the previous trafficFLayer before attempting to display the query results
       map.remove(trafficFLayer);
-	  
+
 	    // Remove any locate results that still exist
 	    view.graphics.removeAll();
 	    locateWidget.destroy();
 
       fromSearch = true;
-      
+
       getData(searchURL)
         .then(createGraphics)
         .then(createLayer)
@@ -704,7 +746,7 @@ function setDevice() {
       // raw JSON data
       var json = response.data;
       recordsReturned = Object.keys(json).length;
-      
+
 	  // Display the amount of results returned
       dom.byId("numRecords").innerHTML = recordsReturned;
 
@@ -765,7 +807,7 @@ function setDevice() {
       } catch (error) {
         return
       };
-	  
+
 	  view.extent = trafficFLayer.fullExtent; // **** Not working for some reason JB *****
       return trafficFLayer;
     }
@@ -1023,13 +1065,13 @@ function setDevice() {
 
      // Populate the select list with all of the possible incident types JB
      populateSearch();
-	  
+
 	  // Run the search once the submit button has been clicked JB
 	  on(dom.byId("submitButton"), "click", runSearch);
-	  
-	  // Limit selected incidents to 5 or fewer when options are clicked and selected 
+
+	  // Limit selected incidents to 5 or fewer when options are clicked and selected
 	  on(dom.byId("incidentTypes"), "click", limitSelection);
-	  	  
+
     });
 
 
