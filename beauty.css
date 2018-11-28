@@ -31,6 +31,19 @@ body:not(.hide-overlay) {
   cursor: pointer;
 }
 
+#activitySpinner {
+  display: none;
+  font-size: 7em;
+  color: green;
+  position: absolute;
+  z-index: 99999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+}
+
 .esri-basemap-toggle {
   z-index: 0;
 }
