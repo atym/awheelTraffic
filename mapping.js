@@ -569,29 +569,31 @@ function setDevice() {
     }
 
     /**************************************************
-     * Define the renderer for symbolizing incidents
+     * Define the renderers for symbolizing incidents
      **************************************************/
+
     function generateClassRenderer() {
       classRenderer = {
         type: "unique-value",
         field: "issueReported", // autocasts as new SimpleRenderer()
         uniqueValueInfos: []
       };
-        for(i = 0; i < incidentClasses.length; i++){
-          for(j = 0; j < incidentClasses[i].issueReported.length; j++){
-            classRenderer.uniqueValueInfos.push({
-              value: incidentClasses[i].issueReported[j],
-              symbol:{
-                type: "simple-marker",
-                size: 13,
-                color: incidentClasses[i].color
-              },
-              label: incidentClasses[i].class
+      for (i = 0; i < incidentClasses.length; i++) {
+        for (j = 0; j < incidentClasses[i].issueReported.length; j++) {
+          classRenderer.uniqueValueInfos.push({
+            value: incidentClasses[i].issueReported[j],
+            symbol: {
+              type: "simple-marker",
+              size: 13,
+              color: incidentClasses[i].color
+            },
+            label: incidentClasses[i].class
           });
         };
       };
     };
-    generateClassRenderer();
+    generateClassRenderer(); //for testing
+
     trafficRenderer = {
       type: "unique-value",
       field: "status", // autocasts as new SimpleRenderer()
