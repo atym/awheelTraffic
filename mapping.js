@@ -376,9 +376,9 @@ require([
       // Add the buffer to the view
       view.graphics.add(bufferGraphic);
 
-      // Limiting results since encountering some memory source errors with large result set
+      // Create searchURL and limit to latest 10,000 incidents 
       searchURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
-        "?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=40000"
+        "?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=10000&$order=traffic_report_status_date_time DESC"
 
       getData(searchURL)
         .then(createGraphics)
