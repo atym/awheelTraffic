@@ -49,15 +49,21 @@ require([
      **************************************************/
 
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer,
-      trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle,
-      cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads,
-      vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn,
-      scaleBar, locateWidget, currentTraffic, uniqueValueRenderer;
-    var renderHeatStatus = false,
-      fromSearch = false;
+    trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle,
+    cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads,
+    vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn,
+    scaleBar, locateWidget, currentTraffic, uniqueValueRenderer, classRenderer;
+	  var renderHeatStatus = false, fromSearch = false;
     var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
     var resultsLayer;
-
+    var symbolSize = function(){
+      if (getDevice() == "mobile"){
+        return 18;
+      }
+      else{
+        return 13;
+      }
+    }
     /***************************************
      * Object with predefined incident classes
      * will need to update if data changes
@@ -65,7 +71,7 @@ require([
 
     var incidentClasses = [{
         class: "Crash",
-        types: [
+        issueReported: [
           "AUTO/ PED",
           "BOAT ACCIDENT",
           "COLLISION",
@@ -81,7 +87,7 @@ require([
       },
       {
         class: "Hazard",
-        types: [
+        issueReported: [
           "Traffic Hazard",
           "Traffic Impediment",
           "TRFC HAZD/ DEBRIS",
@@ -91,7 +97,7 @@ require([
       },
       {
         class: "Advisory",
-        types: [
+        issueReported: [
           "BLOCKED DRIV/ HWY",
           "LOOSE LIVESTOCK",
           "N / HZRD TRFC VIOL",
@@ -106,7 +112,7 @@ require([
      *  to variable based on device type
      **************************************************/
 
-    function setDevice() {
+    function getDevice() {
 
         w = window,
         d = document,
@@ -116,12 +122,10 @@ require([
         y = w.innerHeight || e.clientHeight || g.clientHeight;
 
       if (x <= 450) {
-        var deviceType = "mobile";
+        return "mobile";
       } else {
-        deviceType = "other";
+        return "other";
       }
-
-      console.log(deviceType);
     }
     /**************************************************
      * Create variables for vector layers
@@ -567,23 +571,23 @@ require([
       var pieces = res[0].split("-");
       var year = pieces[0];
 
-      if (pieces[1] == 01) {
+      if (pieces[1] == 1) {
         var month = "January";
-      } else if (pieces[1] == 02) {
+      } else if (pieces[1] == 2) {
         var month = "February";
-      } else if (pieces[1] == 03) {
+      } else if (pieces[1] == 3) {
         var month = "March";
-      } else if (pieces[1] == 04) {
+      } else if (pieces[1] == 4) {
         var month = "April";
-      } else if (pieces[1] == 05) {
+      } else if (pieces[1] == 5) {
         var month = "May";
-      } else if (pieces[1] == 06) {
+      } else if (pieces[1] == 6) {
         var month = "June";
-      } else if (pieces[1] == 07) {
+      } else if (pieces[1] == 7) {
         var month = "July";
-      } else if (pieces[1] == 08) {
+      } else if (pieces[1] == 8) {
         var month = "August";
-      } else if (pieces[1] == 09) {
+      } else if (pieces[1] == 9) {
         var month = "September";
       } else if (pieces[1] == 10) {
         var month = "October";
@@ -631,8 +635,39 @@ require([
     }
 
     /**************************************************
-     * Define the renderer for symbolizing incidents
+     * Define the renderers for symbolizing incidents
      **************************************************/
+
+    classRenderer = {
+      type: "unique-value",
+      valueExpression: 'var incidentClasses =' + JSON.stringify(incidentClasses)
+                      + ';var i = 0, j = 0;for (i in incidentClasses) {for (j in incidentClasses[i].issueReported) {if (incidentClasses[i].issueReported[j] == $feature.issueReported) {return incidentClasses[i].class;};};};',
+      uniqueValueInfos: [{
+          value: "Crash",
+          symbol: {
+            type: "simple-marker",
+            size: symbolSize(),
+            color: "red"
+          }
+        },
+        {
+          value: "Hazard",
+          symbol: {
+            type: "simple-marker",
+            size: symbolSize(),
+            color: "yellow"
+          }
+        },
+        {
+          value: "Advisory",
+          symbol: {
+            type: "simple-marker",
+            size: symbolSize(),
+            color: "blue"
+          }
+        }
+      ]
+    };
 
     trafficRenderer = {
       type: "unique-value",
@@ -641,14 +676,14 @@ require([
         value: "ACTIVE",
         symbol: {
           type: "simple-marker",
-          size: 13,
+          size: symbolSize(),
           color: "red"
         }
       }, {
         value: "ARCHIVED",
         symbol: {
           type: "simple-marker",
-          size: 10,
+          size: symbolSize(),
           color: "yellow"
         }
       }]
@@ -867,7 +902,7 @@ require([
       } else if (fromSearch) {
         trafficFLayer.renderer = generateUniqueRenderer();
       } else {
-        trafficFLayer.renderer = trafficRenderer;
+        trafficFLayer.renderer = classRenderer;
         trafficFLayer.opacity = 1;
       };
 
@@ -968,7 +1003,7 @@ require([
           value: usrSelected[i],
           symbol: {
             type: "simple-marker",
-            size: 10,
+            size: symbolSize(),
             color: uniqueValuesColor[i]
           }
         })
@@ -1096,7 +1131,7 @@ require([
       } else if (fromSearch) {
         trafficFLayer.renderer = uniqueValueRenderer;
       } else {
-        trafficFLayer.renderer = trafficRenderer;
+        trafficFLayer.renderer = classRenderer;
         trafficFLayer.opacity = 1;
       };
     });
