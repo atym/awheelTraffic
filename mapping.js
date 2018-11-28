@@ -411,7 +411,7 @@ require([
           //console.log("Features: "+results.features);
           var resultsReturned = Object.keys(results.features).length;
 
-          populateChart(results);
+          //populateChart(results);
           /*var resultsInfo = results.features;
 
           var autoPed = 0;
@@ -481,6 +481,12 @@ require([
         .catch(function(error) {
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
+		
+		  //Hide activity spinner once results have been displayed
+		  resultsLayer.when(function(){
+			dom.byId("activitySpinner").style.display = "none";  
+		  });
+		  
 
     });
 
@@ -490,6 +496,9 @@ require([
       map.remove(trafficFLayer);
       map.remove(resultsLayer);
       dom.byId("bufferResults").innerHTML = "";
+	  
+	  // Show activity spinner when processing starts
+	  dom.byId("activitySpinner").style.display = "block";
     });
 
     // Remove the buffer if the search is cleared
@@ -501,7 +510,8 @@ require([
     });
 
 	locateWidget.on("search-complete", function(event){
-		console.log("Zoom level: "+view.zoom);
+		//Hide activity spinner once search has completed
+		//dom.byId("activitySpinner").style.display = "none";
 	});
 
     /**************************************************
