@@ -321,6 +321,165 @@ require([
       view: view
     });
 
+    var crashChart = 0;
+    var hazardChart = 0;
+    var advisoryChart = 0;
+
+    function populateChart(results) {
+      var resultsInfo = results.features;
+
+      var autoPed = 0;
+      var driveWay = 0;
+      var boatAccident = 0;
+      var collision = 0;
+      var privateProperty = 0;
+      var injuryCollision = 0;
+      var ftsra = 0;
+      var leaveScene = 0;
+      var crashService = 0;
+      var crashUrgent = 0;
+      var fleetInjury = 0;
+      var highWater = 0;
+      var icyRoadway = 0;
+      var looseLivestock = 0;
+      var trafficViolation = 0;
+      var trafficFatality = 0;
+      var trafficHazard = 0;
+      var trafficImpediment = 0;
+      var trafficDebris = 0;
+      var vehicleFire = 0;
+      var stallVehicle = 0;
+
+        for (var i = 0; i < results.features.length; i++) {
+        var issuesChart = resultsInfo[i].attributes.issueReported;
+          switch (issuesChart) {
+            case "AUTO/ PED":
+            autoPed += 1;
+            break;
+
+            case "BLOCKED DRIV/ HWY":
+            driveWay += 1;
+            break;
+
+            case "BOAT ACCIDENT":
+            boatAccident += 1;
+            break;
+
+            case "COLLISION":
+            collision += 1;
+            break;
+
+            case "COLLISION/PRIVATE PROPERTY":
+            privateProperty += 1;
+            break;
+
+            case "COLLISION WITH INJURY":
+            injuryCollision += 1;
+            break;
+
+            case "COLLISN / FTSRA":
+            ftsra += 1;
+            break;
+
+            case "COLLISN/ LVNG SCN":
+            leaveScene += 1;
+            break;
+
+            case "Crash Service":
+            crashService += 1;
+            break;
+
+            case "Crash Urgent":
+            crashUrgent += 1;
+            break;
+
+            case "FLEET ACC/ INJURY":
+            fleetInjury += 1;
+            break;
+
+            case "HIGH WATER":
+            highWater += 1;
+            break;
+
+            case "ICY ROADWAY":
+            icyRoadway += 1;
+            break;
+
+            case "LOOSE LIVESTOCK":
+            looseLivestock += 1;
+            break;
+
+            case "N / HZRD TRFC VIOL":
+            trafficViolation += 1;
+            break;
+
+            case "TRAFFIC FATALITY":
+            trafficFatality += 1;
+            break;
+
+            case "Traffic Hazard":
+            trafficHazard += 1;
+            break;
+
+            case "Traffic Impediment":
+            trafficImpediment += 1;
+            break;
+
+            case "TRFC HAZD/ DEBRIS":
+            trafficDebris += 1;
+            break;
+
+            case "VEHICLE FIRE":
+            vehicleFire += 1;
+            break;
+
+            case "zSTALLED VEHICLE":
+            stallVehicle += 1;
+            break;
+
+          }
+      }
+
+     crashChart = autoPed + boatAccident + collision + privateProperty + injuryCollision + ftsra + leaveScene + crashService + crashUrgent + fleetInjury + trafficFatality
+
+     hazardChart = trafficHazard + trafficImpediment + trafficDebris + highWater + icyRoadway
+
+     advisoryChart = driveWay + looseLivestock + trafficViolation + vehicleFire + stallVehicle
+
+     console.log(crashChart);
+     console.log(hazardChart);
+     console.log(advisoryChart);
+
+     /**************************************************
+      * Create doughnut chart with Chart.js library
+      **************************************************/
+
+     var ctx = document.getElementById("myChart");
+     var myChart = new Chart(ctx, {
+       type: 'doughnut',
+       data: {
+         labels: ["Crash", "Advisory", "Hazard"],
+         datasets: [{
+           label: 'Incident Class',
+           data: [crashChart, advisoryChart, hazardChart],
+           backgroundColor: [
+             'rgba(255, 99, 132, 0.5)',
+             'rgba(54, 162, 235, 0.5)',
+             'rgba(255, 206, 86, 0.5)'
+           ],
+           borderColor: [
+             'rgba(255,99,132,1)',
+             'rgba(54, 162, 235, 1)',
+             'rgba(255, 206, 86, 1)'
+           ],
+           borderWidth: 2
+         }]
+       },
+     });
+
+        }
+
+
 
 
     /******************************************************
@@ -412,49 +571,6 @@ require([
           var resultsReturned = Object.keys(results.features).length;
 
           populateChart(results);
-          /*var resultsInfo = results.features;
-
-          var autoPed = 0;
-          var driveWay = 0;
-          var boatAccident = 0;
-          var collision = 0;
-          var privateProperty = 0;
-          var injuryCollision = 0;
-          var ftsra = 0;
-          var leaveScene = 0;
-          var crashService = 0;
-          var crashUrgent = 0;
-          var fleetInjury = 0;
-          var highWater = 0;
-          var icyRoadway = 0;
-          var looseLivestock = 0;
-          var trafficViolation = 0;
-          var trafficFatality = 0;
-          var trafficHazard = 0;
-          var trafficImpediment = 0;
-          var trafficDebris = 0;
-          var vehicleFire = 0;
-          var stallVehicle = 0;
-
-          var crash = 0;
-          var hazard = 0;
-          var advisory = 0;
-
-
-            /*console.log(results.features);*/
-
-            /*for (var i = 0; i < results.features.length; i++) {
-            var issueArray = resultsInfo[i].attributes.issueReported;
-            console.log(issueArray);
-          }*/
-          /*var counts = {};
-            for (var j = 0; j < issueArray.length; j++) {
-            counts[issueArray[j]] = 1 + (counts[issueArray[j]] || 0);
-            console.log(counts);
-          }*/
-
-
-
 
           dom.byId("bufferResults").innerHTML = resultsReturned;
 
@@ -1210,38 +1326,7 @@ require([
 
     });
 
-    /**************************************************
-     * Create doughnut chart with Chart.js library
-     **************************************************/
 
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-    });
 
 
   });
