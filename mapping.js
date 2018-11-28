@@ -572,27 +572,36 @@ function setDevice() {
      * Define the renderers for symbolizing incidents
      **************************************************/
 
-    function generateClassRenderer() {
-      classRenderer = {
-        type: "unique-value",
-        field: "issueReported", // autocasts as new SimpleRenderer()
-        uniqueValueInfos: []
-      };
-      for (i = 0; i < incidentClasses.length; i++) {
-        for (j = 0; j < incidentClasses[i].issueReported.length; j++) {
-          classRenderer.uniqueValueInfos.push({
-            value: incidentClasses[i].issueReported[j],
-            symbol: {
-              type: "simple-marker",
-              size: 13,
-              color: incidentClasses[i].color
-            },
-            label: incidentClasses[i].class
-          });
-        };
-      };
+    var classRenderer = {
+      type: "unique-value",
+      valueExpression: 'var incidentClasses =' + JSON.stringify(incidentClasses)
+                      + ';var i = 0, j = 0;for (i in incidentClasses) {for (j in incidentClasses[i].issueReported) {if (incidentClasses[i].issueReported[j] == $feature.issueReported) {return incidentClasses[i].class;};};};',
+      uniqueValueInfos: [{
+          value: "Crash",
+          symbol: {
+            type: "simple-marker",
+            size: 13,
+            color: "red"
+          }
+        },
+        {
+          value: "Hazard",
+          symbol: {
+            type: "simple-marker",
+            size: 13,
+            color: "yellow"
+          }
+        },
+        {
+          value: "Advisory",
+          symbol: {
+            type: "simple-marker",
+            size: 13,
+            color: "blue"
+          }
+        }
+      ]
     };
-    generateClassRenderer(); //for testing
 
     trafficRenderer = {
       type: "unique-value",
