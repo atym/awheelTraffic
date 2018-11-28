@@ -571,18 +571,27 @@ function setDevice() {
     /**************************************************
      * Define the renderer for symbolizing incidents
      **************************************************/
-    function generateClassRenderer(){
-        classRenderer= {
-          type: "unique-value",
-          field: "issueReported"
-        };
+    function generateClassRenderer() {
+      classRenderer = {
+        type: "unique-value",
+        field: "issueReported", // autocasts as new SimpleRenderer()
+        uniqueValueInfos: []
+      };
         for(i = 0; i < incidentClasses.length; i++){
-          for(j = 0; j < incidentClasses[i].class.length; j++){
-            console.log(incidentClasses[i].class);
-          }
-        }
+          for(j = 0; j < incidentClasses[i].issueReported.length; j++){
+            classRenderer.uniqueValueInfos.push({
+              value: incidentClasses[i].issueReported[j],
+              symbol:{
+                type: "simple-marker",
+                size: 13,
+                color: incidentClasses[i].color
+              },
+              label: incidentClasses[i].class
+          });
+        };
+      };
     };
- generateClassRenderer();
+    generateClassRenderer();
     trafficRenderer = {
       type: "unique-value",
       field: "status", // autocasts as new SimpleRenderer()
@@ -817,7 +826,7 @@ function setDevice() {
       } else if (fromSearch) {
         trafficFLayer.renderer = generateUniqueRenderer();
       } else {
-        trafficFLayer.renderer = trafficRenderer;
+        trafficFLayer.renderer = classRenderer;
         trafficFLayer.opacity = 1;
       };
 
@@ -1017,7 +1026,7 @@ function setDevice() {
       } else if (fromSearch) {
         trafficFLayer.renderer = uniqueValueRenderer;
       } else {
-        trafficFLayer.renderer = trafficRenderer;
+        trafficFLayer.renderer = classRenderer;
         trafficFLayer.opacity = 1;
       };
     });
