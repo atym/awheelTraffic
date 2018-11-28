@@ -462,7 +462,7 @@ require([
             graphic.symbol = {
               type: "simple-marker",
               //style: "diamond",
-              size: 10,
+              size: symbolSize(),
               color: "yellow"
             };
 
@@ -481,12 +481,12 @@ require([
         .catch(function(error) {
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
-		
+
 		  //Hide activity spinner once results have been displayed
 		  resultsLayer.when(function(){
-			dom.byId("activitySpinner").style.display = "none";  
+			dom.byId("activitySpinner").style.display = "none";
 		  });
-		  
+
 
     });
 
@@ -496,7 +496,7 @@ require([
       map.remove(trafficFLayer);
       map.remove(resultsLayer);
       dom.byId("bufferResults").innerHTML = "";
-	  
+
 	  // Show activity spinner when processing starts
 	  dom.byId("activitySpinner").style.display = "block";
     });
