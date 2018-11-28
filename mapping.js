@@ -49,12 +49,11 @@ require([
      **************************************************/
 
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer,
-      trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle,
-      cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads,
-      vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn,
-      scaleBar, locateWidget, currentTraffic, uniqueValueRenderer;
-    var renderHeatStatus = false,
-      fromSearch = false;
+    trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle,
+    cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads,
+    vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn,
+    scaleBar, locateWidget, currentTraffic, uniqueValueRenderer, classRenderer;
+	  var renderHeatStatus = false, fromSearch = false;
     var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
     var resultsLayer;
 
@@ -65,7 +64,7 @@ require([
 
     var incidentClasses = [{
         class: "Crash",
-        types: [
+        issueReported: [
           "AUTO/ PED",
           "BOAT ACCIDENT",
           "COLLISION",
@@ -81,7 +80,7 @@ require([
       },
       {
         class: "Hazard",
-        types: [
+        issueReported: [
           "Traffic Hazard",
           "Traffic Impediment",
           "TRFC HAZD/ DEBRIS",
@@ -91,7 +90,7 @@ require([
       },
       {
         class: "Advisory",
-        types: [
+        issueReported: [
           "BLOCKED DRIV/ HWY",
           "LOOSE LIVESTOCK",
           "N / HZRD TRFC VIOL",
@@ -581,8 +580,39 @@ require([
     }
 
     /**************************************************
-     * Define the renderer for symbolizing incidents
+     * Define the renderers for symbolizing incidents
      **************************************************/
+
+    classRenderer = {
+      type: "unique-value",
+      valueExpression: 'var incidentClasses =' + JSON.stringify(incidentClasses)
+                      + ';var i = 0, j = 0;for (i in incidentClasses) {for (j in incidentClasses[i].issueReported) {if (incidentClasses[i].issueReported[j] == $feature.issueReported) {return incidentClasses[i].class;};};};',
+      uniqueValueInfos: [{
+          value: "Crash",
+          symbol: {
+            type: "simple-marker",
+            size: 13,
+            color: "red"
+          }
+        },
+        {
+          value: "Hazard",
+          symbol: {
+            type: "simple-marker",
+            size: 13,
+            color: "yellow"
+          }
+        },
+        {
+          value: "Advisory",
+          symbol: {
+            type: "simple-marker",
+            size: 13,
+            color: "blue"
+          }
+        }
+      ]
+    };
 
     trafficRenderer = {
       type: "unique-value",
@@ -817,7 +847,7 @@ require([
       } else if (fromSearch) {
         trafficFLayer.renderer = generateUniqueRenderer();
       } else {
-        trafficFLayer.renderer = trafficRenderer;
+        trafficFLayer.renderer = classRenderer;
         trafficFLayer.opacity = 1;
       };
 
@@ -1046,7 +1076,7 @@ require([
       } else if (fromSearch) {
         trafficFLayer.renderer = uniqueValueRenderer;
       } else {
-        trafficFLayer.renderer = trafficRenderer;
+        trafficFLayer.renderer = classRenderer;
         trafficFLayer.opacity = 1;
       };
     });
