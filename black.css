@@ -27,6 +27,20 @@ body:not(.hide-overlay) {
   overflow: hidden;
 }
 
+#activitySpinner {
+  display: none;
+  font-size: 7em;
+  color: green;
+  position: absolute;
+  z-index: 99999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+
+}
+
 #mainLogo {
   z-index: 1;
   position: absolute;

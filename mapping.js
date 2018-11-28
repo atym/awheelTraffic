@@ -317,6 +317,8 @@ require([
       view: view
     });
 
+
+
     /******************************************************
      * Create circle around search result once complete
      * Author:  JB
@@ -331,8 +333,8 @@ require([
 
       var bufferRadius = dom.byId("bufferRadius").value;
 	  var zoomLevel;
-	  
-	  // Base custom zoom level on bufferRadius parameter 
+
+	  // Base custom zoom level on bufferRadius parameter
 	  switch (bufferRadius) {
 		case "1":
 			zoomLevel = 13;
@@ -343,15 +345,15 @@ require([
         default:
 			zoomLevel = 12;
       }
-	  
+
 	  // Set new custom zoom level and zoom to it
 	  var newTarget = {
 			  geometry: resultGeometry,
 			  zoom: zoomLevel
 	  };
-	  
+
 	  view.goTo(newTarget);
-	  
+
       // Create geometry around the result point with a predefined radius
       var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, bufferRadius, "miles");
 
@@ -397,11 +399,58 @@ require([
           return trafficFLayer.queryFeatures(query);
 
         })
+
+
         // Create graphics from spatial query result
         .then(function(results) {
 
           //console.log("Features: "+results.features);
           var resultsReturned = Object.keys(results.features).length;
+
+          populateChart(results);
+          /*var resultsInfo = results.features;
+
+          var autoPed = 0;
+          var driveWay = 0;
+          var boatAccident = 0;
+          var collision = 0;
+          var privateProperty = 0;
+          var injuryCollision = 0;
+          var ftsra = 0;
+          var leaveScene = 0;
+          var crashService = 0;
+          var crashUrgent = 0;
+          var fleetInjury = 0;
+          var highWater = 0;
+          var icyRoadway = 0;
+          var looseLivestock = 0;
+          var trafficViolation = 0;
+          var trafficFatality = 0;
+          var trafficHazard = 0;
+          var trafficImpediment = 0;
+          var trafficDebris = 0;
+          var vehicleFire = 0;
+          var stallVehicle = 0;
+
+          var crash = 0;
+          var hazard = 0;
+          var advisory = 0;
+
+
+            /*console.log(results.features);*/
+
+            /*for (var i = 0; i < results.features.length; i++) {
+            var issueArray = resultsInfo[i].attributes.issueReported;
+            console.log(issueArray);
+          }*/
+          /*var counts = {};
+            for (var j = 0; j < issueArray.length; j++) {
+            counts[issueArray[j]] = 1 + (counts[issueArray[j]] || 0);
+            console.log(counts);
+          }*/
+
+
+
 
           dom.byId("bufferResults").innerHTML = resultsReturned;
 
@@ -419,8 +468,9 @@ require([
           resultsLayer.addMany(features);
 
           map.add(resultsLayer);
-		  
+
           return resultsLayer;
+
         })
         .then(createLegend)
         //Catch any of the errors that were created from the previous callback functions
@@ -445,7 +495,7 @@ require([
       map.remove(resultsLayer);
       dom.byId("bufferResults").innerHTML = "";
     });
-	
+
 	locateWidget.on("search-complete", function(event){
 		console.log("Zoom level: "+view.zoom);
 	});
@@ -823,21 +873,21 @@ require([
 
       try {
         map.add(trafficFLayer);
-	
+
       } catch (error) {
         return
       };
-	  
+
 	  // Reset the mapview and extent according to trafficFLayer data JB
 	  trafficFLayer.when(function(){
-		  
+
 		view.goTo({
 			target: view.center,
 			extent: trafficFLayer.extent,
 			zoom: 10
 		});
 	  });
-	  
+
       return trafficFLayer;
     }
 
