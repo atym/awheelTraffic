@@ -32,7 +32,8 @@ require([
     "esri/core/promiseUtils",
     "esri/geometry/geometryEngine",
     "esri/Graphic",
-    "esri/layers/GraphicsLayer"],
+    "esri/layers/GraphicsLayer"
+  ],
 
   /**************************************************
    * Create magic mapping function
@@ -54,12 +55,13 @@ require([
     scaleBar, locateWidget, currentTraffic, uniqueValueRenderer, classRenderer;
 	  var renderHeatStatus = false, fromSearch = false;
     var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
-	  var resultsLayer;
+    var resultsLayer;
 
     /***************************************
-    * Object with predefined incident classes
-    * will need to update if data changes
-    ****************************************/
+     * Object with predefined incident classes
+     * will need to update if data changes
+     ****************************************/
+
     var incidentClasses = [{
         class: "Crash",
         issueReported: [
@@ -98,23 +100,28 @@ require([
       }
     ];
 
-function setDevice() {
+    /**************************************************
+     * Check width of device display and assign value
+     *  to variable based on device type
+     **************************************************/
 
-    w = window,
-    d = document,
-    e = d.documentElement,
-    g = d.getElementsByTagName('body')[0],
-    x = w.innerWidth || e.clientWidth || g.clientWidth,
-    y = w.innerHeight || e.clientHeight || g.clientHeight;
+    function setDevice() {
 
-     if (x <= 450) {
-       var deviceType = "mobile";
-     } else {
-       deviceType = "other";
-     }
+        w = window,
+        d = document,
+        e = d.documentElement,
+        g = d.getElementsByTagName('body')[0],
+        x = w.innerWidth || e.clientWidth || g.clientWidth,
+        y = w.innerHeight || e.clientHeight || g.clientHeight;
 
-     console.log(deviceType);
-}
+      if (x <= 450) {
+        var deviceType = "mobile";
+      } else {
+        deviceType = "other";
+      }
+
+      console.log(deviceType);
+    }
     /**************************************************
      * Create variables for vector layers
      * Combine layers into new basemap
@@ -176,10 +183,9 @@ function setDevice() {
       visible: false
     });
 
-    // *******************************************************
-    // Custom tile layer class code
-    // Create a subclass of BaseTileLayer
-    // *******************************************************
+    /**************************************************
+     * Create layer for traffic data
+     **************************************************/
 
     var TileLayer = BaseTileLayer.createSubclass({
       properties: {
@@ -218,8 +224,6 @@ function setDevice() {
             canvas.width = width;
             canvas.height = height;
 
-
-
             // Draw the blended image onto the canvas.
             context.drawImage(image, 0, 0, width, height);
 
@@ -228,12 +232,12 @@ function setDevice() {
       }
     });
 
-    // *******************************************************
-    // Start of JavaScript application
-    // *******************************************************
+    /**************************************************
+     * Create custom tile layer for live traffic conditions
+     * Refreshes request with z,x,y for current view
+     * Requires 2 IDs for request in URL
+     **************************************************/
 
-
-    // Create a new instance of the TintLayer and set its properties
     var lightTrafficTiles = new TileLayer({
       urlTemplate: "https://1.traffic.maps.api.here.com/maptile/2.1/flowtile/newest/normal.day/[z]/[x]/[y]/256/png8?app_id=1ig2foSCCXslmH8Zh58J&app_code=tjpaSyhSoPkLD-eokE66VQ",
       visible: false,
@@ -289,6 +293,10 @@ function setDevice() {
       container: document.createElement("expandWidget")
     });
 
+    /**************************************************
+     * Create more widgets
+     **************************************************/
+
     var btExpand = new Expand({
       expandIconClass: "esri-icon-collection",
       view: view,
@@ -308,131 +316,137 @@ function setDevice() {
       view: view
     });
 
-	/******************************************************
-	* Create circle around search result once complete
-	* Author:  JB
-	* Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
-	******************************************************/
-	locateWidget.on("select-result", function(event){
+    /******************************************************
+     * Create circle around search result once complete
+     * Author:  JB
+     * Helpful example:  https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query
+     ******************************************************/
 
-		var resultGeometry = event.result.feature.geometry;
+    locateWidget.on("select-result", function(event) {
 
-		resultsLayer = new GraphicsLayer();
+      var resultGeometry = event.result.feature.geometry;
 
-		var bufferRadius = dom.byId("bufferRadius").value;
+      resultsLayer = new GraphicsLayer();
 
-		// Create geometry around the result point with a predefined radius
-		var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, bufferRadius, "miles");
+      var bufferRadius = dom.byId("bufferRadius").value;
+	  var zoomLevel;
+	  
+	  // Base custom zoom level on bufferRadius parameter 
+	  switch (bufferRadius) {
+		case "1":
+			zoomLevel = 13;
+            break;
+        case "4":
+			zoomLevel = 11;
+            break;
+        default:
+			zoomLevel = 12;
+      }
+	  
+	  // Set new custom zoom level and zoom to it
+	  var newTarget = {
+			  geometry: resultGeometry,
+			  zoom: zoomLevel
+	  };
+	  
+	  view.goTo(newTarget);
+	  
+      // Create geometry around the result point with a predefined radius
+      var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, bufferRadius, "miles");
 
-		bufferGraphic = new Graphic ({
-			geometry: pointBuffer,
-			symbol: {
-				type: "simple-fill",
-				color: [140, 140, 222, 0.3],
-				outline: {
-					color: [0, 0, 0, 0.5],
-					width: 2
-				}
-			}
-		});
+      bufferGraphic = new Graphic({
+        geometry: pointBuffer,
+        symbol: {
+          type: "simple-fill",
+          color: [140, 140, 222, 0.3],
+          outline: {
+            color: [0, 0, 0, 0.5],
+            width: 2
+          }
+        }
+      });
 
-		// Add the buffer to the view
-		view.graphics.add(bufferGraphic);
+      // Add the buffer to the view
+      view.graphics.add(bufferGraphic);
 
-		// Limiting results since encountering some memory source errors with large result set
-		searchURL="https://data.austintexas.gov/resource/r3af-2r8x.json" +
+      // Limiting results since encountering some memory source errors with large result set
+      searchURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
         "?$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=40000"
 
-		getData(searchURL)
+      getData(searchURL)
         .then(createGraphics)
-		// Create layer from graphics without adding to map
-        .then(function(graphics){
-			trafficFLayer = new FeatureLayer({
-			source: graphics, // autocast as an array of esri/Graphic
-			fields: fields,
-			objectIdField: "ObjectID",
-			popupTemplate: pTemplate,
-			title: "trafficIncidents"
-			});
+        // Create layer from graphics without adding to map
+        .then(function(graphics) {
+          trafficFLayer = new FeatureLayer({
+            source: graphics, // autocast as an array of esri/Graphic
+            fields: fields,
+            objectIdField: "ObjectID",
+            popupTemplate: pTemplate,
+            title: "trafficIncidents"
+          });
 
-			return trafficFLayer;
-		})
-		// Query feature traffic feature layer for incidents within the buffer
-		.then(function(){
-			var query = trafficFLayer.createQuery();
-			query.geometry = pointBuffer;
-			query.spatialRelationship = "intersects";
+          return trafficFLayer;
+        })
+        // Query feature traffic feature layer for incidents within the buffer
+        .then(function() {
+          var query = trafficFLayer.createQuery();
+          query.geometry = pointBuffer;
+          query.spatialRelationship = "intersects";
 
-			return trafficFLayer.queryFeatures(query);
+          return trafficFLayer.queryFeatures(query);
 
-		})
-		// Create graphics from spatial query result
-		.then(function(results){
+        })
+        // Create graphics from spatial query result
+        .then(function(results) {
 
-			//console.log("Features: "+results.features);
-			var resultsReturned = Object.keys(results.features).length;
+          //console.log("Features: "+results.features);
+          var resultsReturned = Object.keys(results.features).length;
 
-			dom.byId("bufferResults").innerHTML = resultsReturned;
+          dom.byId("bufferResults").innerHTML = resultsReturned;
 
-			var features = results.features.map(function (graphic){
-				graphic.symbol = {
-					type: "simple-marker",
-					//style: "diamond",
-					size: 10,
-					color: "yellow"
-				};
+          var features = results.features.map(function(graphic) {
+            graphic.symbol = {
+              type: "simple-marker",
+              //style: "diamond",
+              size: 10,
+              color: "yellow"
+            };
 
-				return graphic;
-			});
+            return graphic;
+          });
 
-			resultsLayer.addMany(features);
+          resultsLayer.addMany(features);
 
-			map.add(resultsLayer);
-
-			// After the results layer has finished loading adjust the zoom according to the bufferRadius
-			resultsLayer.when(function() {
-
-				switch(bufferRadius){
-					case "1":
-						console.log("CASE 1");
-						view.zoom = 13;
-						break;
-					case "2":
-						view.zoom = 12;
-						break;
-					case "3":
-						view.zoom = 12;
-						break;
-					case "4":
-						view.zoom = 11;
-						break;
-					default:
-						view.zoom = 12;
-				}
-			});
-
-			return resultsLayer;
-		})
+          map.add(resultsLayer);
+		  
+          return resultsLayer;
+        })
         .then(createLegend)
         //Catch any of the errors that were created from the previous callback functions
         .catch(function(error) {
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
 
-	});
+    });
 
-	// Reset map when a new search starts
-	locateWidget.on("search-start", function(event){
-		view.graphics.removeAll();
-		map.removeAll();
-		dom.byId("bufferResults").innerHTML = "";
-	});
+    // Reset map when a new search starts
+    locateWidget.on("search-start", function(event) {
+      view.graphics.removeAll();
+      map.remove(trafficFLayer);
+      map.remove(resultsLayer);
+      dom.byId("bufferResults").innerHTML = "";
+    });
 
-	// Remove the buffer if the search is cleared
-	locateWidget.on("search-clear", function(event){
-		view.graphics.removeAll();
-		map.removeAll();
-		dom.byId("bufferResults").innerHTML = "";
+    // Remove the buffer if the search is cleared
+    locateWidget.on("search-clear", function(event) {
+      view.graphics.removeAll();
+      map.remove(trafficFLayer);
+      map.remove(resultsLayer);
+      dom.byId("bufferResults").innerHTML = "";
+    });
+	
+	locateWidget.on("search-complete", function(event){
+		console.log("Zoom level: "+view.zoom);
 	});
 
     /**************************************************
@@ -659,15 +673,14 @@ function setDevice() {
       return esriRequest(jsonURL, {
         responseType: "json"
       });
-
-
     };
 
     /*********************************************************
      *  Add query parameters to JSON request and redisplay map
-     *
+     *  Search tab in toolBox
      *  Function author:  JB
      *********************************************************/
+
     function runSearch() {
 
       //Get current date
@@ -758,9 +771,9 @@ function setDevice() {
       //Remove the previous trafficFLayer before attempting to display the query results
       map.remove(trafficFLayer);
 
-	    // Remove any locate results that still exist
-	    view.graphics.removeAll();
-	    locateWidget.destroy();
+      // Remove any locate results that still exist
+      view.graphics.removeAll();
+      locateWidget.clear();
 
       fromSearch = true;
 
@@ -783,7 +796,7 @@ function setDevice() {
       var json = response.data;
       recordsReturned = Object.keys(json).length;
 
-	  // Display the amount of results returned
+      // Display the amount of results returned
       dom.byId("numRecords").innerHTML = recordsReturned;
 
       // Create an array of Graphics from each JSON feature
@@ -840,13 +853,27 @@ function setDevice() {
 
       try {
         map.add(trafficFLayer);
+	
       } catch (error) {
         return
       };
-
-	  view.extent = trafficFLayer.fullExtent; // **** Not working for some reason JB *****
+	  
+	  // Reset the mapview and extent according to trafficFLayer data JB
+	  trafficFLayer.when(function(){
+		  
+		view.goTo({
+			target: view.center,
+			extent: trafficFLayer.extent,
+			zoom: 10
+		});
+	  });
+	  
       return trafficFLayer;
     }
+
+    /**************************************************
+     * Create legend in legend div of toolBox
+     **************************************************/
 
     function createLegend(layer) {
       // if the legend already exists, then update it with the new layer
@@ -866,11 +893,13 @@ function setDevice() {
       }
     }
 
-    /**********************************************************************
-     * Dynamically populate Search tab with form elements for incident types
+    /*******************************************
+     * Dynamically populate Search tab
+     * with form elements for incident types
      *
      * Function author:  JB
-     **********************************************************************/
+     *******************************************/
+
     function populateSearch() {
 
       var html = "";
@@ -899,6 +928,7 @@ function setDevice() {
      * Generate unique values renderer based on user
      * selected incident types
      ***************************************************/
+
     function generateUniqueRenderer() {
       uniqueValueRenderer = {
         type: "unique-value",
@@ -926,14 +956,6 @@ function setDevice() {
       return (uniqueValueRenderer);
     };
 
-    /**************************************************
-     * Create custom tile layer for live traffic conditions
-     * Refreshes request with z,x,y for current view
-     * Requires 2 IDs for request in URL
-     **************************************************/
-
-
-
     scaleBar = new ScaleBar({
       view: view,
       unit: "dual"
@@ -946,6 +968,10 @@ function setDevice() {
      * the layer is still part of the map, which means you can access
      * its properties and perform analysis even though it isn't visible.
      *******************************************************************/
+
+    /**************************************************
+     * Define variables for toggles
+     **************************************************/
     var roadTrafficStyle = "";
     var trafficVisible = false;
 
@@ -961,7 +987,10 @@ function setDevice() {
     heatRenderToggle.checked = false;
     scaleBarToggle.checked = false;
 
-
+    /**************************************************
+     * Check local storage to determine user
+     *  preference for light/dark mode
+     **************************************************/
 
     if (localStorage.getItem("mode") == "dark") {
       darkRoads.visible = true;
@@ -969,6 +998,13 @@ function setDevice() {
       roadTrafficStyle = "dark";
       currentTrafficToggle.checked = false;
     }
+
+    /**************************************************
+     * Function to run when dark mode toggle checked
+     * This function styles map layers
+     * 1 of 2
+     * Other darkmode function is animate.js for CSS
+     **************************************************/
 
     darkModeToggle.addEventListener("change", function() {
       if (darkModeToggle.checked && trafficVisible == false) {
@@ -998,7 +1034,9 @@ function setDevice() {
       }
     });
 
-
+    /**************************************************
+     * Toggle to show/hide city limits layer
+     **************************************************/
 
     cityLimitsLayerToggle.addEventListener("change", function() {
       limits.visible = cityLimitsLayerToggle.checked;
@@ -1025,6 +1063,10 @@ function setDevice() {
         roadTrafficStyle = "light";
       }
     });
+
+    /**************************************************
+     * Heatmap generator for radio buttons
+     **************************************************/
 
     heatRenderToggle.addEventListener("change", function() {
       renderHeatStatus = searchToggleHeatmap.checked;
@@ -1069,6 +1111,7 @@ function setDevice() {
      *
      * Author:  JB
      ********************************************************/
+
     function limitSelection() {
 
       var last_valid_selection = null;
@@ -1093,6 +1136,7 @@ function setDevice() {
      * createGraphics() method when graphics are created,
      * create the layer
      **************************************************/
+
     view.when(function() {
 
       getData(trafficRequestURL)
@@ -1100,15 +1144,48 @@ function setDevice() {
         .then(createLayer)
         .then(createLegend);
 
-     // Populate the select list with all of the possible incident types JB
-     populateSearch();
+      // Populate the select list with all of the possible incident types JB
+      populateSearch();
 
-	  // Run the search once the submit button has been clicked JB
-	  on(dom.byId("submitButton"), "click", runSearch);
+      // Run the search once the submit button has been clicked JB
+      on(dom.byId("submitButton"), "click", runSearch);
 
-	  // Limit selected incidents to 5 or fewer when options are clicked and selected
-	  on(dom.byId("incidentTypes"), "click", limitSelection);
+      // Limit selected incidents to 5 or fewer when options are clicked and selected
+      on(dom.byId("incidentTypes"), "click", limitSelection);
 
+    });
+
+    /**************************************************
+     * Create doughnut chart with Chart.js library
+     **************************************************/
+
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
     });
 
 

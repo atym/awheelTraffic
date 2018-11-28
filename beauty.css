@@ -488,6 +488,11 @@ body:not(.hide-overlay) {
   color: #262626;
 }
 
+#lightFooter span {
+  float: right;
+  margin-right: 0.4em;
+}
+
 #darkFooter {
   display: none;
 }
@@ -506,7 +511,7 @@ body:not(.hide-overlay) {
   position: absolute;
   right: 0;
   bottom: 0;
-  margin-bottom: 10em !important;
+  margin-bottom: 10.5em !important;
   margin-right: 0em !important;
 }
 
@@ -514,7 +519,7 @@ body:not(.hide-overlay) {
   position: absolute;
   right: 0;
   bottom: 0;
-  margin-bottom: 13em !important;
+  margin-bottom: 13.5em !important;
   margin-right: 0em !important;
 }
 
@@ -530,7 +535,12 @@ body:not(.hide-overlay) {
   position: absolute;
   right: 0;
   bottom: 0;
-  margin-bottom: 5.3em !important;
+  margin-bottom: 6.3em !important;
+  margin-right: 0em !important;
+}
+
+.esri-zoom {
+  margin-bottom: 1em !important;
   margin-right: 0em !important;
 }
 
