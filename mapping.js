@@ -569,7 +569,7 @@ function setDevice() {
      * Define the renderers for symbolizing incidents
      **************************************************/
 
-    var classRenderer = {
+    classRenderer = {
       type: "unique-value",
       valueExpression: 'var incidentClasses =' + JSON.stringify(incidentClasses)
                       + ';var i = 0, j = 0;for (i in incidentClasses) {for (j in incidentClasses[i].issueReported) {if (incidentClasses[i].issueReported[j] == $feature.issueReported) {return incidentClasses[i].class;};};};',
