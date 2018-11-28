@@ -74,8 +74,7 @@ require([
           "Crash Urgent",
           "FLEET ACC/ INJURY",
           "TRAFFIC FATALITY"
-        ],
-        color: "red"
+        ]
       },
       {
         class: "Hazard",
@@ -85,8 +84,7 @@ require([
           "TRFC HAZD/ DEBRIS",
           "HIGH WATER",
           "ICY ROADWAY"
-        ],
-        color: "yellow"
+        ]
       },
       {
         class: "Advisory",
@@ -96,8 +94,7 @@ require([
           "N / HZRD TRFC VIOL",
           "VEHICLE FIRE",
           "zSTALLED VEHICLE"
-        ],
-        color: "blue"
+        ]
       }
     ];
 
