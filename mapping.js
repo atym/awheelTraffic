@@ -871,6 +871,9 @@ require([
      *********************************************************/
 
     function runSearch() {
+		
+	  // Show activity spinner when processing starts
+	  dom.byId("activitySpinner").style.display = "block";
 
       //Get current date
       var now = new Date();
@@ -974,6 +977,9 @@ require([
         .catch(function(error) {
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
+		
+	  // Hide activity spinner when processing is finished
+	  dom.byId("activitySpinner").style.display = "none";
 
     }
     /**************************************************
