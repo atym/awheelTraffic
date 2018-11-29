@@ -872,9 +872,6 @@ require([
 
     function runSearch() {
 		
-	  // Show activity spinner when processing starts
-	  dom.byId("activitySpinner").style.display = "block";
-
       //Get current date
       var now = new Date();
 
@@ -888,6 +885,7 @@ require([
 
       // Make sure a number has been entered for days to search by
       if (days > 0 == false) {
+
         alert("You must enter a number for the days to search by.");
 
         return;
@@ -909,6 +907,9 @@ require([
 
         return;
       }
+	  
+	  // Show activity spinner when processing starts and after validation of input
+	  dom.byId("activitySpinner").style.display = "block";
 
       // Add all selected elements to the incidentTypes array
       for (var i = 0; i < options.length; i++) {
