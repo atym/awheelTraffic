@@ -213,6 +213,11 @@ body:not(.hide-overlay) {
   width: 28em;
 }
 
+#esriLegend {
+  margin-top: 5em;
+  box-shadow: 0px 0px 4px #272A28;
+}
+
 #legendSpinner {
   position: absolute;
   bottom: 0;
@@ -250,6 +255,41 @@ body:not(.hide-overlay) {
 
 #daysFromDate {
   width: 13em !important;
+}
+
+.esri-search {
+  position: absolute;
+  margin-left: 5em;
+  margin-top: 9.5em;
+  box-shadow: 0px 0px 4px #272A28;
+}
+
+#radiusOptions {
+  margin-top: 2em;
+}
+
+#tableIcon {
+  position: absolute;
+  font-size: 3em;
+  top: 0;
+  margin-top: 8.5em;
+  margin-left: -0.45em;
+}
+
+#tableLabel {
+  position: absolute;
+  margin-left: 7.6em;
+  margin-top: 10em;
+}
+
+#searchLabel {
+  position: absolute;
+  margin-left: -4.5em;
+  margin-top: 6em;
+}
+
+#locateResult {
+  margin-top: 8em;
 }
 
 #locateSpinner {
@@ -824,10 +864,7 @@ body:not(.hide-overlay) {
     margin-top: -12em;
   }
 
-  #esriLegend {
-    margin-top: -3em;
-    width: 12em;
-  }
+
 
   .w3-button {
     margin-top: 0;

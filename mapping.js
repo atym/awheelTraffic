@@ -325,6 +325,13 @@ require([
     var hazardChart = 0;
     var advisoryChart = 0;
 
+    /**************************************************
+     * take results from intersection of buffer and
+     *    most recent records to generate Chart
+     * loop through attribute strings and Count
+     *  each incident type occurance, aggregate by class
+     **************************************************/
+
     function populateChart(results) {
       var resultsInfo = results.features;
 
@@ -570,6 +577,7 @@ require([
           //console.log("Features: "+results.features);
           var resultsReturned = Object.keys(results.features).length;
 
+          // send spatial query result to chart function
           populateChart(results);
 
           dom.byId("bufferResults").innerHTML = resultsReturned;

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 
-<script>
+                                              <script>
   /**************************************************
  * WELCOME to the Index
  **************************************************/
@@ -12,7 +12,7 @@
  * Ian Kelly
  * Brandon Rose
  **************************************************/
-</script>
+                                              </script>
 
 <head>
 
@@ -66,10 +66,11 @@
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+  <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
   <script src="https://js.arcgis.com/4.9/"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
   <script src="mapping.js"></script>
-  <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+
 
 </head>
 
@@ -197,9 +198,10 @@
       <div id="Locate" class="w3-container title" style="display:none">
         <span onclick="closeMenu(event, 'Locate')" class="esri-icon-up" aria-label="close icon" id="locateClose"></span>
 
+        <span id="searchLabel">Enter an Address:</span>
         <div id="esriLocate"></div>
         <p id="radiusOptions">
-          <label for="bufferRadius">Buffer Radius: </label>
+          <label for="bufferRadius">Choose Circle Radius: </label>
           <select id="bufferRadius">
             <option value=1>1 mile</option>
             <option value=2>2 miles</option>
@@ -207,10 +209,13 @@
             <option value=4>4 miles</option>
           </select>
         </p>
-        <p>Results returned: <span id="bufferResults"></span></p>
+        <p id="locateResult"><span id="bufferResults"></span>
         <span id="locateSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
         <span id="locateInfo" data-tippy="Use the locate tool to search by your current location or enter an address manually to see all incidents within a 1-mile radius." class="esri-icon-description" aria-label="info icon"></span>
+        <span id="tableLabel">View Results Table:</span>
         <canvas id="myChart" width="400" height="400" aria-label="Incident Doughnut Chart" role="img"></canvas>
+
+        <span class="fa fa-table" id="tableIcon"></span>
       </div>
     </div>
   </div>
