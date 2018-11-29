@@ -54,7 +54,7 @@
   <link id="pagestyle" rel="stylesheet" type="text/css" href="beauty.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link id="darkTheme" rel="stylesheet"> <!-- empty style to be filled with dark on JS -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <script>
@@ -212,10 +212,12 @@
         <p id="locateResult"><span id="bufferResults"></span>
         <span id="locateSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
         <span id="locateInfo" data-tippy="Use the locate tool to search by your current location or enter an address manually to see all incidents within a 1-mile radius." class="esri-icon-description" aria-label="info icon"></span>
-        <span id="tableLabel">View Results Table:</span>
+        <span id="resultsLabel">View Results:</span>
         <canvas id="myChart" width="400" height="400" aria-label="Incident Doughnut Chart" role="img"></canvas>
-
+        <span id="chartLabel">Chart</span>
         <span class="fa fa-table" id="tableIcon"></span>
+        <span id="tableLabel">Table</span>
+        <span class="fa fa-pie-chart" id="chartIcon"></span>
       </div>
     </div>
   </div>
