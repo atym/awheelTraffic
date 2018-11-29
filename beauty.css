@@ -34,7 +34,7 @@ body:not(.hide-overlay) {
 #activitySpinner {
   display: none;
   font-size: 7em;
-  color: green;
+  color: #23292F;
   position: absolute;
   z-index: 99999;
   position: fixed;
