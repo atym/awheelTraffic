@@ -8,7 +8,6 @@
  * Ian Kelly
  * Brandon Rose
  **************************************************/
-
 require([
     "esri/Map",
     "esri/Basemap",
@@ -44,7 +43,7 @@ require([
     BaseTileLayer, Locate, esriRequest, dom, on, promiseUtils, geometryEngine,
     Graphic, GraphicsLayer) {
 
-    dom.byId("activitySpinner").style.display = "block";
+    document.getElementById("activitySpinner").style.display = "block";
     /**************************************************
      * VARIABLES
      **************************************************/
@@ -325,9 +324,9 @@ require([
 
     view.watch('updating', function(evt){
       if(evt === true){
-        dom.byId("activitySpinner").style.display = "block";
+        document.getElementById("activitySpinner").style.display = "block";
       }else{
-        dom.byId("activitySpinner").style.display = "none";
+        document.getElementById("activitySpinner").style.display = "none";
       }
     })
 
