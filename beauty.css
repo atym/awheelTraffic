@@ -218,6 +218,10 @@ body:not(.hide-overlay) {
   box-shadow: 0px 0px 4px #272A28;
 }
 
+.esri-legend__layer-cell.esri-legend__layer-cell--info {
+    text-align: left;
+}
+
 #legendSpinner {
   position: absolute;
   bottom: 0;

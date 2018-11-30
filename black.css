@@ -194,6 +194,10 @@ body:not(.hide-overlay) {
   padding: 0.7em;
 }
 
+.esri-legend__layer-cell.esri-legend__layer-cell--info {
+    text-align: left;
+}
+
 #legendInfo:hover {
   background-color: #151E1C;
 }

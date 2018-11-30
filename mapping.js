@@ -49,18 +49,18 @@ require([
      **************************************************/
 
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer,
-    trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle,
-    cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads,
-    vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn,
-    scaleBar, locateWidget, currentTraffic, uniqueValueRenderer, classRenderer;
-	  var renderHeatStatus = false, fromSearch = false;
+      trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle,
+      cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads,
+      vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn,
+      scaleBar, locateWidget, currentTraffic, uniqueValueRenderer, classRenderer;
+    var renderHeatStatus = false,
+      fromSearch = false;
     var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
     var resultsLayer;
-    var symbolSize = function(){
-      if (getDevice() == "mobile"){
+    var symbolSize = function() {
+      if (getDevice() == "mobile") {
         return 18;
-      }
-      else{
+      } else {
         return 13;
       }
     }
@@ -106,27 +106,60 @@ require([
         ]
       }
     ];
-
     /**************************************************
-     * Check width of device display and assign value
-     *  to variable based on device type
+     * Load initial batch of traffic data from COA
+     * JSON data over Socrata API
      **************************************************/
 
-    function getDevice() {
+    trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
+      "?$where=traffic_report_status='ACTIVE'" +
+      "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
+      "&$limit=3000";
 
-        w = window,
-        d = document,
-        e = d.documentElement,
-        g = d.getElementsByTagName('body')[0],
-        x = w.innerWidth || e.clientWidth || g.clientWidth,
-        y = w.innerHeight || e.clientHeight || g.clientHeight;
+    /**************************************************
+     * Define the specification for each field to create
+     * in the layer
+     **************************************************/
 
-      if (x <= 450) {
-        return "mobile";
-      } else {
-        return "other";
-      }
-    }
+    fields = [{
+      name: "ObjectID",
+      alias: "ObjectID",
+      type: "oid"
+    }, {
+      name: "address",
+      alias: "address",
+      type: "string"
+    }, {
+      name: "issueReported",
+      alias: "Incident Reported",
+      type: "string"
+    }, {
+      name: "latitude",
+      alias: "latitude",
+      type: "number"
+    }, {
+      name: "longitude",
+      alias: "longitude",
+      type: "number"
+    }, {
+      name: "status",
+      alias: "status",
+      type: "string"
+    }, {
+      name: "statusDateTime",
+      alias: "statusDateTime",
+      type: "string"
+    }];
+
+    /**************************************************
+     * Define the popup for info about incidents
+     **************************************************/
+
+    pTemplate = {
+      title: "<strong>{issueReported}</strong>",
+      content: "Location: {address}<br> Date: {statusDateTime:calculateDate}<br> Time: {statusDateTime:calculateTime}"
+    };
+
     /**************************************************
      * Create variables for vector layers
      * Combine layers into new basemap
@@ -321,11 +354,15 @@ require([
       view: view
     });
 
+    scaleBar = new ScaleBar({
+      view: view,
+      unit: "dual"
+    });
 
-    view.watch('updating', function(evt){
-      if(evt === true){
+    view.watch('updating', function(evt) {
+      if (evt === true) {
         document.getElementById("activitySpinner").style.display = "block";
-      }else{
+      } else {
         document.getElementById("activitySpinner").style.display = "none";
       }
     })
@@ -366,136 +403,134 @@ require([
       var vehicleFire = 0;
       var stallVehicle = 0;
 
-        for (var i = 0; i < results.features.length; i++) {
+      for (var i = 0; i < results.features.length; i++) {
         var issuesChart = resultsInfo[i].attributes.issueReported;
-          switch (issuesChart) {
-            case "AUTO/ PED":
+        switch (issuesChart) {
+          case "AUTO/ PED":
             autoPed += 1;
             break;
 
-            case "BLOCKED DRIV/ HWY":
+          case "BLOCKED DRIV/ HWY":
             driveWay += 1;
             break;
 
-            case "BOAT ACCIDENT":
+          case "BOAT ACCIDENT":
             boatAccident += 1;
             break;
 
-            case "COLLISION":
+          case "COLLISION":
             collision += 1;
             break;
 
-            case "COLLISION/PRIVATE PROPERTY":
+          case "COLLISION/PRIVATE PROPERTY":
             privateProperty += 1;
             break;
 
-            case "COLLISION WITH INJURY":
+          case "COLLISION WITH INJURY":
             injuryCollision += 1;
             break;
 
-            case "COLLISN / FTSRA":
+          case "COLLISN / FTSRA":
             ftsra += 1;
             break;
 
-            case "COLLISN/ LVNG SCN":
+          case "COLLISN/ LVNG SCN":
             leaveScene += 1;
             break;
 
-            case "Crash Service":
+          case "Crash Service":
             crashService += 1;
             break;
 
-            case "Crash Urgent":
+          case "Crash Urgent":
             crashUrgent += 1;
             break;
 
-            case "FLEET ACC/ INJURY":
+          case "FLEET ACC/ INJURY":
             fleetInjury += 1;
             break;
 
-            case "HIGH WATER":
+          case "HIGH WATER":
             highWater += 1;
             break;
 
-            case "ICY ROADWAY":
+          case "ICY ROADWAY":
             icyRoadway += 1;
             break;
 
-            case "LOOSE LIVESTOCK":
+          case "LOOSE LIVESTOCK":
             looseLivestock += 1;
             break;
 
-            case "N / HZRD TRFC VIOL":
+          case "N / HZRD TRFC VIOL":
             trafficViolation += 1;
             break;
 
-            case "TRAFFIC FATALITY":
+          case "TRAFFIC FATALITY":
             trafficFatality += 1;
             break;
 
-            case "Traffic Hazard":
+          case "Traffic Hazard":
             trafficHazard += 1;
             break;
 
-            case "Traffic Impediment":
+          case "Traffic Impediment":
             trafficImpediment += 1;
             break;
 
-            case "TRFC HAZD/ DEBRIS":
+          case "TRFC HAZD/ DEBRIS":
             trafficDebris += 1;
             break;
 
-            case "VEHICLE FIRE":
+          case "VEHICLE FIRE":
             vehicleFire += 1;
             break;
 
-            case "zSTALLED VEHICLE":
+          case "zSTALLED VEHICLE":
             stallVehicle += 1;
             break;
 
-          }
+        }
       }
 
-     crashChart = autoPed + boatAccident + collision + privateProperty + injuryCollision + ftsra + leaveScene + crashService + crashUrgent + fleetInjury + trafficFatality
+      crashChart = autoPed + boatAccident + collision + privateProperty + injuryCollision + ftsra + leaveScene + crashService + crashUrgent + fleetInjury + trafficFatality
 
-     hazardChart = trafficHazard + trafficImpediment + trafficDebris + highWater + icyRoadway
+      hazardChart = trafficHazard + trafficImpediment + trafficDebris + highWater + icyRoadway
 
-     advisoryChart = driveWay + looseLivestock + trafficViolation + vehicleFire + stallVehicle
+      advisoryChart = driveWay + looseLivestock + trafficViolation + vehicleFire + stallVehicle
 
-     console.log(crashChart);
-     console.log(hazardChart);
-     console.log(advisoryChart);
+      console.log(crashChart);
+      console.log(hazardChart);
+      console.log(advisoryChart);
 
-     /**************************************************
-      * Create doughnut chart with Chart.js library
-      **************************************************/
+      /**************************************************
+       * Create doughnut chart with Chart.js library
+       **************************************************/
 
-     var ctx = document.getElementById("myChart");
-     var myChart = new Chart(ctx, {
-       type: 'doughnut',
-       data: {
-         labels: ["Crash", "Advisory", "Hazard"],
-         datasets: [{
-           label: 'Incident Class',
-           data: [crashChart, advisoryChart, hazardChart],
-           backgroundColor: [
-             'rgba(255, 99, 132, 0.5)',
-             'rgba(54, 162, 235, 0.5)',
-             'rgba(255, 206, 86, 0.5)'
-           ],
-           borderColor: [
-             'rgba(255,99,132,1)',
-             'rgba(54, 162, 235, 1)',
-             'rgba(255, 206, 86, 1)'
-           ],
-           borderWidth: 2
-         }]
-       },
-     });
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ["Crash", "Advisory", "Hazard"],
+          datasets: [{
+            label: 'Incident Class',
+            data: [crashChart, advisoryChart, hazardChart],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(255, 206, 86, 0.5)'
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 2
+          }]
+        },
+      });
 
-        }
-
-
+    }
 
 
     /******************************************************
@@ -511,27 +546,27 @@ require([
       resultsLayer = new GraphicsLayer();
 
       var bufferRadius = dom.byId("bufferRadius").value;
-	  var zoomLevel;
+      var zoomLevel;
 
-	  // Base custom zoom level on bufferRadius parameter
-	  switch (bufferRadius) {
-		case "1":
-			zoomLevel = 13;
-            break;
+      // Base custom zoom level on bufferRadius parameter
+      switch (bufferRadius) {
+        case "1":
+          zoomLevel = 13;
+          break;
         case "4":
-			zoomLevel = 11;
-            break;
+          zoomLevel = 11;
+          break;
         default:
-			zoomLevel = 12;
+          zoomLevel = 12;
       }
 
-	  // Set new custom zoom level and zoom to it
-	  var newTarget = {
-			  geometry: resultGeometry,
-			  zoom: zoomLevel
-	  };
+      // Set new custom zoom level and zoom to it
+      var newTarget = {
+        geometry: resultGeometry,
+        zoom: zoomLevel
+      };
 
-	  view.goTo(newTarget);
+      view.goTo(newTarget);
 
       // Create geometry around the result point with a predefined radius
       var pointBuffer = geometryEngine.geodesicBuffer(resultGeometry, bufferRadius, "miles");
@@ -615,10 +650,10 @@ require([
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
 
-		  //Hide activity spinner once results have been displayed
-		  resultsLayer.when(function(){
-			dom.byId("activitySpinner").style.display = "none";
-		  });
+      //Hide activity spinner once results have been displayed
+      resultsLayer.when(function() {
+        dom.byId("activitySpinner").style.display = "none";
+      });
 
 
     });
@@ -630,8 +665,8 @@ require([
       map.remove(resultsLayer);
       dom.byId("bufferResults").innerHTML = "";
 
-	  // Show activity spinner when processing starts
-	  dom.byId("activitySpinner").style.display = "block";
+      // Show activity spinner when processing starts
+      dom.byId("activitySpinner").style.display = "block";
     });
 
     // Remove the buffer if the search is cleared
@@ -642,64 +677,10 @@ require([
       dom.byId("bufferResults").innerHTML = "";
     });
 
-	locateWidget.on("search-complete", function(event){
-		//Hide activity spinner once search has completed
-		//dom.byId("activitySpinner").style.display = "none";
-	});
-
-    /**************************************************
-     * Load initial batch of traffic data from COA
-     * JSON data over Socrata API
-     **************************************************/
-
-    trafficRequestURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
-      "?$where=traffic_report_status='ACTIVE'" +
-      "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM" +
-      "&$limit=3000";
-
-    /**************************************************
-     * Define the specification for each field to create
-     * in the layer
-     **************************************************/
-
-    fields = [{
-      name: "ObjectID",
-      alias: "ObjectID",
-      type: "oid"
-    }, {
-      name: "address",
-      alias: "address",
-      type: "string"
-    }, {
-      name: "issueReported",
-      alias: "Incident Reported",
-      type: "string"
-    }, {
-      name: "latitude",
-      alias: "latitude",
-      type: "number"
-    }, {
-      name: "longitude",
-      alias: "longitude",
-      type: "number"
-    }, {
-      name: "status",
-      alias: "status",
-      type: "string"
-    }, {
-      name: "statusDateTime",
-      alias: "statusDateTime",
-      type: "string"
-    }];
-
-    /**************************************************
-     * Define the popup for info about incidents
-     **************************************************/
-
-    pTemplate = {
-      title: "<strong>{issueReported}</strong>",
-      content: "Location: {address}<br> Date: {statusDateTime:calculateDate}<br> Time: {statusDateTime:calculateTime}"
-    };
+    locateWidget.on("search-complete", function(event) {
+      //Hide activity spinner once search has completed
+      //dom.byId("activitySpinner").style.display = "none";
+    });
 
     /**************************************************
      * Custom functions to split field that contains
@@ -786,12 +767,12 @@ require([
       legendOptions: {
         title: "Incident Class"
       },
-      valueExpression: 'var incidentClasses =' + JSON.stringify(incidentClasses)
-                      + ';var i = 0, j = 0;for (i in incidentClasses) {for ' +
-                      '(j in incidentClasses[i].issueReported) {if ' +
-                      '(incidentClasses[i].issueReported[j] == ' +
-                      '$feature.issueReported) {return ' +
-                      'incidentClasses[i].class;};};};',
+      valueExpression: 'var incidentClasses =' + JSON.stringify(incidentClasses) +
+        ';var i = 0, j = 0;for (i in incidentClasses) {for ' +
+        '(j in incidentClasses[i].issueReported) {if ' +
+        '(incidentClasses[i].issueReported[j] == ' +
+        '$feature.issueReported) {return ' +
+        'incidentClasses[i].class;};};};',
       uniqueValueInfos: [{
           value: "Crash",
           symbol: {
@@ -866,6 +847,57 @@ require([
       minPixelIntensity: 0
     };
 
+    /**************************************************
+     * Generate unique values renderer based on user
+     * selected incident types
+     ***************************************************/
+    function generateUniqueRenderer() {
+      uniqueValueRenderer = {
+        type: "unique-value",
+        field: "issueReported", // autocasts as new SimpleRenderer()
+        uniqueValueInfos: []
+      };
+
+      var dataClasses = document.getElementById("incidentTypes").options;
+      var usrSelected = [];
+      for (var i = 0; i < dataClasses.length; i++) {
+        if (dataClasses[i].selected) {
+          usrSelected.push(dataClasses[i].value);
+        }
+      }
+      for (var i = 0; i < usrSelected.length; i++) {
+        uniqueValueRenderer.uniqueValueInfos.push({
+          value: usrSelected[i],
+          symbol: {
+            type: "simple-marker",
+            size: symbolSize(),
+            color: uniqueValuesColor[i]
+          }
+        })
+      };
+      return (uniqueValueRenderer);
+    };
+
+    /**************************************************
+     * Check width of device display and assign value
+     *  to variable based on device type
+     **************************************************/
+
+    function getDevice() {
+
+      w = window,
+        d = document,
+        e = d.documentElement,
+        g = d.getElementsByTagName('body')[0],
+        x = w.innerWidth || e.clientWidth || g.clientWidth,
+        y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+      if (x <= 450) {
+        return "mobile";
+      } else {
+        return "other";
+      }
+    }
 
     /**************************************************
      * Request traffic incident data
@@ -922,8 +954,8 @@ require([
         return;
       }
 
-	  // Show activity spinner when processing starts and after validation of input
-	  dom.byId("activitySpinner").style.display = "block";
+      // Show activity spinner when processing starts and after validation of input
+      dom.byId("activitySpinner").style.display = "block";
 
       // Add all selected elements to the incidentTypes array
       for (var i = 0; i < options.length; i++) {
@@ -993,8 +1025,8 @@ require([
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
 
-	  // Hide activity spinner when processing is finished
-	  dom.byId("activitySpinner").style.display = "none";
+      // Hide activity spinner when processing is finished
+      dom.byId("activitySpinner").style.display = "none";
 
     }
     /**************************************************
@@ -1068,15 +1100,15 @@ require([
         return
       };
 
-	  // Reset the mapview and extent according to trafficFLayer data JB
-	  trafficFLayer.when(function(){
+      // Reset the mapview and extent according to trafficFLayer data JB
+      trafficFLayer.when(function() {
 
-		view.goTo({
-			target: view.center,
-			extent: trafficFLayer.extent,
-			zoom: 10
-		});
-	  });
+        view.goTo({
+          target: view.center,
+          extent: trafficFLayer.extent,
+          zoom: 10
+        });
+      });
 
       return trafficFLayer;
     }
@@ -1132,43 +1164,29 @@ require([
       });
     }
 
-    /**************************************************
-     * Generate unique values renderer based on user
-     * selected incident types
-     ***************************************************/
+    /********************************************************
+     * Limit incident type selection to only 5 options using jquery (After 5th option is chosen the next option is unselected)
+     *
+     * Author:  JB
+     ********************************************************/
 
-    function generateUniqueRenderer() {
-      uniqueValueRenderer = {
-        type: "unique-value",
-        field: "issueReported", // autocasts as new SimpleRenderer()
-        uniqueValueInfos: []
-      };
+    function limitSelection() {
 
-      var dataClasses = document.getElementById("incidentTypes").options;
-      var usrSelected = [];
-      for (var i = 0; i < dataClasses.length; i++) {
-        if (dataClasses[i].selected) {
-          usrSelected.push(dataClasses[i].value);
+      var last_valid_selection = null;
+
+      $('#incidentTypes').change(function(event) {
+
+        if ($(this).val().length > 5) {
+
+          alert("You may only select 5 incident types at a time.");
+
+          //Set current selectino to last valid selection
+          $(this).val(last_valid_selection);
+        } else {
+          last_valid_selection = $(this).val();
         }
-      }
-      for (var i = 0; i < usrSelected.length; i++) {
-        uniqueValueRenderer.uniqueValueInfos.push({
-          value: usrSelected[i],
-          symbol: {
-            type: "simple-marker",
-            size: symbolSize(),
-            color: uniqueValuesColor[i]
-          }
-        })
-      };
-      return (uniqueValueRenderer);
-    };
-
-    scaleBar = new ScaleBar({
-      view: view,
-      unit: "dual"
-
-    });
+      });
+    }
 
     /*****************************************************************
      * The visible property on the layer can be used to toggle the
@@ -1314,29 +1332,6 @@ require([
       }
     });
 
-    /********************************************************
-     * Limit incident type selection to only 5 options using jquery (After 5th option is chosen the next option is unselected)
-     *
-     * Author:  JB
-     ********************************************************/
-
-    function limitSelection() {
-
-      var last_valid_selection = null;
-
-      $('#incidentTypes').change(function(event) {
-
-        if ($(this).val().length > 5) {
-
-          alert("You may only select 5 incident types at a time.");
-
-          //Set current selectino to last valid selection
-          $(this).val(last_valid_selection);
-        } else {
-          last_valid_selection = $(this).val();
-        }
-      });
-    }
 
     /**************************************************
      * Request the  data from data.austin when the
