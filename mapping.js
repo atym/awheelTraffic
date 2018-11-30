@@ -672,7 +672,7 @@ require([
       type: "string"
     }, {
       name: "issueReported",
-      alias: "issueReported",
+      alias: "Incident Reported",
       type: "string"
     }, {
       name: "latitude",
@@ -783,8 +783,15 @@ require([
 
     classRenderer = {
       type: "unique-value",
+      legendOptions: {
+        title: "Incident Class"
+      },
       valueExpression: 'var incidentClasses =' + JSON.stringify(incidentClasses)
-                      + ';var i = 0, j = 0;for (i in incidentClasses) {for (j in incidentClasses[i].issueReported) {if (incidentClasses[i].issueReported[j] == $feature.issueReported) {return incidentClasses[i].class;};};};',
+                      + ';var i = 0, j = 0;for (i in incidentClasses) {for ' +
+                      '(j in incidentClasses[i].issueReported) {if ' +
+                      '(incidentClasses[i].issueReported[j] == ' +
+                      '$feature.issueReported) {return ' +
+                      'incidentClasses[i].class;};};};',
       uniqueValueInfos: [{
           value: "Crash",
           symbol: {
@@ -1041,7 +1048,7 @@ require([
         fields: fields,
         objectIdField: "ObjectID",
         popupTemplate: pTemplate,
-        title: "trafficIncidents"
+        title: "Traffic Incidents"
       });
 
       if (renderHeatStatus) {
@@ -1082,15 +1089,13 @@ require([
       // if the legend already exists, then update it with the new layer
       if (legend) {
         legend.layerInfos = [{
-          layer: layer,
-          title: "Status"
+          layer: layer
         }];
       } else {
         legend = new Legend({
           view: view,
           layerInfos: [{
-            layer: layer,
-            title: "Status"
+            layer: layer
           }]
         }, "esriLegend");
       }
