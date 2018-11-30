@@ -1188,6 +1188,22 @@ require([
       });
     }
 
+    function defaultView(){
+      getData(trafficRequestURL)
+        .then(createGraphics)
+        .then(createLayer)
+        .then(createLegend);
+    }
+
+    function resetView(){
+      map.remove(trafficFLayer);
+      map.remove(resultsLayer);
+      view.graphics.removeAll();
+      fromSearch = false;
+      heatRenderToggle[0].checked = true;
+      defaultView();
+    }
+
     /*****************************************************************
      * The visible property on the layer can be used to toggle the
      * layer's visibility in the view. When the visibility is turned off
@@ -1210,7 +1226,6 @@ require([
     scaleBarToggle = document.getElementById("scaleBar");
 
     cityLimitsLayerToggle.checked = false;
-    heatRenderToggle.checked = false;
     scaleBarToggle.checked = false;
 
     /**************************************************
@@ -1295,7 +1310,7 @@ require([
      **************************************************/
 
     heatRenderToggle.addEventListener("change", function() {
-      renderHeatStatus = searchToggleHeatmap.checked;
+      renderHeatStatus = heatRenderToggle[1].checked;
       if (renderHeatStatus) {
         trafficFLayer.renderer = trafficHeatRenderer;
         trafficFLayer.opacity = 0.75;
@@ -1306,6 +1321,7 @@ require([
         trafficFLayer.opacity = 1;
       };
     });
+
 
     /**************************************************
      * ADD and MODIFY map widgets
@@ -1342,10 +1358,7 @@ require([
 
     view.when(function() {
 
-      getData(trafficRequestURL)
-        .then(createGraphics)
-        .then(createLayer)
-        .then(createLegend);
+      defaultView();
 
       // Populate the select list with all of the possible incident types JB
       populateSearch();
@@ -1355,6 +1368,9 @@ require([
 
       // Limit selected incidents to 5 or fewer when options are clicked and selected
       on(dom.byId("incidentTypes"), "click", limitSelection);
+
+      on(dom.byId("resetData"), "click", resetView);
+
 
     });
 
