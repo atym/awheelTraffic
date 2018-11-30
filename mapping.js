@@ -44,6 +44,7 @@ require([
     BaseTileLayer, Locate, esriRequest, dom, on, promiseUtils, geometryEngine,
     Graphic, GraphicsLayer) {
 
+    dom.byId("activitySpinner").style.display = "block";
     /**************************************************
      * VARIABLES
      **************************************************/
@@ -320,6 +321,15 @@ require([
     var locateBtn = new Locate({
       view: view
     });
+
+
+    view.watch('updating', function(evt){
+      if(evt === true){
+        dom.byId("activitySpinner").style.display = "block";
+      }else{
+        dom.byId("activitySpinner").style.display = "none";
+      }
+    })
 
     var crashChart = 0;
     var hazardChart = 0;
@@ -849,9 +859,7 @@ require([
       maxPixelIntensity: 25,
       minPixelIntensity: 0
     };
-    trafficHeatRenderer.visualVariables = ([{
-      opacity: 0.5
-    }]);
+
 
     /**************************************************
      * Request traffic incident data
@@ -871,7 +879,7 @@ require([
      *********************************************************/
 
     function runSearch() {
-		
+
       //Get current date
       var now = new Date();
 
@@ -907,7 +915,7 @@ require([
 
         return;
       }
-	  
+
 	  // Show activity spinner when processing starts and after validation of input
 	  dom.byId("activitySpinner").style.display = "block";
 
@@ -978,7 +986,7 @@ require([
         .catch(function(error) {
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
-		
+
 	  // Hide activity spinner when processing is finished
 	  dom.byId("activitySpinner").style.display = "none";
 
