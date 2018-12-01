@@ -1199,9 +1199,9 @@ require([
       map.remove(trafficFLayer);
       map.remove(resultsLayer);
       view.graphics.removeAll();
-      fromSearch = false;
+      fromSearch, renderHeatStatus = false;
       heatRenderToggle[0].checked = true;
-      defaultView();
+      defaultView(); 
     }
 
     /*****************************************************************
