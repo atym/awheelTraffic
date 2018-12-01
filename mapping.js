@@ -666,21 +666,21 @@ require([
 
             return graphic;
           });
-		  
+
 		  // Create empty array for result graphics
 		  graphicsArray=[];
-		  
+
 		  // Loop through feature results to add each element to the graphicsArray
 		  features.forEach(function(feature){
 			  graphicsArray.push({
 				  geometry: feature.geometry,
 				  symbol: {type: "simple-marker"},
 				  attributes: feature.attributes
-				  
+
 			  });
-			  
+
 		  });
-		  
+
 		  // Create the results feature layer referencing the graphicsArray and fields for the dataset
 		  resultsFL = new FeatureLayer({
 			  source: graphicsArray,
@@ -692,7 +692,7 @@ require([
 		  });
 
 		  map.add(resultsFL);
-		  
+
 		  console.log(map.layers);
 
           //map.reorder(resultsFL,0);
@@ -1241,7 +1241,7 @@ require([
 
     function resetView(){
       map.remove(trafficFLayer);
-      map.remove(resultsLayer);
+      map.remove(resultsFL);
       locateWidget.clear();
       if(!(typeof myChart === "undefined")){
         myChart.destroy();
