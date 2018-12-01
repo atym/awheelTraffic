@@ -1198,10 +1198,13 @@ require([
     function resetView(){
       map.remove(trafficFLayer);
       map.remove(resultsLayer);
+      locateWidget.clear();
       view.graphics.removeAll();
-      fromSearch, renderHeatStatus = false;
-      heatRenderToggle[0].checked = true;
-      defaultView(); 
+      searchToggleHeatmap.checked = false;
+      fromSearch = false;
+      renderHeatStatus = false;
+      searchTogglePoints.checked = true;
+      defaultView();
     }
 
     /*****************************************************************
@@ -1220,13 +1223,15 @@ require([
     darkModeToggle = document.getElementById("darkMode");
     cityLimitsLayerToggle = document.getElementById("cityLimitsLayer");
     currentTrafficToggle = document.getElementById("currentTraffic");
-    heatRenderToggle = document.getElementById("toggleHeat");
+    renderToggle = document.getElementById("renderToggle");
     searchTogglePoints = document.getElementById("buttonPoints");
     searchToggleHeatmap = document.getElementById("buttonHeatmap");
     scaleBarToggle = document.getElementById("scaleBar");
+    resetViewButton = document.getElementById("resetData");
 
     cityLimitsLayerToggle.checked = false;
     scaleBarToggle.checked = false;
+    searchToggleHeatmap.checked = false;
 
     /**************************************************
      * Check local storage to determine user
@@ -1309,8 +1314,8 @@ require([
      * Heatmap generator for radio buttons
      **************************************************/
 
-    heatRenderToggle.addEventListener("change", function() {
-      renderHeatStatus = heatRenderToggle[1].checked;
+    renderToggle.addEventListener("change", function() {
+      renderHeatStatus = searchToggleHeatmap.checked;
       if (renderHeatStatus) {
         trafficFLayer.renderer = trafficHeatRenderer;
         trafficFLayer.opacity = 0.75;
@@ -1321,6 +1326,9 @@ require([
         trafficFLayer.opacity = 1;
       };
     });
+
+
+    resetViewButton.addEventListener("click", resetView);
 
 
     /**************************************************
@@ -1369,7 +1377,7 @@ require([
       // Limit selected incidents to 5 or fewer when options are clicked and selected
       on(dom.byId("incidentTypes"), "click", limitSelection);
 
-      on(dom.byId("resetData"), "click", resetView);
+      //on(dom.byId("resetData"), "click", resetView);
 
 
     });
