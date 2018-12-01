@@ -383,6 +383,7 @@ require([
       var resultsInfo = results.features;
       document.getElementById("esriLegend").style.display = "none";
       document.getElementById("myChart").style.display = "block";
+      document.getElementById("bufferResults").style.display = "block";
 
       var autoPed = 0;
       var driveWay = 0;
@@ -1252,6 +1253,30 @@ require([
       currentTrafficToggle.checked = false;
     }
 
+    if (localStorage.getItem("traffic") == "on" && localStorage.getItem("mode") == "light") {
+      currentTrafficToggle.checked = true;
+      lightTrafficTiles.visible = true;
+      roadTrafficStyle = "light";
+      trafficVisible = true;
+    }
+
+    if (localStorage.getItem("traffic") == "on" && localStorage.getItem("mode") == "dark") {
+      currentTrafficToggle.checked = true;
+      darkTrafficTiles.visible = true;
+      roadTrafficStyle = "dark";
+      trafficVisible = true;
+    }
+
+    if (localStorage.getItem("show") == "limits") {
+      cityLimitsLayerToggle.checked = true;
+      limits.visible = true;
+    }
+
+    if (localStorage.getItem("widget") == "scale") {
+      scaleBarToggle.checked = true;
+      view.ui.add(scaleBar, "manual");
+    }
+
     /**************************************************
      * Function to run when dark mode toggle checked
      * This function styles map layers
@@ -1292,7 +1317,13 @@ require([
      **************************************************/
 
     cityLimitsLayerToggle.addEventListener("change", function() {
-      limits.visible = cityLimitsLayerToggle.checked;
+      if (cityLimitsLayerToggle.checked) {
+      limits.visible = true;
+      localStorage.setItem("show", "limits");
+    } else {
+      limits.visible = false;
+      localStorage.setItem("show", "nolimits");
+    }
     });
 
     /**************************************************
@@ -1304,16 +1335,19 @@ require([
         lightTrafficTiles.visible = false;
         darkTrafficTiles.visible = false;
         trafficVisible = false;
+        localStorage.setItem("traffic", "off");
       } else if (roadTrafficStyle == "dark") {
         darkTrafficTiles.visible = true;
         lightTrafficTiles.visible = false;
         trafficVisible = true;
         roadTrafficStyle = "dark";
+        localStorage.setItem("traffic", "on");
       } else {
         lightTrafficTiles.visible = true;
         darkTrafficTiles.visible = false;
         trafficVisible = true;
         roadTrafficStyle = "light";
+        localStorage.setItem("traffic", "on");
       }
     });
 
@@ -1354,8 +1388,10 @@ require([
     scaleBarToggle.addEventListener("change", function() {
       if (scaleBarToggle.checked == true) {
         view.ui.add(scaleBar, "manual");
+        localStorage.setItem("widget", "scale");
       } else if (scaleBarToggle.checked == false) {
         view.ui.remove(scaleBar, "manual")
+        localStorage.setItem("widget", "noscale");
       }
     });
 
