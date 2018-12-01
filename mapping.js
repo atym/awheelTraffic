@@ -627,7 +627,7 @@ require([
           // send spatial query result to chart function
           populateChart(results);
 
-          /*dom.byId("bufferResults").innerHTML = resultsReturned;*/
+          dom.byId("bufferResults").innerHTML = resultsReturned;
 
           var features = results.features.map(function(graphic) {
             graphic.symbol = {
@@ -666,7 +666,7 @@ require([
       view.graphics.removeAll();
       map.remove(trafficFLayer);
       map.remove(resultsLayer);
-      /*dom.byId("bufferResults").innerHTML = "";*/
+      dom.byId("bufferResults").innerHTML = "";
 
       // Show activity spinner when processing starts
       dom.byId("activitySpinner").style.display = "block";
@@ -677,7 +677,7 @@ require([
       view.graphics.removeAll();
       map.remove(trafficFLayer);
       map.remove(resultsLayer);
-      /*dom.byId("bufferResults").innerHTML = "";*/
+      dom.byId("bufferResults").innerHTML = "";
     });
 
     locateWidget.on("search-complete", function(event) {
@@ -922,6 +922,7 @@ require([
     function runSearch() {
       document.getElementById("esriLegend").style.display = "block";
       document.getElementById("myChart").style.display = "none";
+      document.getElementById("bufferResults").style.display = "none";
 
       //Get current date
       var now = new Date();

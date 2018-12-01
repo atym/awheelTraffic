@@ -150,7 +150,11 @@
         <canvas id="myChart" width="400" height="400" aria-label="Incident Doughnut Chart" role="img"></canvas>
 
 
+
+
         <span id="legendSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
+
+        <p id="locateResult"><span onclick="toggleTable()" id="bufferResults">Total:</span>
 
       </div>
 
@@ -213,18 +217,20 @@
             <option value=4>4 miles</option>
           </select>
         </p>
-        <!--<p id="locateResult"><span id="bufferResults"></span>-->
+
         <span id="locateSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
         <span id="locateInfo" data-tippy="Use the locate tool to search by your current location or enter an address manually to see all incidents within a 1-mile radius." class="esri-icon-description" aria-label="info icon"></span>
         <span id="resultsLabel">View Results:</span>
-        <canvas id="myChart" width="400" height="400" aria-label="Incident Doughnut Chart" role="img"></canvas>
+
         <span id="chartLabel">Chart</span>
-        <span class="fa fa-table" id="tableIcon"></span>
+        <span onclick="toggleTable()" class="fa fa-table" id="tableIcon"></span>
         <span id="tableLabel">Table</span>
         <span onclick="openLegend()" class="fa fa-pie-chart" id="chartIcon"></span>
       </div>
     </div>
   </div>
+
+
 
   <script>
     /**************************************************
@@ -384,6 +390,132 @@
 
   <div id="expandWidget"></div>
 
+
+
+  <table id="table">
+    <tr>
+      <th>Incident</th>
+      <th>#</th>
+
+    </tr>
+    <tr>
+      <td>Matched in 4 mile radius:</td>
+      <td>1136</td>
+
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+
+    </tr>
+    <tr id="autoPedTab">
+      <td>AUTO/ PED</td>
+      <td>1</td>
+
+    </tr>
+    <tr id="blockDriveTab">
+      <td>BLOCKED DRIV/ HWY</td>
+      <td>6</td>
+
+    </tr>
+    <tr id="boatCrashTab">
+      <td>BOAT ACCIDENT</td>
+      <td>2</td>
+
+    </tr>
+    <tr>
+      <td>COLLISION</td>
+      <td>20</td>
+
+    </tr>
+    <tr>
+      <td>COLLISION/PRIVATE PROPERTY</td>
+      <td>3</td>
+
+    </tr>
+    <tr>
+      <td>COLLISION WITH INJURY</td>
+      <td>40</td>
+
+    </tr>
+    <tr>
+      <td>COLLISN / FTSRA</td>
+      <td>32</td>
+
+    </tr>
+    <tr>
+      <td>COLLISN/ LVNG SCN</td>
+      <td>18</td>
+
+    </tr>
+    <tr>
+      <td>Crash Service</td>
+      <td>108</td>
+
+    </tr>
+    <tr>
+      <td>Crash Urgent</td>
+      <td>150</td>
+
+    </tr>
+      <tr>
+      <td>FLEET ACC/ INJURY</td>
+      <td>1</td>
+
+    </tr>
+    <tr>
+      <td>HIGH WATER</td>
+      <td>6</td>
+
+    </tr>
+    <tr>
+      <td>ICY ROADWAY</td>
+      <td>2</td>
+
+    </tr>
+    <tr>
+      <td>LOOSE LIVESTOCK</td>
+      <td>20</td>
+
+    </tr>
+    <tr>
+      <td>N / HZRD TRFC VIOL</td>
+      <td>3</td>
+
+    </tr>
+    <tr>
+      <td>TRAFFIC FATALITY</td>
+      <td>40</td>
+
+    </tr>
+    <tr>
+      <td>Traffic Hazard</td>
+      <td>32</td>
+
+    </tr>
+    <tr>
+      <td>Traffic Impediment</td>
+      <td>18</td>
+
+    </tr>
+    <tr>
+      <td>TRFC HAZD/ DEBRIS</td>
+      <td>108</td>
+
+    </tr>
+    <tr>
+      <td>VEHICLE FIRE</td>
+      <td>150</td>
+
+    </tr>
+    <tr>
+      <td>zSTALLED VEHICLE</td>
+      <td>150</td>
+
+    </tr>
+
+  </table>
+
   <script>
     /**************************************************
      * Footer info div
@@ -400,6 +532,8 @@
   </script>
 
   <div id="viewDiv"></div>
+
+
 
 
   <script>

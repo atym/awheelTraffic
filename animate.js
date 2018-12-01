@@ -16,6 +16,7 @@
 var settingsView = document.getElementById("settingsDiv");
 var settingsButton = document.getElementById("settingsButton");
 var settingsCover = document.getElementById("settingsCover");
+var chart = document.getElementById("myChart");
 settingsView.style.display = "none";
 
 function toggleSettings() {
@@ -34,6 +35,19 @@ window.addEventListener("mouseup", function(event) {
   }
 });
 
+
+
+function toggleTable() {
+var table = document.getElementById("table");
+  if (chart.style.display == "block" && table.style.display == "block") {
+    table.style.display = "none";
+  } else if (chart.style.display == "block") {
+    table.style.display = "block";
+  }
+  else  {
+    table.style.display = "none";
+  }
+}
 /**************************************************
  * Open and Close full screen overlay on button click
  **************************************************/
@@ -74,6 +88,7 @@ function closeMenu(evt, titleMenu) {
     x[i].style.display = "none";
   }
   document.getElementById("boxContent").style.display = "none";
+  table.style.display = "none";
 }
 
 /**************************************************
@@ -118,8 +133,11 @@ function openMenu(evt, titleMenu) {
 
 function openLegend() {
 
+  if (chart.style.display == "block") {
+
   x = document.getElementsByClassName("title");
   tablinks = document.getElementsByClassName("tablink");
+  document.getElementById("bufferResults").style.display = "block";
 
   for (i = 0; i < x.length; i++) {
     x[i].style.display = "none";
@@ -131,6 +149,7 @@ function openLegend() {
 
   document.getElementById("Legend").style.display = "block";
   document.getElementById("legendTab").firstElementChild.className += " w3-border-red";
+  }
 }
 
 /**************************************************
