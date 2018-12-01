@@ -137,6 +137,24 @@ body:not(.hide-overlay) {
   background-color: #ECECEC;
 }
 
+#settingsCover {
+  display: none;
+  width: 2.4em;
+  height: 2.4em;
+  bottom: 0;
+  position: absolute;
+  margin-top: 5em;
+  z-index: 99999;
+  margin-left: 0.85em;
+  margin-bottom: 2.7em;
+  cursor: pointer;
+}
+
+#settingsCover:hover {
+  background-color: #ECECEC;
+  opacity: 0.4;
+}
+
 #settingsDiv {
   display: none;
 	position: absolute;
@@ -272,12 +290,23 @@ body:not(.hide-overlay) {
   margin-top: 2em;
 }
 
+#myChart {
+  width: 360px !important;
+  height: 360px !important;
+  position: absolute;
+  margin-left: 1em;
+}
+
+#bufferResults {
+  display: none;
+}
+
 
 
 #resultsLabel {
   position: absolute;
-  margin-left: 9.5em;
-  margin-top: 4em;
+  margin-left: -3.5em;
+  margin-top: 9.5em;
 }
 
 #searchLabel {
@@ -294,10 +323,14 @@ body:not(.hide-overlay) {
   margin-left: -2.6em;
 }
 
+#chartIcon:hover {
+  cursor: pointer;
+}
+
 #chartLabel {
   position: absolute;
-  margin-top: -15.5em;
-  margin-left: -8em;
+  margin-top: 13em;
+  margin-left: -7.8em;
 }
 
 #tableIcon {
@@ -308,9 +341,13 @@ body:not(.hide-overlay) {
   margin-left: 1.5em;
 }
 
+#tableIcon:hover {
+  cursor: pointer;
+}
+
 #tableLabel {
   position: absolute;
-  margin-top: -15.5em;
+  margin-top: 13em;
   margin-left: 4.5em;
 }
 

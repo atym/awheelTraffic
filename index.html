@@ -87,7 +87,9 @@
 
   <div id="infoButton" class="esri-icon-description" aria-label="close icon" onclick="openOverlay()"></div>
 
-  <div id="settingsButton" class="esri-icon-settings" aria-label="settings icon" onclick="toggleSettings()" href="javascript:void(0)"></div>
+  <div id="settingsButton" class="esri-icon-settings" aria-label="settings icon" onclick="toggleSettings()"></div>
+
+  <div id="settingsCover" onclick="closeSettings()"></div>
 
   <script>
     /**************************************************
@@ -112,7 +114,7 @@
 
     <div id="boxMenu">
       <div class="w3-row">
-        <a href="javascript:void(0)" onclick="openMenu(event, 'Legend')">
+        <a href="javascript:void(0)" onclick="openMenu(event, 'Legend')" id="legendTab">
           <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Legend</div>
         </a>
         <a href="javascript:void(0)" onclick="openMenu(event, 'Search')">
@@ -144,6 +146,8 @@
         <br>
         <div id="esriLegend"></div>
         <span id="legendInfo" data-tippy="Use the legend tool for descriptions of the symbols visible on the map." class="esri-icon-description" aria-label="info icon"></span>
+
+        <canvas id="myChart" width="400" height="400" aria-label="Incident Doughnut Chart" role="img"></canvas>
 
 
         <span id="legendSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
@@ -209,7 +213,7 @@
             <option value=4>4 miles</option>
           </select>
         </p>
-        <p id="locateResult"><span id="bufferResults"></span>
+        <!--<p id="locateResult"><span id="bufferResults"></span>-->
         <span id="locateSpinner" class="esri-icon-refresh" aria-label="refresh icon" onclick="refreshPage()"></span>
         <span id="locateInfo" data-tippy="Use the locate tool to search by your current location or enter an address manually to see all incidents within a 1-mile radius." class="esri-icon-description" aria-label="info icon"></span>
         <span id="resultsLabel">View Results:</span>
@@ -217,7 +221,7 @@
         <span id="chartLabel">Chart</span>
         <span class="fa fa-table" id="tableIcon"></span>
         <span id="tableLabel">Table</span>
-        <span class="fa fa-pie-chart" id="chartIcon"></span>
+        <span onclick="openLegend()" class="fa fa-pie-chart" id="chartIcon"></span>
       </div>
     </div>
   </div>

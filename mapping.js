@@ -12,6 +12,7 @@ require([
     "esri/Map",
     "esri/Basemap",
     "esri/views/MapView",
+    "esri/widgets/Expand",
     "esri/widgets/BasemapToggle",
     "esri/layers/FeatureLayer",
     "esri/layers/VectorTileLayer",
@@ -22,7 +23,7 @@ require([
     "esri/widgets/ScaleBar",
     "esri/widgets/Search",
     "esri/widgets/Fullscreen",
-    "esri/widgets/Expand",
+
     "esri/layers/BaseTileLayer",
     "esri/widgets/Locate",
     "esri/request",
@@ -38,8 +39,8 @@ require([
    * Create magic mapping function
    **************************************************/
 
-  function(Map, Basemap, MapView, BasemapToggle, FeatureLayer, VectorTileLayer,
-    TileLayer, Point, Legend, Home, ScaleBar, Search, Fullscreen, Expand,
+  function(Map, Basemap, MapView, Expand, BasemapToggle, FeatureLayer, VectorTileLayer,
+    TileLayer, Point, Legend, Home, ScaleBar, Search, Fullscreen,
     BaseTileLayer, Locate, esriRequest, dom, on, promiseUtils, geometryEngine,
     Graphic, GraphicsLayer) {
 
@@ -380,6 +381,8 @@ require([
 
     function populateChart(results) {
       var resultsInfo = results.features;
+      document.getElementById("esriLegend").style.display = "none";
+      document.getElementById("myChart").style.display = "block";
 
       var autoPed = 0;
       var driveWay = 0;
@@ -511,19 +514,19 @@ require([
       var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ["Crash", "Advisory", "Hazard"],
+          labels: ["Crash", "Hazard", "Advisory"],
           datasets: [{
             label: 'Incident Class',
-            data: [crashChart, advisoryChart, hazardChart],
+            data: [crashChart, hazardChart, advisoryChart],
             backgroundColor: [
               'rgba(255, 99, 132, 0.5)',
-              'rgba(54, 162, 235, 0.5)',
-              'rgba(255, 206, 86, 0.5)'
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(54, 162, 235, 0.5)'
             ],
             borderColor: [
               'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)'
+              'rgba(255, 206, 86, 1)',
+              'rgba(54, 162, 235, 1)'
             ],
             borderWidth: 2
           }]
@@ -624,7 +627,7 @@ require([
           // send spatial query result to chart function
           populateChart(results);
 
-          dom.byId("bufferResults").innerHTML = resultsReturned;
+          /*dom.byId("bufferResults").innerHTML = resultsReturned;*/
 
           var features = results.features.map(function(graphic) {
             graphic.symbol = {
@@ -663,7 +666,7 @@ require([
       view.graphics.removeAll();
       map.remove(trafficFLayer);
       map.remove(resultsLayer);
-      dom.byId("bufferResults").innerHTML = "";
+      /*dom.byId("bufferResults").innerHTML = "";*/
 
       // Show activity spinner when processing starts
       dom.byId("activitySpinner").style.display = "block";
@@ -674,7 +677,7 @@ require([
       view.graphics.removeAll();
       map.remove(trafficFLayer);
       map.remove(resultsLayer);
-      dom.byId("bufferResults").innerHTML = "";
+      /*dom.byId("bufferResults").innerHTML = "";*/
     });
 
     locateWidget.on("search-complete", function(event) {
@@ -917,6 +920,8 @@ require([
      *********************************************************/
 
     function runSearch() {
+      document.getElementById("esriLegend").style.display = "block";
+      document.getElementById("myChart").style.display = "none";
 
       //Get current date
       var now = new Date();

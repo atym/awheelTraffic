@@ -15,14 +15,17 @@
 
 var settingsView = document.getElementById("settingsDiv");
 var settingsButton = document.getElementById("settingsButton");
+var settingsCover = document.getElementById("settingsCover");
 settingsView.style.display = "none";
 
 function toggleSettings() {
   settingsView.style.display = "block";
+  settingsCover.style.display = "block";
 }
 
 function closeSettings() {
   settingsView.style.display = "none";
+  settingsCover.style.display = "none";
 }
 
 window.addEventListener("mouseup", function(event) {
@@ -111,6 +114,23 @@ function openMenu(evt, titleMenu) {
   } else {
     open();
   }
+}
+
+function openLegend() {
+
+  x = document.getElementsByClassName("title");
+  tablinks = document.getElementsByClassName("tablink");
+
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-border-red", "");
+  }
+
+  document.getElementById("Legend").style.display = "block";
+  document.getElementById("legendTab").firstElementChild.className += " w3-border-red";
 }
 
 /**************************************************
