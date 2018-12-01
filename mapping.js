@@ -574,6 +574,7 @@ require([
       resultsLayer = new GraphicsLayer();
 
       var bufferRadius = dom.byId("bufferRadius").value;
+      dom.byId("totalTable").innerHTML = bufferRadius;
       var zoomLevel;
 
       // Base custom zoom level on bufferRadius parameter
@@ -1241,6 +1242,7 @@ require([
       renderHeatStatus = false;
       searchTogglePoints.checked = true;
       document.getElementById("esriLegend").style.display = "block";
+      document.getElementById("table").style.display = "none";
       defaultView();
     }
 

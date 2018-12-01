@@ -246,6 +246,7 @@ background-color: #826828 !important;
   height: 360px !important;
   position: absolute;
   margin-left: 1em;
+  display: none;
 }
 
 #bufferResults {
