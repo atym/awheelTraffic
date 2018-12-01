@@ -1240,6 +1240,7 @@ require([
       fromSearch = false;
       renderHeatStatus = false;
       searchTogglePoints.checked = true;
+      document.getElementById("esriLegend").style.display = "block";
       defaultView();
     }
 
