@@ -680,12 +680,6 @@ require([
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
 
-      //Hide activity spinner once results have been displayed
-      resultsLayer.when(function() {
-        dom.byId("activitySpinner").style.display = "none";
-      });
-
-
     });
 
     // Reset map when a new search starts
@@ -695,8 +689,6 @@ require([
       map.remove(resultsLayer);
       dom.byId("bufferResults").innerHTML = "";
 
-      // Show activity spinner when processing starts
-      dom.byId("activitySpinner").style.display = "block";
     });
 
     // Remove the buffer if the search is cleared
@@ -708,11 +700,6 @@ require([
       document.getElementById("myChart").style.display = "none";
       document.getElementById("table").style.display = "none";
       document.getElementById("esriLegend").style.display = "block";
-    });
-
-    locateWidget.on("search-complete", function(event) {
-      //Hide activity spinner once search has completed
-      //dom.byId("activitySpinner").style.display = "none";
     });
 
     /**************************************************
@@ -991,9 +978,6 @@ require([
         return;
       }
 
-      // Show activity spinner when processing starts and after validation of input
-      dom.byId("activitySpinner").style.display = "block";
-
       // Add all selected elements to the incidentTypes array
       for (var i = 0; i < options.length; i++) {
         opt = options[i];
@@ -1061,9 +1045,6 @@ require([
         .catch(function(error) {
           console.log('One of the promises in the chain was rejected! Message: ', error);
         });
-
-      // Hide activity spinner when processing is finished
-      dom.byId("activitySpinner").style.display = "none";
 
     }
     /**************************************************
