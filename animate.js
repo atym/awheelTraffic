@@ -36,9 +36,9 @@ window.addEventListener("mouseup", function(event) {
 });
 
 
-
-function toggleTable() {
 var table = document.getElementById("table");
+function toggleTable() {
+
   if (chart.style.display == "block" && table.style.display == "block") {
     table.style.display = "none";
   } else if (chart.style.display == "block") {

@@ -123,7 +123,7 @@ body:not(.hide-overlay) {
 #table {
     /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
     border-collapse: collapse;
-    width: 20em;
+    width: 19.2em;
     height: 560px;
     position: fixed;
     z-index: 999;
@@ -132,35 +132,108 @@ body:not(.hide-overlay) {
     margin-top: 2em;
     display: none;
     box-shadow: 0px 0px 10px #149FEC;
+    color: #ACB5BA;
 }
 
 #table td, #table th {
-    border: 1px solid #ddd;
+    border: 1px solid black;
     padding: 4px;
 }
 
-#table tr:nth-child(even){background-color: #f2f2f2;}
-#table tr:nth-child(odd){background-color: #FFF;}
+#table tr:nth-child(even){background-color: #414141;}
+#table tr:nth-child(odd){background-color: #343434;}
 
 /*#table tr:hover {background-color: #ddd;}*/
 
 #autoPedTab:hover {
-  background-color: rgba(220,20,60,0.8) !important;
+  background-color: rgba(220,20,60,0.5) !important;
 }
 
 #blockDriveTab:hover {
-  background-color: rgba(30,144,255,0.8) !important;
+  background-color: rgba(30,144,255,0.5) !important;
 }
 
 #boatCrashTab:hover {
+  background-color: rgba(220,20,60,0.5) !important;
+}
+
+#collisionTab:hover {
+  background-color: rgba(220,20,60,0.5) !important;
+}
+
+#privatePropertyTab:hover {
+  background-color: rgba(220,20,60,0.5) !important;
+}
+
+#collisionInjuryTab:hover {
+  background-color: rgba(220,20,60,0.5) !important;
+}
+
+#ftsraTab:hover {
+  background-color: rgba(220,20,60,0.5) !important;
+}
+
+#leaveSceneTab:hover {
+  background-color: rgba(220,20,60,0.5) !important;
+}
+
+#crashServiceTab:hover {
+  background-color: rgba(220,20,60,0.5) !important;
+}
+
+#crashUrgentTab:hover {
+  background-color: rgba(220,20,60,0.5) !important;
+}
+
+#fleetACCTab:hover {
+  background-color: rgba(220,20,60,0.8) !important;
+}
+
+#highWaterTab:hover {
   background-color: rgba(255,255,102,0.8) !important;
+}
+
+#icyRoadwayTab:hover {
+  background-color: rgba(255,255,102,0.8) !important;
+}
+
+#looseLivestockTab:hover {
+  background-color: rgba(30,144,255,0.8) !important;
+}
+
+#nHZRDTab:hover {
+  background-color: rgba(30,144,255,0.8) !important;
+}
+
+#trafficFatalityTab:hover {
+  background-color: rgba(220,20,60,0.8) !important;
+}
+
+#trafficHazardTab:hover {
+  background-color: rgba(255,255,102,0.8) !important;
+}
+
+#trafficImpedimentTab:hover {
+  background-color: rgba(255,255,102,0.8) !important;
+}
+
+#trafficDebrisTab:hover {
+  background-color: rgba(255,255,102,0.8) !important;
+}
+
+#vehicleFireTab:hover {
+  background-color: rgba(30,144,255,0.5) !important;
+}
+
+#stalledVehicleTab:hover {
+  background-color: rgba(30,144,255,0.5) !important;
 }
 
 #table th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #1E2128;
+    background-color: #222224;
     color: white;
 }
 

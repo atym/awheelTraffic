@@ -502,9 +502,28 @@ require([
 
       advisoryChart = driveWay + looseLivestock + trafficViolation + vehicleFire + stallVehicle
 
-      console.log(crashChart);
-      console.log(hazardChart);
-      console.log(advisoryChart);
+      dom.byId("totalAutoPed").innerHTML = autoPed;
+      dom.byId("totalBlockDrive").innerHTML = driveWay;
+      dom.byId("totalBoat").innerHTML = boatAccident;
+      dom.byId("totalCollision").innerHTML = collision;
+      dom.byId("totalPrivate").innerHTML = privateProperty;
+      dom.byId("totalInjury").innerHTML = injuryCollision;
+      dom.byId("totalFtsra").innerHTML = ftsra;
+      dom.byId("totalLeave").innerHTML = leaveScene;
+      dom.byId("totalService").innerHTML = crashService;
+      dom.byId("totalUrgent").innerHTML = crashUrgent;
+      dom.byId("totalFleet").innerHTML = fleetInjury;
+      dom.byId("totalWater").innerHTML = highWater;
+      dom.byId("totalIce").innerHTML = icyRoadway;
+      dom.byId("totalLivestock").innerHTML = looseLivestock;
+      dom.byId("totalNonHzrd").innerHTML = trafficViolation;
+      dom.byId("totalFatal").innerHTML = trafficFatality;
+      dom.byId("totalHazard").innerHTML = trafficHazard;
+      dom.byId("totalImpediment").innerHTML = trafficImpediment;
+      dom.byId("totalDebris").innerHTML = trafficDebris;
+      dom.byId("totalFire").innerHTML = vehicleFire;
+      dom.byId("totalStall").innerHTML = stallVehicle;
+
 
       /**************************************************
        * Create doughnut chart with Chart.js library
@@ -628,6 +647,7 @@ require([
           populateChart(results);
 
           dom.byId("bufferResults").innerHTML = resultsReturned;
+          dom.byId("totalLocate").innerHTML = resultsReturned;
 
           var features = results.features.map(function(graphic) {
             graphic.symbol = {
@@ -923,6 +943,7 @@ require([
       document.getElementById("esriLegend").style.display = "block";
       document.getElementById("myChart").style.display = "none";
       document.getElementById("bufferResults").style.display = "none";
+      document.getElementById("table").style.display = "none";
 
       //Get current date
       var now = new Date();
