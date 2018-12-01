@@ -9,9 +9,9 @@
 
 #### legend
 
--   [ ] update with Jason's unique values for incident type, maybe classify
-    -   [ ] crash, hazard, informational
--   [ ] update legend with optional layers
+-   [x] update with Jason's unique values for incident type, maybe classify
+    -   [x] crash, hazard, informational
+-   [-] update legend with optional layers
 -   [ ] fit legend in div
     -   [ ] **special attention** to landscape mobile
 
@@ -27,23 +27,23 @@
 -   [x] ~~geocoder or search widget~~ @ipk
 -   [x] ~~research output from locate to buffer~~ @jwb
 -   [x] ~~mobile location finder~~ @jwb
--   [ ] user adjustable buffer distance/ 1 or 5
+-   [x] user adjustable buffer distance/ 1 or 5
 -   [x] ~~use buffer to only display points that intersect~~ @jwb
--   [ ] display graph with distribution of incident types within radius
+-   [x] display graph with distribution of incident types within radius
 
 #### style
 
--   [ ] revisit color of title bar
+-   [x] revisit color of title bar
 -   [ ] clean css and comment
 -   [x] ~~create custom css for dark mode, update text and toolbox background on click, including dark mode zoom buttons from esri~~ @ipk
 
 #### mobile
 
--   [ ] symbology scale with device size
--   [ ] research ios landscape status fix
--   [ ] retina display 192dpi
+-   [x] symbology scale with device size
+-   [x] research ios landscape status fix
+-   [x] retina display 192dpi
 -   [x] ~~add ios splash screen for pwa~~ @ipk
--   [ ] add popup on mobile for detected screen size <450 with option for vector or raster (HD vs SD)(Wifi&LTE vs 3G&E)...option to remember user choice for next visit. only show message on mobile so not obtrusive to desktop experience, but provides better load times for those on a slower connection. dont use words vector and raster, too confusing. hd and sd are button with big text and the network connection is a subtitle.
+-   [-] add popup on mobile for detected screen size <450 with option for vector or raster (HD vs SD)(Wifi&LTE vs 3G&E)...option to remember user choice for next visit. only show message on mobile so not obtrusive to desktop experience, but provides better load times for those on a slower connection. dont use words vector and raster, too confusing. hd and sd are button with big text and the network connection is a subtitle.
 -   [x] ~~fix size of search text box to accomodate default text value~~ @ipk
 
 #### other
@@ -55,7 +55,7 @@
 -   [x] ~~add refresh button to each toolbox window~~ @ipk
       - [ ] refresh should reload entire map, not html doc
 -   [ ] dynamic default map extent based on screen
--   [ ] icons that load only for active incidents (initial display) based on three classes
+-   [x] icons that load only for active incidents (initial display) based on three classes
 -   [x] ~~aboutHelper~~ @ipk
     -   [x] ~~research logo mods for better         about identification, maybe re-position logo elements and add unicode tooltip~~
   - [x] ~~add footer for copyright info~~ @ipk
