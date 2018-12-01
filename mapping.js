@@ -967,6 +967,8 @@ require([
       document.getElementById("bufferResults").style.display = "none";
       document.getElementById("table").style.display = "none";
 
+      view.popup.close();
+      
       //Get current date
       var now = new Date();
 
@@ -1247,6 +1249,7 @@ require([
         myChart.destroy();
       }
       view.graphics.removeAll();
+      view.popup.close();
       searchToggleHeatmap.checked = false;
       fromSearch = false;
       renderHeatStatus = false;
