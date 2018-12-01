@@ -58,7 +58,7 @@ require([
     var renderHeatStatus = false;
     var fromSearch = false;
     var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
-    var resultsLayer;
+    var resultsFL;
     var symbolSize = function() {
       if (getDevice() == "mobile") {
         return 18;
@@ -666,12 +666,37 @@ require([
 
             return graphic;
           });
+		  
+		  // Create empty array for result graphics
+		  graphicsArray=[];
+		  
+		  // Loop through feature results to add each element to the graphicsArray
+		  features.forEach(function(feature){
+			  graphicsArray.push({
+				  geometry: feature.geometry,
+				  symbol: {type: "simple-marker"},
+				  attributes: feature.attributes
+				  
+			  });
+			  
+		  });
+		  
+		  // Create the results feature layer referencing the graphicsArray and fields for the dataset
+		  resultsFL = new FeatureLayer({
+			  source: graphicsArray,
+			  fields: fields,
+			  objectIdField: "ObjectID",
+              popupTemplate: pTemplate,
+			  title: "bufferResults",
+			  renderer: classRenderer
+		  });
 
-          resultsLayer.addMany(features);
+		  map.add(resultsFL);
+		  
+		  console.log(map.layers);
 
-          map.add(resultsLayer);
-
-          return resultsLayer;
+          //map.reorder(resultsFL,0);
+		  return resultsFL;
 
         })
         .then(createLegend)
@@ -686,7 +711,7 @@ require([
     locateWidget.on("search-start", function(event) {
       view.graphics.removeAll();
       map.remove(trafficFLayer);
-      map.remove(resultsLayer);
+      map.remove(resultsFL);
       dom.byId("bufferResults").innerHTML = "";
 
     });
@@ -695,7 +720,7 @@ require([
     locateWidget.on("search-clear", function(event) {
       view.graphics.removeAll();
       map.remove(trafficFLayer);
-      map.remove(resultsLayer);
+      map.remove(resultsFL);
       dom.byId("bufferResults").innerHTML = "";
       document.getElementById("myChart").style.display = "none";
       document.getElementById("table").style.display = "none";
@@ -1033,6 +1058,7 @@ require([
 
       // Remove any locate results that still exist
       view.graphics.removeAll();
+	  map.remove(resultsFL);
       locateWidget.clear();
 
       fromSearch = true;
