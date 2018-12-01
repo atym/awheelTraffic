@@ -1204,7 +1204,9 @@ require([
       map.remove(trafficFLayer);
       map.remove(resultsLayer);
       locateWidget.clear();
-      myChart.destroy();
+      if(!(typeof myChart === "undefined")){
+        myChart.destroy();
+      }
       view.graphics.removeAll();
       searchToggleHeatmap.checked = false;
       fromSearch = false;
