@@ -49,12 +49,13 @@ require([
      **************************************************/
 
     var limits, roads, trafficFLayer, fields, pTemplate, trafficRenderer,
-      trafficHeatRenderer, heatRenderToggle, map, view, legend, roadLayerToggle,
-      cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads, darkRoads,
-      vectorRoads, satelliteBase, satelliteReference, satellite, homeBtn,
-      scaleBar, locateWidget, currentTraffic, uniqueValueRenderer, classRenderer;
-    var renderHeatStatus = false,
-      fromSearch = false;
+      trafficHeatRenderer, renderToggle, map, view, legend, roadLayerToggle,
+      cityLimitsLayerToggle, trafficRequestURL, baseToggle, lightRoads,
+      darkRoads, vectorRoads, satelliteBase, satelliteReference, satellite,
+      homeBtn, scaleBar, locateWidget, currentTraffic, uniqueValueRenderer,
+      classRenderer, myChart;
+    var renderHeatStatus = false;
+    var fromSearch = false;
     var uniqueValuesColor = ['#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854'];
     var resultsLayer;
     var symbolSize = function() {
@@ -508,7 +509,11 @@ require([
        **************************************************/
 
       var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
+      if(!(typeof myChart === "undefined")){
+        myChart.destroy();
+      }
+
+      myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
           labels: ["Crash", "Advisory", "Hazard"],
@@ -1199,6 +1204,7 @@ require([
       map.remove(trafficFLayer);
       map.remove(resultsLayer);
       locateWidget.clear();
+      myChart.destroy();
       view.graphics.removeAll();
       searchToggleHeatmap.checked = false;
       fromSearch = false;
