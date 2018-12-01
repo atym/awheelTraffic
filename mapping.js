@@ -705,6 +705,9 @@ require([
       map.remove(trafficFLayer);
       map.remove(resultsLayer);
       dom.byId("bufferResults").innerHTML = "";
+      document.getElementById("myChart").style.display = "none";
+      document.getElementById("table").style.display = "none";
+      document.getElementById("esriLegend").style.display = "block";
     });
 
     locateWidget.on("search-complete", function(event) {
