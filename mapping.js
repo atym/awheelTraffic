@@ -814,7 +814,7 @@ require([
           symbol: {
             type: "simple-marker",
             size: symbolSize(),
-            color: "blue"
+            color: "#3389ff"
           }
         }
       ]
