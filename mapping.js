@@ -1411,22 +1411,6 @@ require([
     resetViewButton.addEventListener("click", resetView);
 
 
-    /**************************************************
-     * ADD and MODIFY map widgets
-     **************************************************/
-
-    view.ui.move("zoom", "bottom-right"); //Move Zoom
-    /*view.ui.add(baseToggle, "bottom-right"); //Add Basemap toggle*/
-    view.ui.add(homeBtn, "bottom-right"); // Add the home button
-
-    view.ui.add(new Fullscreen({
-      view: view,
-      element: entireApp
-    }), "top-right");
-    view.ui.add(btExpand, "bottom-right");
-    view.ui.add(locateBtn, {
-      position: "bottom-right"
-    });
 
     scaleBarToggle.addEventListener("change", function() {
       if (scaleBarToggle.checked == true) {
@@ -1459,8 +1443,22 @@ require([
       // Limit selected incidents to 5 or fewer when options are clicked and selected
       on(dom.byId("incidentTypes"), "click", limitSelection);
 
-      //on(dom.byId("resetData"), "click", resetView);
+      /**************************************************
+       * ADD and MODIFY map widgets
+       **************************************************/
 
+      view.ui.move("zoom", "bottom-right"); //Move Zoom
+      /*view.ui.add(baseToggle, "bottom-right"); //Add Basemap toggle*/
+      view.ui.add(homeBtn, "bottom-right"); // Add the home button
+
+      view.ui.add(new Fullscreen({
+        view: view,
+        element: entireApp
+      }), "top-right");
+      view.ui.add(btExpand, "bottom-right");
+      view.ui.add(locateBtn, {
+        position: "bottom-right"
+      });
 
     });
 
