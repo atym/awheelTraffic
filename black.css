@@ -40,6 +40,10 @@ body:not(.hide-overlay) {
   margin-left: -50px;
 }
 
+#aboutLinks a{
+  font-size: 15px;
+}
+
 #mainLogo {
   z-index: 1;
   position: absolute;

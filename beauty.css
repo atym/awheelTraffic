@@ -179,6 +179,10 @@ body:not(.hide-overlay) {
   cursor: pointer;
 }
 
+#aboutLinks a{
+  font-size: 15px;
+}
+
 /*#infoLightButton {
   position: absolute;
   bottom: 0;
