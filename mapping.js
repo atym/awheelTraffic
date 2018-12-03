@@ -647,7 +647,6 @@ require([
         // Create graphics from spatial query result
         .then(function(results) {
 
-          //console.log("Features: "+results.features);
           var resultsReturned = Object.keys(results.features).length;
 
           // send spatial query result to chart function
@@ -693,9 +692,6 @@ require([
 
 		  map.add(resultsFL);
 
-		  console.log(map.layers);
-
-          //map.reorder(resultsFL,0);
 		  return resultsFL;
 
         })
@@ -1052,8 +1048,6 @@ require([
         "?$where=traffic_report_status_date_time>" + "'" + queryDateString + "'" +
         " AND issue_reported IN " + incidentTypesString +
         "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM&$limit=100000";
-
-      //console.log("Query params: " + queryDateString + " " + incidentTypes);
 
       //Remove the previous trafficFLayer before attempting to display the query results
       map.remove(trafficFLayer);
