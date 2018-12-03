@@ -170,13 +170,13 @@ require([
      **************************************************/
 
     lightRoads = new VectorTileLayer({
-      url: "http://www.arcgis.com/sharing/rest/content/items/63c47b7177f946b49902c24129b87252/resources/styles/root.json?f=pjson",
+      url: "http://www.arcgis.com/sharing/rest/content/items/63c47b7177f946b49902c24129b87252/resources/styles/root.json",
       visible: true,
       title: "lightRoads"
     });
 
     darkRoads = new VectorTileLayer({
-      url: "https://www.arcgis.com/sharing/rest/content/items/86f556a2d1fd468181855a35e344567f/resources/styles/root.json?f=pjson",
+      url: "https://www.arcgis.com/sharing/rest/content/items/86f556a2d1fd468181855a35e344567f/resources/styles/root.json",
       visible: false,
       title: "darkRoads"
     });
@@ -201,7 +201,7 @@ require([
     });
 
     satelliteReference = new VectorTileLayer({
-      url: "http://www.arcgis.com/sharing/rest/content/items/30d6b8271e1849cd9c3042060001f425/resources/styles/root.json?f=pjson"
+      url: "http://www.arcgis.com/sharing/rest/content/items/30d6b8271e1849cd9c3042060001f425/resources/styles/root.json"
     });
 
     satellite = new Basemap({
