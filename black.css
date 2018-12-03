@@ -126,7 +126,7 @@ body:not(.hide-overlay) {
     width: 19.2em;
     height: 560px;
     position: fixed;
-    z-index: 999;
+    z-index: 25;
     overflow: scroll;
     margin-left: 30em;
     margin-top: 2em;
