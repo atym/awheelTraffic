@@ -968,7 +968,7 @@ require([
       document.getElementById("table").style.display = "none";
 
       view.popup.close();
-      
+
       //Get current date
       var now = new Date();
 
@@ -1256,6 +1256,7 @@ require([
       searchTogglePoints.checked = true;
       document.getElementById("esriLegend").style.display = "block";
       document.getElementById("table").style.display = "none";
+      document.getElementById("tableClose").style.display = "none";
       defaultView();
     }
 

@@ -290,6 +290,21 @@ body:not(.hide-overlay) {
   margin-top: 2em;
 }
 
+#tableClose {
+  position: fixed;
+  z-index: 5;
+  background-color: white;
+  padding: 0.2em;
+  font-size: 1.7em;
+  margin-left: 28.92em;
+  margin-top: 11.5em;
+  padding-top: 0.9em;
+  padding-bottom: 0.9em;
+  box-shadow: 0px 0px 4px #272A28;
+  cursor: pointer;
+  display: none;
+}
+
 #table {
     /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
     border-collapse: collapse;

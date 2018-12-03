@@ -37,16 +37,25 @@ window.addEventListener("mouseup", function(event) {
 
 
 var table = document.getElementById("table");
+var tableClose = document.getElementById("tableClose");
 function toggleTable() {
 
   if (chart.style.display == "block" && table.style.display == "block") {
     table.style.display = "none";
+    tableClose.style.display = "none";
   } else if (chart.style.display == "block") {
     table.style.display = "block";
+    tableClose.style.display = "block";
   }
   else  {
     table.style.display = "none";
+    tableClose.style.display = "none";
   }
+}
+
+function closeTable() {
+  table.style.display = "none";
+  tableClose.style.display = "none";
 }
 /**************************************************
  * Open and Close full screen overlay on button click
@@ -89,6 +98,7 @@ function closeMenu(evt, titleMenu) {
   }
   document.getElementById("boxContent").style.display = "none";
   table.style.display = "none";
+  tableClose.style.display = "none";
 }
 
 /**************************************************
