@@ -305,6 +305,10 @@ body:not(.hide-overlay) {
   display: none;
 }
 
+#tableClose:hover {
+  background-color: #C1C1C1;
+}
+
 #table {
     /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
     border-collapse: collapse;
