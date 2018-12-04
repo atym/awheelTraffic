@@ -236,8 +236,12 @@ body:not(.hide-overlay) {
 }
 
 #esriLegend {
-  margin-top: 5em;
+  margin-top: 1em;
   box-shadow: 0px 0px 4px #272A28;
+}
+
+#resetData {
+  margin-top: 2em;
 }
 
 .esri-legend__layer-cell.esri-legend__layer-cell--info {
@@ -430,13 +434,22 @@ background-color: #FEE391 !important;
 }
 
 #myChart {
-  width: 360px !important;
-  height: 360px !important;
+  width: 330px !important;
+  height: 330px !important;
+
+  margin-left: 2em;
+  margin-top: -1.25em;
+  display: none;
+}
+
+#resetData {
+  margin-top: 1.5em;
+  margin-left: -6em;
   position: absolute;
-  margin-left: 1em;
 }
 
 #bufferResults {
+  margin-top: -16.5em;
   display: none;
   text-decoration: underline;
 }
@@ -851,6 +864,48 @@ background-color: #FEE391 !important;
     width: 6.5em !important;
   }
 
+  #resetData {
+    position: relative;
+    margin-top: -10em;
+    margin-left: 0em;
+  }
+
+  #myChart {
+    width: 300px !important;
+    height: 300px !important;
+
+    margin-left: 1.5em;
+  }
+
+  #bufferResults {
+    margin-left: -1em !important;
+    margin-top: -16.6em;
+  }
+
+  #resetData {
+    margin-top: 1em;
+  }
+
+  #tableIcon {
+    display: none;
+  }
+
+  #tableLabel {
+    display: none;
+  }
+
+  #chartIcon {
+    margin-left: -0.4em;
+  }
+
+  #chartLabel {
+    margin-left: -1.3em;
+  }
+
+  .esri-search {
+    margin-left: 3.7em;
+  }
+
   .overlay-content img {
     height: 90px;
     width: 90px;
@@ -967,6 +1022,64 @@ background-color: #FEE391 !important;
     height: 90px;
     width: 90px;
     margin-top: -0.75em;
+  }
+
+  #tableIcon {
+    display: none;
+  }
+
+  #tableLabel {
+    display: none;
+  }
+
+  #chartIcon {
+    margin-left: 3em;
+    margin-top: 5em;
+  }
+
+  #chartLabel {
+    margin-left: 9em;
+    margin-top: 3em;
+  }
+
+  #resultsLabel {
+    margin-left: 7em;
+    margin-top: -1em;
+  }
+
+  #radiusOptions {
+    margin-left: -15em;
+  }
+
+  #searchLabel {
+    margin-left: -14em;
+    margin-top: 7.5em;
+  }
+
+  .esri-search {
+    margin-left: 3.7em;
+    margin-top: 12em;
+  }
+
+  #esriLegend {
+    width: 300px;
+    height: 260px;
+    margin-left: 3em;
+    margin-top:  -1.5em;
+  }
+
+  #Legend {
+    width: 300px;
+  }
+
+  #legendClose {
+    margin-left: 7.6em;
+  }
+
+  #resetData {
+    margin-right: -50em;
+    margin-top: -20em;
+    z-index: 9999;
   }
 
   .overlay-content p {

@@ -266,16 +266,24 @@ background-color: #826828 !important;
 }
 
 #myChart {
-  width: 360px !important;
-  height: 360px !important;
-  position: absolute;
-  margin-left: 1em;
+  width: 330px !important;
+  height: 330px !important;
+
+  margin-left: 2em;
+  margin-top: -1.25em;
   display: none;
 }
 
 #bufferResults {
+  margin-top: -16.5em;
   display: none;
   text-decoration: underline;
+}
+
+#resetData {
+  margin-top: 1.5em;
+  margin-left: -6em;
+  position: absolute;
 }
 
 
@@ -601,7 +609,7 @@ background-color: #826828 !important;
 }
 
 #esriLegend {
-  margin-top: 5em;
+  margin-top: 1em;
   box-shadow: 0px 0px 4px #ACB5BA;
 }
 
@@ -880,6 +888,45 @@ background-color: #826828 !important;
     width: 6.5em !important;
   }
 
+  #resetData {
+    position: relative;
+margin-top: -11.5em;
+    margin-left: -5.7em;
+  }
+
+  #myChart {
+    width: 300px !important;
+    height: 300px !important;
+    margin-left: 1.5em;
+  }
+
+  #bufferResults {
+    margin-left: -1em !important;
+    margin-top: -16.6em;
+  }
+
+
+#tableIcon {
+  display: none;
+}
+
+#tableLabel {
+  display: none;
+}
+
+#chartIcon {
+  margin-left: -0.4em;
+}
+
+#chartLabel {
+  margin-left: -1.3em;
+}
+
+
+
+.esri-search {
+  margin-left: 3.7em;
+}
 
 
 .esri-scale-bar {
@@ -1004,6 +1051,58 @@ background-color: #826828 !important;
     height: 90px;
     width: 90px;
     margin-top: -0.75em;
+  }
+
+  #tableIcon {
+    display: none;
+  }
+
+  #tableLabel {
+    display: none;
+  }
+
+  #chartIcon {
+    margin-left: 3em;
+    margin-top: 5em;
+  }
+
+  #chartLabel {
+    margin-left: 9em;
+    margin-top: 3em;
+  }
+
+  #resultsLabel {
+    margin-left: 7em;
+    margin-top: -1em;
+  }
+
+  #radiusOptions {
+    margin-left: -15em;
+  }
+
+  #searchLabel {
+    margin-left: -14em;
+    margin-top: 7.5em;
+  }
+
+  .esri-search {
+    margin-left: 3.7em;
+    margin-top: 12em;
+  }
+
+  #esriLegend {
+    width: 300px;
+    height: 260px;
+    margin-left: 3em;
+    margin-top:  -1.5em;
+  }
+
+  #Legend {
+    width: 300px;
+  }
+
+  #legendClose {
+    margin-left: 7.6em;
   }
 
   .overlay-content p {

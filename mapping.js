@@ -535,6 +535,7 @@ require([
       if(!(typeof myChart === "undefined")){
         myChart.destroy();
       }
+      Chart.defaults.global.defaultFontSize = 17;
 
       myChart = new Chart(ctx, {
         type: 'doughnut',
@@ -1251,6 +1252,7 @@ require([
       document.getElementById("esriLegend").style.display = "block";
       document.getElementById("table").style.display = "none";
       document.getElementById("tableClose").style.display = "none";
+      document.getElementById("myChart").style.display = "none";
       defaultView();
     }
 
