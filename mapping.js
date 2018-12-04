@@ -360,7 +360,8 @@ require([
       view: view,
       unit: "dual"
     });
-
+    
+	// Watch for an updating view to either activate or deactivate the loading spinner
     view.watch('updating', function(evt) {
       if (evt === true) {
         document.getElementById("activitySpinner").style.display = "block";
@@ -659,7 +660,6 @@ require([
           var features = results.features.map(function(graphic) {
             graphic.symbol = {
               type: "simple-marker",
-              //style: "diamond",
               size: symbolSize(),
               color: "orange"
             };
@@ -1039,11 +1039,6 @@ require([
       var queryDateDD = queryDate.getDate();
 
       var queryDateString = queryDateYYYY + "-" + queryDateMM + "-" + queryDateDD;
-
-      /*var searchURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
-      "?$where=traffic_report_status_date_time>"+"'"+queryDateString+"'"+
-      " AND issue_reported="+"'"+incidentTypes+"'"+
-      "&$$app_token=EoIlIKmVmkrwWkHNv5TsgP1CM";*/
 
       var searchURL = "https://data.austintexas.gov/resource/r3af-2r8x.json" +
         "?$where=traffic_report_status_date_time>" + "'" + queryDateString + "'" +
