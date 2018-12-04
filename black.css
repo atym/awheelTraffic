@@ -41,7 +41,12 @@ body:not(.hide-overlay) {
 }
 
 #aboutLinks a{
-  font-size: 15px;
+  color: white;
+  font-size: 1em;
+}
+
+#aboutLinks a:hover {
+  color: #999999;
 }
 
 #mainLogo {
