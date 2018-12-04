@@ -20,21 +20,16 @@ var chart = document.getElementById("myChart");
 settingsView.style.display = "none";
 
 function toggleSettings() {
+  if (settingsView.style.display == "none") {
   settingsView.style.display = "block";
-  settingsCover.style.display = "block";
+} else {
+  settingsView.style.display = "none";
+}
 }
 
 function closeSettings() {
   settingsView.style.display = "none";
-  settingsCover.style.display = "none";
 }
-
-window.addEventListener("mouseup", function(event) {
-  if (event.target != settingsView && event.target.parentNode != settingsView) {
-    settingsView.style.display = "none";
-  }
-});
-
 
 var table = document.getElementById("table");
 var tableClose = document.getElementById("tableClose");
