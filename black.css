@@ -672,6 +672,14 @@ background-color: #826828 !important;
   display: none;
 }
 
+.overlay-content .about #eMail {
+    line-height: 2em;
+}
+
+.overlay-content #aboutLinks {
+    line-height: 2em;
+}
+
 .overlay-content {
   position: relative;
   top: 2.5em;
@@ -732,7 +740,7 @@ background-color: #826828 !important;
   margin-bottom: 40px;
 }
 
-.overlay a {
+.overlay #closeOverlay {
   padding: 5px;
   text-decoration: none;
   font-size: 50px;
