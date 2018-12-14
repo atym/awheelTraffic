@@ -569,7 +569,7 @@ background-color: #826828 !important;
 	position: absolute;
   bottom: 0;
   margin-left: 5em;
-  z-index: 99;
+  z-index: 50;
 	background: #2e2e30;
 	border-radius: .4em;
   padding: 1em;
