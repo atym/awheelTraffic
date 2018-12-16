@@ -1183,26 +1183,51 @@ background-color: #826828 !important;
     margin-top: -0.75em;
   }
 
+  #myChart {
+    width: 220px !important;
+    height: 220px !important;
+    margin-left: 27em;
+  }
+
+  #bufferResults {
+    margin-left: 6em;
+    margin-top: -13.5em;
+  }
+
+  #esriLegend {
+    margin-top: -1em !important;
+    margin-left: 27.5em !important;
+    height: 16.7em !important;
+    width: 15em !important;
+  }
+
+  #resetData {
+    margin-top: -6.5em;
+    margin-left: -4.5em;
+  }
+
   #tableIcon {
-    display: none;
+    margin-left: 4.6em;
+    margin-top: 5em;
   }
 
   #tableLabel {
-    display: none;
+    margin-left: 13.7em;
+    margin-top: 3em;
   }
 
   #chartIcon {
-    margin-left: 3em;
+    margin-left: 1.5em;
     margin-top: 5em;
   }
 
   #chartLabel {
-    margin-left: 9em;
+    margin-left: 4.4em;
     margin-top: 3em;
   }
 
   #resultsLabel {
-    margin-left: 7em;
+    margin-left: 7.5em;
     margin-top: -1em;
   }
 
@@ -1213,6 +1238,17 @@ background-color: #826828 !important;
   #searchLabel {
     margin-left: -14em;
     margin-top: 7.5em;
+  }
+
+  #table {
+    display: none !important;
+  }
+
+  #tableMobile {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .esri-search {
@@ -1296,7 +1332,7 @@ background-color: #826828 !important;
   }
 
   #darkModeLogo {
-    margin-top: -0.9em;
+    margin-top: -0.77em;
     margin-left: 5em;
   }
 

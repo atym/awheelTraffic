@@ -24,7 +24,7 @@ w = window,
   x = w.innerWidth || e.clientWidth || g.clientWidth,
   y = w.innerHeight || e.clientHeight || g.clientHeight;
 
-if (x <= 450) {
+if (x <= 830) {
   deviceType = "mobile";
 } else {
   deviceType = "other";
