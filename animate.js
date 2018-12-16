@@ -13,6 +13,25 @@
  * SETTINGS WINDOW ANIMATION
  **************************************************/
 
+var deviceType
+
+function getDevice() {
+
+w = window,
+  d = document,
+  e = d.documentElement,
+  g = d.getElementsByTagName('body')[0],
+  x = w.innerWidth || e.clientWidth || g.clientWidth,
+  y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+if (x <= 450) {
+  deviceType = "mobile";
+} else {
+  deviceType = "other";
+}
+
+}
+
 var settingsView = document.getElementById("settingsDiv");
 var settingsButton = document.getElementById("settingsButton");
 var settingsCover = document.getElementById("settingsCover");
@@ -34,6 +53,12 @@ function closeSettings() {
 var table = document.getElementById("table");
 var tableClose = document.getElementById("tableClose");
 function toggleTable() {
+
+  getDevice();
+
+  if (deviceType == "mobile" && chart.style.display == "block") {
+    document.getElementById("tableOverlay").style.width = "100%";
+  }
 
   if (chart.style.display == "block" && table.style.display == "block") {
     table.style.display = "none";
@@ -64,6 +89,7 @@ function openOverlay() {
 
 function closeOverlay() {
   document.getElementById("fullOverlay").style.width = "0%";
+  document.getElementById("tableOverlay").style.width = "0%";
 }
 
 /**************************************************

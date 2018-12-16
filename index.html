@@ -392,6 +392,141 @@
 
   <script>
     /**************************************************
+   * Create table full screen overlay for mobile
+   **************************************************/
+  </script>
+
+  <div id="tableOverlay" class="overlay">
+    <a href="javascript:void(0)" onclick="closeOverlay()" class="esri-icon-close" aria-label="close icon" id="closeOverlay"></a>
+
+    <table id="tableMobile">
+      <tr>
+        <th>Incident</th>
+        <th>#</th>
+
+      </tr>
+      <tr>
+        <td>Matched in <span id="totalTableM"></span> mile radius:</td>
+        <td id="totalLocateM"></td>
+
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+
+      </tr>
+      <tr id="autoPedTabM">
+        <td>AUTO/ PED</td>
+        <td id="totalAutoPedM"></td>
+
+      </tr>
+      <tr id="blockDriveTabM">
+        <td>BLOCKED DRIV/ HWY</td>
+        <td id="totalBlockDriveM"></td>
+
+      </tr>
+      <tr id="boatCrashTabM">
+        <td>BOAT ACCIDENT</td>
+        <td id="totalBoatM"></td>
+
+      </tr>
+      <tr id="collisionTabM">
+        <td>COLLISION</td>
+        <td id="totalCollisionM"></td>
+
+      </tr>
+      <tr id="privatePropertyTabM">
+        <td>COLLISION/PRIVATE PROPERTY</td>
+        <td id="totalPrivateM"></td>
+
+      </tr>
+      <tr id="collisionInjuryTabM">
+        <td>COLLISION WITH INJURY</td>
+        <td id="totalInjuryM"></td>
+
+      </tr>
+      <tr id="ftsraTabM">
+        <td>COLLISN / FTSRA</td>
+        <td id="totalFtsraM"></td>
+
+      </tr>
+      <tr id="leaveSceneTabM">
+        <td>COLLISN/ LVNG SCN</td>
+        <td id="totalLeaveM"></td>
+
+      </tr>
+      <tr id="crashServiceTabM">
+        <td>Crash Service</td>
+        <td id="totalServiceM"></td>
+
+      </tr>
+      <tr id="crashUrgentTabM">
+        <td>Crash Urgent</td>
+        <td id="totalUrgentM"></td>
+
+      </tr>
+      <tr id="fleetACCTabM">
+        <td>FLEET ACC/ INJURY</td>
+        <td id="totalFleetM"></td>
+
+      </tr>
+      <tr id="highWaterTabM">
+        <td>HIGH WATER</td>
+        <td id="totalWaterM"></td>
+
+      </tr>
+      <tr id="icyRoadwayTabM">
+        <td>ICY ROADWAY</td>
+        <td id="totalIceM"></td>
+
+      </tr>
+      <tr id="looseLivestockTabM">
+        <td>LOOSE LIVESTOCK</td>
+        <td id="totalLivestockM"></td>
+
+      </tr>
+      <tr id="nHZRDTabM">
+        <td>N / HZRD TRFC VIOL</td>
+        <td id="totalNonHzrdM"></td>
+
+      </tr>
+      <tr id="trafficFatalityTabM">
+        <td>TRAFFIC FATALITY</td>
+        <td id="totalFatalM"></td>
+
+      </tr>
+      <tr id="trafficHazardTabM">
+        <td>Traffic Hazard</td>
+        <td id="totalHazardM"></td>
+
+      </tr>
+      <tr id="trafficImpedimentTabM">
+        <td>Traffic Impediment</td>
+        <td id="totalImpedimentM"></td>
+
+      </tr>
+      <tr id="trafficDebrisTabM">
+        <td>TRFC HAZD/ DEBRIS</td>
+        <td id="totalDebrisM"></td>
+
+      </tr>
+      <tr id="vehicleFireTabM">
+        <td>VEHICLE FIRE</td>
+        <td id="totalFireM"></td>
+
+      </tr>
+      <tr id="stalledVehicleTabM">
+        <td>zSTALLED VEHICLE</td>
+        <td id="totalStallM"></td>
+
+      </tr>
+
+    </table>
+
+  </div>
+
+  <script>
+    /**************************************************
    * Create popup box to store settings
    **************************************************/
   </script>

@@ -360,7 +360,7 @@ require([
       view: view,
       unit: "dual"
     });
-    
+
 	// Watch for an updating view to either activate or deactivate the loading spinner
     view.watch('updating', function(evt) {
       if (evt === true) {
@@ -527,6 +527,28 @@ require([
       dom.byId("totalFire").innerHTML = vehicleFire;
       dom.byId("totalStall").innerHTML = stallVehicle;
 
+      dom.byId("totalAutoPedM").innerHTML = autoPed;
+      dom.byId("totalBlockDriveM").innerHTML = driveWay;
+      dom.byId("totalBoatM").innerHTML = boatAccident;
+      dom.byId("totalCollisionM").innerHTML = collision;
+      dom.byId("totalPrivateM").innerHTML = privateProperty;
+      dom.byId("totalInjuryM").innerHTML = injuryCollision;
+      dom.byId("totalFtsraM").innerHTML = ftsra;
+      dom.byId("totalLeaveM").innerHTML = leaveScene;
+      dom.byId("totalServiceM").innerHTML = crashService;
+      dom.byId("totalUrgentM").innerHTML = crashUrgent;
+      dom.byId("totalFleetM").innerHTML = fleetInjury;
+      dom.byId("totalWaterM").innerHTML = highWater;
+      dom.byId("totalIceM").innerHTML = icyRoadway;
+      dom.byId("totalLivestockM").innerHTML = looseLivestock;
+      dom.byId("totalNonHzrdM").innerHTML = trafficViolation;
+      dom.byId("totalFatalM").innerHTML = trafficFatality;
+      dom.byId("totalHazardM").innerHTML = trafficHazard;
+      dom.byId("totalImpedimentM").innerHTML = trafficImpediment;
+      dom.byId("totalDebrisM").innerHTML = trafficDebris;
+      dom.byId("totalFireM").innerHTML = vehicleFire;
+      dom.byId("totalStallM").innerHTML = stallVehicle;
+
 
       /**************************************************
        * Create doughnut chart with Chart.js library
@@ -577,6 +599,8 @@ require([
 
       var bufferRadius = dom.byId("bufferRadius").value;
       dom.byId("totalTable").innerHTML = bufferRadius;
+      dom.byId("totalTableM").innerHTML = bufferRadius;
+
       var zoomLevel;
 
       // Base custom zoom level on bufferRadius parameter
@@ -656,6 +680,7 @@ require([
 
           dom.byId("bufferResults").innerHTML = resultsReturned;
           dom.byId("totalLocate").innerHTML = resultsReturned;
+          dom.byId("totalLocateM").innerHTML = resultsReturned;
 
           var features = results.features.map(function(graphic) {
             graphic.symbol = {

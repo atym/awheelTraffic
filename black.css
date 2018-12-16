@@ -266,6 +266,122 @@ background-color: #826828 !important;
     color: #CCCCCC;
 }
 
+#tableMobile {
+    /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
+    border-collapse: collapse;
+    width: 19.2em;
+    height: 100%;
+    z-index: 99999;
+    overflow: visible;
+    margin-left: 3em;
+    margin-top: 6em;
+    margin-bottom: 3em;
+    box-shadow: 0px 0px 10px #149FEC;
+    color: #CCCCCC;
+}
+
+#tableMobile td, #tableMobile th {
+    border: 1px solid black;
+    padding: 4px;
+}
+
+#tableMobile tr:nth-child(even){background-color: #414141;}
+#tableMobile tr:nth-child(odd){background-color: #343434;}
+
+/*#table tr:hover {background-color: #ddd;}*/
+
+#autoPedTabM:hover {
+  background-color: #871F3F !important;
+}
+
+#blockDriveTabM:hover {
+  background-color: #124E77 !important;
+}
+
+#boatCrashTabM:hover {
+  background-color: #871F3F !important;
+}
+
+#collisionTabM:hover {
+  background-color: #871F3F !important;
+}
+
+#privatePropertyTabM:hover {
+  background-color: #871F3F !important;
+}
+
+#collisionInjuryTabM:hover {
+  background-color: #871F3F !important;
+}
+
+#ftsraTabM:hover {
+  background-color: #871F3F !important;
+}
+
+#leaveSceneTabM:hover {
+  background-color: #871F3F !important;
+}
+
+#crashServiceTabM:hover {
+  background-color: #871F3F !important;
+}
+
+#crashUrgentTabM:hover {
+  background-color: #871F3F !important;
+}
+
+#fleetACCTabM:hover {
+  background-color: #871F3F !important;
+}
+
+#highWaterTabM:hover {
+  background-color: #826828 !important;
+}
+
+#icyRoadwayTabM:hover {
+background-color: #826828 !important;
+}
+
+#looseLivestockTabM:hover {
+  background-color: #124E77 !important;
+}
+
+#nHZRDTabM:hover {
+  background-color: #124E77 !important;
+}
+
+#trafficFatalityTabM:hover {
+  background-color: #871F3F !important;
+}
+
+#trafficHazardTabM:hover {
+background-color: #826828 !important;
+}
+
+#trafficImpedimentTabM:hover {
+background-color: #826828 !important;
+}
+
+#trafficDebrisTabM:hover {
+background-color: #826828 !important;
+}
+
+#vehicleFireTabM:hover {
+  background-color: #124E77 !important;
+}
+
+#stalledVehicleTabM:hover {
+  background-color: #124E77 !important;
+}
+
+#tableMobile th {
+  /*padding-top: 12px;
+  padding-bottom: 12px;*/
+  text-align: left;
+  background-color: #222224;
+  color: #CCCCCC;
+}
+
 #radiusOptions {
   margin-top: 2em;
 }
@@ -773,14 +889,15 @@ background-color: #826828 !important;
   margin-bottom: 1.3em;
   font-size: 0.75em;
   height: 1.2em;
-  padding-left: 0.5em;
+  padding-left: 0.2em;
   color: #C4C4C4;
   display: none;
 }
 
 #darkFooter span {
   float: right;
-  margin-right: 0.4em;
+  margin-right: 0.1em;
+  margin-top: -0.123em !important;
 }
 
 /*ESRI dark theme CSS*/
@@ -919,7 +1036,7 @@ background-color: #826828 !important;
   }
 
 
-#tableIcon {
+/*#tableIcon {
   display: none;
 }
 
@@ -933,7 +1050,7 @@ background-color: #826828 !important;
 
 #chartLabel {
   margin-left: -1.3em;
-}
+}*/
 
 
 
